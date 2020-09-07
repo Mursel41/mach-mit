@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm start --prefix backend & npm start --prefix frontend",
     "build": "npm run build --prefix frontend"
-
   },
   "repository": {
     "type": "git",
