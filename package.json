@@ -1,0 +1,22 @@
+{
+  "name": "mach-mit",
+  "version": "1.0.0",
+  "description": "our final project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start --prefix backend & npm start --prefix frontend",
+    "build": "npm run build --prefix frontend"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LE-FBW1/mach-mit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LE-FBW1/mach-mit/issues"
+  },
+  "homepage": "https://github.com/LE-FBW1/mach-mit#readme"
+}
