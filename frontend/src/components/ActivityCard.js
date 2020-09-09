@@ -1,14 +1,20 @@
 import React from 'react';
+import OneActivityCard from "./OneActivityCard"
+import Box from '@material-ui/core/Box';
+
+function ActivityCard() {
 
 
-function ActivityCard () {
-
-    return (
-        <div>
-            <p>Hello ActivityCard</p>
-        </div>
-    )
-
+  return (
+  <div>
+      <Box display="flex" flexDirection="row" justifyContent="space-between" p={1} m={1}>
+        <OneActivityCard/>
+        <OneActivityCard/>
+        <OneActivityCard/>
+        <OneActivityCard/>
+      </Box>
+  </div>
+  );
 }
 
 
