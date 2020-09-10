@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 // internal Dependencies
 const indexRouter = require('./routes/index');
-const activitiesRouter = require('./routes/activities');
+const activitiesRouter = require('./routes/activitiesRoute');
 const usersRouter = require('./routes/users');
 const CORS = require('./middleware/CORS');
 const { error400, handleErrors } = require('./middleware/errors');
