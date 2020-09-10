@@ -1,20 +1,49 @@
+// External Dependencies
 const express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// internal Dependencies
+const indexRouter = require('./routes/index');
+const activitiesRouter = require('./routes/activities');
+const usersRouter = require('./routes/users');
+const CORS = require('./middleware/CORS');
+const { error400, handleErrors } = require('./middleware/errors');
 
-var app = express();
+// Initialization
+const app = express();
 
+// Initialize Mongoose
+mongoose
+  .connect('mongodb://127.0.0.1:27017/machMit', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .catch((err) => console.error(err));
+mongoose.connection.on('open', () => console.log('MongoDB running'));
+mongoose.connection.on('error', (err) => console.error(err));
+
+// Middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(CORS);
 
+// Routers
 app.use('/', indexRouter);
+app.use('/api/v1/activities', activitiesRouter);
 app.use('/users', usersRouter);
+
+// If route does not match
+app.use(error400);
+
+// Global error Handling
+app.use(handleErrors);
 
 module.exports = app;
