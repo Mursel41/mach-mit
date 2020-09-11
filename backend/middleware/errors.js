@@ -9,6 +9,7 @@ exports.handleErrors = (err, req, res, next) => {
   res.status(err.status || 500).send({
     error: {
       message: err.message,
+      details: err.validator || null,
     },
   });
 };

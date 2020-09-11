@@ -10,13 +10,12 @@ const ActivitySchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
     trim: true,
   },
   typeOfActivity: {
     type: Schema.Types.ObjectId,
     ref: 'CategoryModel',
-    required: true,
+    //required: true,
   },
   typeOfAttendee: {
     type: String,
@@ -26,7 +25,6 @@ const ActivitySchema = new Schema({
   numberOfAttendee: {
     type: Number,
     required: true,
-    default: 1,
   },
   address: {
     type: Address,
@@ -35,10 +33,12 @@ const ActivitySchema = new Schema({
   startDate: {
     type: Date,
     required: true,
+    default: Date.now(),
   },
   endDate: {
     type: Date,
     required: true,
+    default: Date.now(),
   },
   price: {
     type: Number,

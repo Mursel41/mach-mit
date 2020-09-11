@@ -9,12 +9,18 @@ const {
   deleteActivity,
 } = require('../controllers/activitiesController');
 
-router.route('/').get(getActivities).post(createActivity);
+const validator = require('../middleware/validator');
+const activityRules = require('../utilities/validation/activity');
+
+router
+  .route('/')
+  .get(getActivities)
+  .post(validator(activityRules), createActivity);
 
 router
   .route('/:id')
   .get(getActivity)
-  .put(updateActivity)
+  .put(validator(activityRules), updateActivity)
   .delete(deleteActivity);
 
 module.exports = router;
