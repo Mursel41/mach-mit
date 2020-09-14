@@ -49,7 +49,7 @@ const gender = [
   ];
 
     
-  export default function SignUp() {
+export default function SignUp() {
   const classes = useStyles();
 
   const signUpSchema = yup.object().shape({
@@ -66,10 +66,12 @@ const gender = [
 });
   
 
-const [currency, setGender] = React.useState('Gender');
+const [currency, setGender] = React.useState('');
 const handleGender = (event) => {
   setGender(event.target.value);
 };
+
+
 
 return (
     <Container component="main" maxWidth="xs">
@@ -92,8 +94,11 @@ return (
             city: ""
           }}
           validationSchema={signUpSchema}
-          onSubmit={values => {
-            console.log(values);
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
           }}>
           {({ errors, handleChange, touched }) => (
             <Form className={classes.form}>
@@ -238,8 +243,3 @@ return (
     </Container>
   );
 }
-
-
-
-
-        
