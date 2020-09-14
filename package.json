@@ -17,5 +17,6 @@
   "bugs": {
     "url": "https://github.com/LE-FBW1/mach-mit/issues"
   },
-  "homepage": "https://github.com/LE-FBW1/mach-mit#readme"
+  "homepage": "https://github.com/LE-FBW1/mach-mit#readme",
+  "dependencies": {}
 }
