@@ -1,9 +1,31 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const {
+  getUsers,
+  addUser,
+  getUser,
+  updateUser,
+  deleteUser,
+  loginUser,
+} = require('../controllers/usersController');
+
+const validator = require('../middleware/validator');
+const userRules = require('../utilities/validation/user');
+// const authorizeToken = require('../middleware/tokenAuth');
+// const authorizeUser = require('../middleware/userAuth');
+// const authorizeAdmin = require('../middleware/adminAuth');
+
+router.route('/').get(getUsers);
+
+router.route('/signup').post(validator(userRules), addUser);
+
+router.route('/login').post(loginUser);
+
+router
+  .route('/:id')
+  .get(getUser)
+  .put(validator(userRules), updateUser)
+  .delete(deleteUser);
 
 module.exports = router;

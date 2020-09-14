@@ -2,7 +2,7 @@ const createError = require('http-errors');
 
 exports.error400 = (req, res, next) => {
   const error = new createError.BadRequest();
-  next();
+  next(error);
 };
 
 exports.handleErrors = (err, req, res, next) => {

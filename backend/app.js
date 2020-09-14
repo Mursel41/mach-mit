@@ -38,7 +38,7 @@ app.use(CORS);
 // Routers
 app.use('/', indexRouter);
 app.use('/api/v1/activities', activitiesRouter);
-app.use('/users', usersRouter);
+app.use('/api/v1/users', usersRouter);
 
 // If route does not match
 app.use(error400);
