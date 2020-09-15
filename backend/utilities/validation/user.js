@@ -27,7 +27,22 @@ module.exports = [
     .withMessage(
       'Minimum eight characters, at least one upper case letter, one lower case letter, one number and one special character'
     ),
-  body('address.street').optional().trim().escape(),
-  body('address.zip').optional().trim().escape(),
-  body('address.city').optional().trim().escape(),
+  body('city')
+    .optional()
+    .trim()
+    .escape()
+    .isAlpha()
+    .withMessage('Gender must contain only letters'),
+  body('age')
+    .optional()
+    .trim()
+    .escape()
+    .isNumeric()
+    .withMessage('Age must be number'),
+  body('gender')
+    .optional()
+    .trim()
+    .escape()
+    .isAlpha()
+    .withMessage('Gender must contain only letters'),
 ];

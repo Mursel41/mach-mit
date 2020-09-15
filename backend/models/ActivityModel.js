@@ -14,8 +14,8 @@ const ActivitySchema = new Schema({
   },
   typeOfActivity: {
     type: Schema.Types.ObjectId,
-    ref: 'CategoryModel',
-    //required: true,
+    ref: 'Category',
+    required: true,
   },
   typeOfAttendee: {
     type: String,
@@ -44,6 +44,10 @@ const ActivitySchema = new Schema({
     type: Number,
     required: true,
     default: 0,
+  },
+  image: {
+    type: String,
+    default: 'add path',
   },
 });
 
