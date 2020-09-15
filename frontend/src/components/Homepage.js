@@ -1,29 +1,72 @@
 import React from "react";
-import { Grid, Typography, Button, Box } from "@material-ui/core";
+import { Grid, Typography, Button, Box, Container } from "@material-ui/core";
 import hero from "../images/hero.jpg";
+import logo from "../images/Logo.png";
+import SearchBar from "./SearchBar";
 
 function Homepage() {
   return (
-    <Box m={30}>
-      <Grid container>
-        <Box mr={20}>
-          <Grid item sm style={{ padding: 20 }}>
-            <Typography variant="h2" component="h2" gutterBottom>
-              Meet people near you who share your interests.
-            </Typography>
-            <Box mt={6} mb={10}>
-              <Button variant="contained" color="secondary" size="large">
-                Join us
-              </Button>
-            </Box>
-          </Grid>
+    <Container maxWidth="lg">
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mt={5}
+      >
+        <Box>
+          <img src={logo} alt="Logo" width="150" />
         </Box>
 
-        <Grid item sm style={{ padding: 20 }}>
-          <img src={hero} alt="Hero Image" width="100%" />
-        </Grid>
-      </Grid>
-    </Box>
+        <Box>
+          <Button href="#text-buttons" color="default" size="large">
+            Log in
+          </Button>
+          <Button href="#text-buttons" color="default" size="large">
+            Sign up
+          </Button>
+        </Box>
+      </Box>
+
+      <Box mt={10}>
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
+          <Box width="50%">
+            <Typography variant="h3" component="h3" gutterBottom width="60%">
+              Meet people near you who share your interests.
+            </Typography>
+          </Box>
+          <Box width="35%">
+            <img src={hero} alt="Hero Image" width="400" />
+          </Box>
+        </Box>
+      </Box>
+
+      <Box mb={5} mt={5}>
+        <Button variant="contained" color="secondary" size="large">
+          Join us
+        </Button>
+      </Box>
+      <Box
+        mt={8}
+        mb={5}
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+      >
+        <Box>
+          <SearchBar />
+        </Box>
+        <Box ml={1}>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#90E2D8", color: "#272C34" }}
+            size="large"
+          >
+            Search
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 }
 export default Homepage;
