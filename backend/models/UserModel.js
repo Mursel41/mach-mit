@@ -21,6 +21,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -41,7 +42,8 @@ const UserSchema = new Schema(
     },
     image: {
       type: String,
-      default: 'add path',
+      default:
+        'https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png',
     },
     role: {
       type: String,
@@ -91,6 +93,7 @@ UserSchema.method('toJSON', function () {
     city: this.city,
     age: this.age,
     gender: this.gender,
+    image: this.image,
   };
 });
 

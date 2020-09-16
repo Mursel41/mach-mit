@@ -47,8 +47,24 @@ const ActivitySchema = new Schema({
   },
   image: {
     type: String,
-    default: 'add path',
+    default: 'https://unsplash.com/photos/bEcC0nyIp2g',
   },
+});
+
+ActivitySchema.method('toJSON', function () {
+  return {
+    _id: this._id,
+    title: this.title,
+    description: this.description,
+    typeOfActivity: this.typeOfActivity,
+    typeOfAttendee: this.typeOfAttendee,
+    numberOfAttendee: this.numberOfAttendee,
+    address: this.address,
+    startDate: this.startDate,
+    endDate: this.endDate,
+    price: this.price,
+    image: this.image,
+  };
 });
 
 module.exports = model('Activity', ActivitySchema);

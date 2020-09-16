@@ -40,4 +40,10 @@ module.exports = [
     .escape()
     .isNumeric()
     .withMessage('Price must contain only numbers'),
+  body('image')
+    .optional()
+    .trim()
+    .escape()
+    .isAlpha()
+    .withMessage('Image must contain only letters'),
 ];
