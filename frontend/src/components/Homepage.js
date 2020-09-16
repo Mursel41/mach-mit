@@ -36,7 +36,7 @@ function Homepage() {
             </Typography>
           </Box>
           <Box width="35%">
-            <img src={hero} alt="Hero Image" width="400" />
+            <img src={hero} alt="Hero Image" width="450" />
           </Box>
         </Box>
       </Box>
@@ -53,17 +53,8 @@ function Homepage() {
         flexDirection="row"
         justifyContent="center"
       >
-        <Box>
+        <Box mt={3}>
           <SearchBar />
-        </Box>
-        <Box ml={1}>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#90E2D8", color: "#272C34" }}
-            size="large"
-          >
-            Search
-          </Button>
         </Box>
       </Box>
     </Container>
