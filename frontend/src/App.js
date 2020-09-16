@@ -5,9 +5,10 @@ import { Signup } from "./components/signUpForm";
 class App extends React.Component {
   render() {
     return (
-     <div>
-      <Signup />
-    </div>
+      <Container maxWidth="lg">
+        <Homepage />
+        <ActivityCard />
+      </Container>
     );
   }
 }
