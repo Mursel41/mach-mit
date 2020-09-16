@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import SignUp from "./components/SignUpForm";
+import { Signup } from "./components/signUpForm";
 
 class App extends React.Component {
   render() {
     return (
      <div>
-      <SignUp />
+      <Signup />
     </div>
     );
   }
