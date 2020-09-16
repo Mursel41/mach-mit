@@ -11,16 +11,17 @@ const {
 
 const validator = require('../middleware/validator');
 const activityRules = require('../utilities/validation/activity');
+const authorizeToken = require('../middleware/tokenAuth');
 
 router
   .route('/')
   .get(getActivities)
-  .post(validator(activityRules), createActivity);
+  .post(authorizeToken, validator(activityRules), createActivity);
 
 router
   .route('/:id')
   .get(getActivity)
-  .put(validator(activityRules), updateActivity)
-  .delete(deleteActivity);
+  .put(authorizeToken, validator(activityRules), updateActivity)
+  .delete(authorizeToken, deleteActivity);
 
 module.exports = router;

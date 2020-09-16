@@ -21,14 +21,29 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
     },
-    address: {
-      type: Address,
+    city: {
+      type: String,
       required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'none'],
+      required: true,
+    },
+    image: {
+      type: String,
+      default:
+        'https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png',
     },
     role: {
       type: String,
@@ -75,7 +90,10 @@ UserSchema.method('toJSON', function () {
     lastName: this.lastName,
     email: this.email,
     fullName: this.fullName,
-    address: this.address,
+    city: this.city,
+    age: this.age,
+    gender: this.gender,
+    image: this.image,
   };
 });
 
