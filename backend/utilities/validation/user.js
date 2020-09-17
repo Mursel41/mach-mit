@@ -34,7 +34,7 @@ module.exports = [
     .trim()
     .escape()
     .isAlpha()
-    .withMessage('Gender must contain only letters'),
+    .withMessage('City must contain only letters'),
   body('age')
     .optional()
     .trim()
