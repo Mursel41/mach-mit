@@ -37,13 +37,12 @@ const UserSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ['male', 'female', 'none'],
+      enum: ['Male', 'Female', 'Other'],
       required: true,
     },
     image: {
       type: String,
-      default:
-        'https://www.pngitem.com/pimgs/m/504-5040528_empty-profile-picture-png-transparent-png.png',
+      default: 'backend/assets/img/user-profile-default.png',
     },
     role: {
       type: String,
