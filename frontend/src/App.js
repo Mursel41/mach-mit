@@ -10,6 +10,7 @@ import MainTextHeroImg from "./components/MainTextHeroImg";
 import SearchBar from "./components/SearchBar";
 import JoinButton from "./components/JoinButton.js";
 
+
 class App extends React.Component {
   render() {
     return (
@@ -19,6 +20,7 @@ class App extends React.Component {
           <MainTextHeroImg />
           <JoinButton />
           <SearchBar />
+          <Homepage />
           <ActivityCard />
         </Container>
         <div>
