@@ -34,7 +34,11 @@ let SignupSchema = yup.object().shape({
 
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    ),  
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),  
   age: yup
     .number()
     .positive()
@@ -196,6 +200,25 @@ export const Signup = () => {
                     helperText={
                       errors.password && touched.password
                         ? errors.password
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    error={errors.confirmPassword && touched.confirmPassword}
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth
+                    onChange={handleChange}
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="confirm-password"
+                    helperText={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? errors.confirmPassword
                         : null
                     }
                   />
