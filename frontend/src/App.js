@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { Signup } from "./components/signUpForm";
-import Homepage from "./components/JoinButton.js";
 import ActivityCard from "./components/ActivityCard";
 import Container from "@material-ui/core/Container";
 import Footer from "./components/Footer";
@@ -20,7 +19,6 @@ class App extends React.Component {
           <MainTextHeroImg />
           <JoinButton />
           <SearchBar />
-          <Homepage />
           <ActivityCard />
         </Container>
         <div>
