@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Button, Box, Container } from "@material-ui/core";
+import { Typography, Button, Box, Container } from "@material-ui/core";
 import hero from "../images/hero.jpg";
 import logo from "../images/Logo.png";
 import SearchBar from "./SearchBar";
@@ -36,7 +36,7 @@ function Homepage() {
             </Typography>
           </Box>
           <Box width="35%">
-            <img src={hero} alt="Hero Image" width="450" />
+            <img src={hero} alt="Hero" width="450" />
           </Box>
         </Box>
       </Box>
