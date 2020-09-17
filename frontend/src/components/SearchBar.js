@@ -1,90 +1,67 @@
 import React from "react";
 
-import InputBase from "@material-ui/core/InputBase";
-import { fade, makeStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
 import { Box, Button, ButtonGroup } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  search: {
-    position: "relative",
-    border: "1px solid black",
-    height: "40px",
-    maxWidth: "600px",
-    minWidth: "150px",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "100ch",
-      "&:focus": {
-        width: "100ch",
-      },
-    },
-  },
-}));
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 export default function SearchBar() {
-  const classes = useStyles();
-
   return (
     <Box
-      className={classes.root}
       display="flex"
       flexDirection="row"
       justifyContent="center"
+      alignItems="center"
+      mt={8}
+      mb={5}
     >
-      <Box mr={1}>
-        <ButtonGroup
-          disableRipple
-          variant="contained"
-          color="primary"
-          size="large"
-        >
-          <Button>Activity</Button>
-          <Button color="default">Partner</Button>
-        </ButtonGroup>
-      </Box>
-      <Box alignItems="center">
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ "aria-label": "search" }}
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box style={{ width: 400 }}>
+          <Autocomplete
+            id="free-solo-demo"
+            freeSolo
+            options={activities.map((option) => option.title)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search Activity"
+                margin="normal"
+                variant="outlined"
+              />
+            )}
           />
-        </div>
+        </Box>
+        <Box style={{ width: 200 }}>
+          <Autocomplete
+            freeSolo
+            id="free-solo-2-demo"
+            disableClearable
+            options={cities.map((option) => option.title)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select City"
+                margin="normal"
+                variant="outlined"
+                InputProps={{ ...params.InputProps, type: "search" }}
+              />
+            )}
+          />
+        </Box>
       </Box>
-      <Box ml={1}>
+      <Box ml={1} mt={1}>
         <Button
           variant="contained"
-          style={{ backgroundColor: "#90E2D8", color: "#272C34" }}
+          style={{
+            backgroundColor: "#90E2D8",
+            color: "#272C34",
+            height: "54px",
+          }}
           size="large"
         >
           Search
@@ -93,3 +70,34 @@ export default function SearchBar() {
     </Box>
   );
 }
+
+// .....
+const cities = [
+  { title: "Berlin" },
+  { title: "Leipzig" },
+  { title: "Dortmund" },
+  { title: "Dresden" },
+  { title: "Cologne" },
+  { title: "Munich" },
+  { title: "Stuttgart" },
+  { title: "Düsseldorf" },
+  { title: "Frankfurt" },
+  { title: "Essen" },
+  { title: "Bremen" },
+  { title: "Hanover" },
+  { title: "Bochum" },
+  { title: "Wiesbaden" },
+  { title: "Erfurt" },
+];
+
+const activities = [
+  { title: "Swimming" },
+  { title: "Volleyball" },
+  { title: "Cinema" },
+  { title: "Cooking" },
+  { title: "Football" },
+  { title: "Meeting" },
+  { title: "Climbing" },
+  { title: "Photo" },
+  { title: "Chess" },
+];

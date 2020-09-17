@@ -5,7 +5,10 @@ const Activity = require('../models/ActivityModel');
 
 exports.getActivities = async (req, res, next) => {
   try {
-    const activities = await Activity.find();
+    const activities = await Activity.find().populate(
+      'typeOfActivity',
+      '-_id name'
+    );
     res.status(200).send(activities);
   } catch (error) {
     next(error);
@@ -26,7 +29,10 @@ exports.getActivity = async (req, res, next) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
       throw new createError.NotFound();
-    const activity = await Activity.findById(req.params.id);
+    const activity = await Activity.findById(req.params.id).populate(
+      'typeOfActivity',
+      '-_id name'
+    );
     if (!activity) throw new createError.NotFound();
     res.status(200).send(activity);
   } catch (error) {
@@ -42,7 +48,7 @@ exports.updateActivity = async (req, res, next) => {
       req.params.id,
       req.body,
       { new: true, runValidators: true }
-    );
+    ).populate('typeOfActivity', '-_id name');
     if (!updatedActivity) throw new createError.NotFound();
     res.status(200).send(updatedActivity);
   } catch (error) {
