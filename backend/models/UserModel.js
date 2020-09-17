@@ -26,9 +26,18 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    address: {
-      type: Address,
+    gender: {
+      type: String,
       required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    city: {
+      type: Address,
+      required: true
     },
     role: {
       type: String,
