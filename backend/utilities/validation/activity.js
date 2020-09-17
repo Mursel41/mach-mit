@@ -13,18 +13,8 @@ module.exports = [
     .escape()
     .isLength({ min: 10, max: 256 })
     .withMessage('Description must be between 10 and 256 characters'),
-  body('typeOfActivity')
-    .optional()
-    .escape()
-    .trim()
-    .isAlpha()
-    .withMessage('Type of activity must contain only letters'),
-  body('typeOfAttendee')
-    .optional()
-    .trim()
-    .escape()
-    .isAlpha()
-    .withMessage('Type of attendee must contain only letters'),
+  body('typeOfActivity').optional().escape().trim(),
+  body('typeOfAttendee').optional().trim().escape(),
   body('numberOfAttendee')
     .optional()
     .trim()

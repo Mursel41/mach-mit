@@ -47,7 +47,7 @@ const ActivitySchema = new Schema({
   },
   image: {
     type: String,
-    default: 'https://unsplash.com/photos/bEcC0nyIp2g',
+    default: 'backend/assets/img/activity-default.jpg',
   },
 });
 
