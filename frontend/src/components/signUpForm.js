@@ -28,14 +28,13 @@ let SignupSchema = yup.object().shape({
     .string()
     .email('Email is invalid')
     .required("This field is required."),
-  password: yup
-    .string()
-    .min(8, "Password is too short.")
-    .required("This field is required."),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),  
+  password: yup.string()
+    .required('Please Enter your password')
+    .matches(
+
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    ),  
   age: yup
     .number()
     .positive()
@@ -81,18 +80,7 @@ export const Signup = () => {
   const classes = useStyles();
   
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-  const submitForm = (values) => {
-    axios
-      .post("http://localhost:5000/signup", values)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -111,15 +99,23 @@ export const Signup = () => {
             lastName: "",
             email: "",
             password: "",
-            confirmPassword: "",
             gender: "",
             age: "",
             city: ""
           }}
           validationSchema={SignupSchema}
-          onSubmit={async (values, { setSubmitting }) => {
-            await axios.post
-            // console.log(values);
+          onSubmit={(values, { setSubmitting }) => {
+            axios.post(`${apiUrl}`, JSON.stringify(values), {
+              headers: {
+                  'Content-Type': 'application/json'
+              }})
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+            console.log(values);
             // alert('SUCCESS!!\n\n' + JSON.stringify(values));
             setSubmitting(false);
           }}
@@ -204,25 +200,6 @@ export const Signup = () => {
                     }
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    error={errors.confirmPassword && touched.confirmPassword}
-                    variant="outlined"
-                    color="secondary"
-                    fullWidth
-                    onChange={handleChange}
-                    name="confirmPassword"
-                    label="Confirm Password"
-                    type="password"
-                    id="confirmPassword"
-                    autoComplete="confirm-password"
-                    helperText={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? errors.confirmPassword
-                        : null
-                    }
-                  />
-                </Grid>
                 <Grid item xs={12} 
                       container
                       direction="row"
@@ -280,7 +257,6 @@ export const Signup = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                disabled={isSubmitting}
                 color="secondary"
                 className={classes.submit}
               >
