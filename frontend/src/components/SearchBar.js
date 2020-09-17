@@ -1,7 +1,5 @@
 import React from "react";
-
-import { Box, Button, ButtonGroup } from "@material-ui/core";
-
+import { Box, Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -10,6 +8,7 @@ export default function SearchBar() {
     <Box
       display="flex"
       flexDirection="row"
+      flexWrap="wrap"
       justifyContent="center"
       alignItems="center"
       mt={8}
@@ -20,8 +19,9 @@ export default function SearchBar() {
         flexDirection="row"
         justifyContent="center"
         alignItems="center"
+        flexWrap="wrap"
       >
-        <Box style={{ width: 400 }}>
+        <Box style={{ width: 300 }}>
           <Autocomplete
             id="free-solo-demo"
             freeSolo
@@ -36,7 +36,7 @@ export default function SearchBar() {
             )}
           />
         </Box>
-        <Box style={{ width: 200 }}>
+        <Box style={{ width: 300 }}>
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"

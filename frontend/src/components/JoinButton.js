@@ -4,7 +4,7 @@ import { Button, Box, Container } from "@material-ui/core";
 function JoinButton() {
   return (
     <Container maxWidth="lg">
-      <Box mb={10} mt={6}>
+      <Box mb={8} mt={2}>
         <Button
           variant="contained"
           color="secondary"
