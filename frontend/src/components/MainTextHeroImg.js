@@ -1,6 +1,6 @@
-import React from "react";
-import { Box, Container, Typography } from "@material-ui/core";
-import hero from "../images/hero.jpg";
+import React from 'react';
+import { Box, Container, Typography } from '@material-ui/core';
+import hero from '../images/hero.jpg';
 
 function MainTextHeroImg() {
   return (
@@ -18,7 +18,7 @@ function MainTextHeroImg() {
             </Typography>
           </Box>
           <Box>
-            <img src={hero} alt="Hero Image" width="400" />
+            <img src={hero} alt="activities" width="400" />
           </Box>
         </Box>
       </Box>
