@@ -7,19 +7,20 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 export default function SearchBar() {
   return (
-    <Box display="flex" flexDirection="row" justifyContent="center">
-      <Box mr={1}>
-        <ButtonGroup
-          disableRipple
-          variant="contained"
-          color="primary"
-          size="large"
-        >
-          <Button>Activity</Button>
-          <Button color="default">Partner</Button>
-        </ButtonGroup>
-      </Box>
-      <Box display="flex" flexDirection="row" justifyContent="center">
+    <Box
+      display="flex"
+      flexDirection="row"
+      justifyContent="center"
+      alignItems="center"
+      mt={8}
+      mb={5}
+    >
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Box style={{ width: 400 }}>
           <Autocomplete
             id="free-solo-demo"
@@ -53,10 +54,14 @@ export default function SearchBar() {
           />
         </Box>
       </Box>
-      <Box ml={1}>
+      <Box ml={1} mt={1}>
         <Button
           variant="contained"
-          style={{ backgroundColor: "#90E2D8", color: "#272C34" }}
+          style={{
+            backgroundColor: "#90E2D8",
+            color: "#272C34",
+            height: "54px",
+          }}
           size="large"
         >
           Search
