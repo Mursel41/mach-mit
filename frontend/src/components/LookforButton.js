@@ -1,22 +1,22 @@
 import React from "react";
 import { Button, Box, Container } from "@material-ui/core";
 
-function JoinButton() {
+function LookForActivityButton() {
   return (
     <Container maxWidth="lg">
-      <Box mb={10} mt={6}>
+      <Box mb={3} mt={3}>
         <Button
           variant="contained"
-          color="secondary"
+          color="Primary"
           size="large"
           style={{
             height: "54px",
           }}
         >
-          Join us
+          Look for Activity
         </Button>
       </Box>
     </Container>
   );
 }
-export default JoinButton;
+export default LookForActivityButton;
