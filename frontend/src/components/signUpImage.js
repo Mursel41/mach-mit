@@ -1,69 +1,68 @@
 import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Formik, Form, Field } from 'formik';
-import FormikRadioGroup from './radioGroupFormik';
-import FormLabel from '@material-ui/core/FormLabel';
-<<<<<<< HEAD
-import * as yup from 'yup';
-=======
+import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
-import axios from 'axios';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormikRadioGroup from "./radioGroupFormik"
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
+
+
+
 
 let SignupSchema = yup.object().shape({
-  firstName: yup
-    .string()
-    .max(30, 'Name is too long.')
-    .required('This field is required.'),
-  lastName: yup
-    .string()
-    .max(30, 'Last name is too long.')
-    .required('This field is required.'),
-  email: yup
-    .string()
-    .email('Email is invalid')
-<<<<<<< HEAD
-    .required('This field is required.'),
-  password: yup
-    .string()
-    .min(8, 'Password is too short.')
-    .required('This field is required.'),
-=======
-    .required("This field is required."),
-  password: yup.string()
-    .required('Please Enter your password')
-    .matches(
-
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    ),
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
-  age: yup.number().positive().integer().required('This field is required.'),
-  city: yup.string().required('This field is required.'),
-  gender: yup.string().required('Please select your gender.'),
-});
+    firstName: yup
+      .string()
+      .max(30, "Name is too long.")
+      .required("This field is required."),
+    lastName: yup
+      .string()
+      .max(30, "Last name is too long.")
+      .required("This field is required."),
+    email: yup
+      .string()
+      .email('Email is invalid')
+      .required("This field is required."),
+    password: yup
+      .string()
+      .min(8, "Password is too short.")
+      .required("This field is required."),  
+    age: yup
+      .number()
+      .positive()
+      .integer()
+      .required('This field is required.'),
+    city: yup
+      .string()
+      .required('This field is required.'),
+    gender: yup
+      .string()
+      .required("Please select your gender.")      
+  });
 
 const useStyles = makeStyles((theme) => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
+  root: {
+    height: '100vh',
+  },
+  image: {
+    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -74,84 +73,65 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
 
-<<<<<<< HEAD
-export const Signup = () => {
-=======
+const responseGoogle = (response) => {
+    console.log(response);
+  }
 
+const responseFacebook = (response) => {
+    console.log(response);
+  }
 
-
-export const Signup = () => {  
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
+export default function SignInSide() {
   const classes = useStyles();
-  
-  const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-  
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      <Grid item xs={false} sm={4} md={6} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        
         <Formik
           initialValues={{
-<<<<<<< HEAD
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            gender: '',
-            age: '',
-            city: '',
-          }}
-          validationSchema={SignupSchema}
-          onSubmit={(values) => {
-            console.log(values);
-            alert('SUCCESS!!\n\n' + JSON.stringify(values));
-=======
             firstName: "",
             lastName: "",
             email: "",
-            password: "",
+            password: "",           
             gender: "",
             age: "",
             city: ""
           }}
           validationSchema={SignupSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            axios.post(`${apiUrl}`, JSON.stringify(values), {
-              headers: {
-                  'Content-Type': 'application/json'
-              }})
-            .then(res => {
-              console.log(res);
-            })
-            .catch(error => {
-              console.log(error);
-            });
+          onSubmit={values => {
             console.log(values);
-            // alert('SUCCESS!!\n\n' + JSON.stringify(values));
-            setSubmitting(false);
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
+            alert('SUCCESS!!\n\n' + JSON.stringify(values))
           }}
         >
-          
-          {({ errors, handleChange, touched, handleSubmit, isSubmitting, values, setFieldValue }) => (
-            <Form className={classes.form} onSubmit={handleSubmit}>
+          {({ errors, handleChange, touched }) => (
+            <Form className={classes.form}>
               <Grid container spacing={2}>
+              <Grid item xs={12}>
+              <GoogleLogin
+                clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+                />
+                
+                  </ Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     error={errors.firstName && touched.firstName}
@@ -161,7 +141,6 @@ export const Signup = () => {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
-                    value={values.firstName}
                     id="firstName"
                     label="First Name"
                     autoFocus
@@ -179,7 +158,6 @@ export const Signup = () => {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
-                    value={values.lastName}
                     id="lastName"
                     label="Last Name"
                     name="lastName"
@@ -198,7 +176,6 @@ export const Signup = () => {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
-                    value={values.email}
                     id="email"
                     label="Email Address"
                     name="email"
@@ -215,7 +192,6 @@ export const Signup = () => {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
-                    value={values.password}
                     name="password"
                     label="Password"
                     type="password"
@@ -228,42 +204,7 @@ export const Signup = () => {
                     }
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    error={errors.confirmPassword && touched.confirmPassword}
-                    variant="outlined"
-                    color="secondary"
-                    fullWidth
-                    onChange={handleChange}
-                    name="confirmPassword"
-                    label="Confirm Password"
-                    type="password"
-                    id="confirmPassword"
-                    autoComplete="confirm-password"
-                    helperText={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? errors.confirmPassword
-                        : null
-                    }
-                  />
-                </Grid>
-<<<<<<< HEAD
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <FormLabel component="legend">Gender</FormLabel>
-                  <Field
-                    name="gender"
-                    id="gender"
-                    options={['Male', 'Female', 'Other']}
-                    component={FormikRadioGroup}
-                  />
-=======
+                
                 <Grid item xs={12} 
                       container
                       direction="row"
@@ -272,12 +213,10 @@ export const Signup = () => {
                 <FormLabel component="legend">Gender</FormLabel>
                 <Field
                   name="gender"
-                  value={values.gender}
                   id="gender"
                   options={["Male", "Female", "Other"]}
                   component={FormikRadioGroup}
                 />
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -286,12 +225,15 @@ export const Signup = () => {
                     fullWidth
                     color="secondary"
                     onChange={handleChange}
-                    value={values.age}
                     id="age"
                     label="Age"
                     name="age"
                     autoComplete="age"
-                    helperText={errors.age && touched.age ? errors.age : null}
+                    helperText={
+                      errors.age && touched.age
+                        ? errors.age
+                        : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -301,13 +243,14 @@ export const Signup = () => {
                     fullWidth
                     color="secondary"
                     onChange={handleChange}
-                    value={values.city}
                     id="city"
                     label="City"
                     name="city"
                     autoComplete="city"
                     helperText={
-                      errors.city && touched.city ? errors.city : null
+                      errors.city && touched.city
+                        ? errors.city
+                        : null
                     }
                   />
                 </Grid>
@@ -325,6 +268,7 @@ export const Signup = () => {
           )}
         </Formik>
       </div>
-    </Container>
+      </Grid>
+    </Grid>
   );
-};
+}
