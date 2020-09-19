@@ -1,87 +1,77 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Formik, Form, Field } from "formik";
-import FormikRadioGroup from "./radioGroupFormik"
+import { Formik, Form, Field } from 'formik';
+import FormikRadioGroup from './radioGroupFormik';
 import FormLabel from '@material-ui/core/FormLabel';
-import * as yup from "yup";
-
+import * as yup from 'yup';
 
 let SignupSchema = yup.object().shape({
   firstName: yup
     .string()
-    .max(30, "Name is too long.")
-    .required("This field is required."),
+    .max(30, 'Name is too long.')
+    .required('This field is required.'),
   lastName: yup
     .string()
-    .max(30, "Last name is too long.")
-    .required("This field is required."),
+    .max(30, 'Last name is too long.')
+    .required('This field is required.'),
   email: yup
     .string()
     .email('Email is invalid')
-    .required("This field is required."),
+    .required('This field is required.'),
   password: yup
     .string()
-    .min(8, "Password is too short.")
-    .required("This field is required."),
+    .min(8, 'Password is too short.')
+    .required('This field is required.'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),  
-  age: yup
-    .number()
-    .positive()
-    .integer()
-    .required('This field is required.'),
-  city: yup
-    .string()
-    .required('This field is required.'),
-  gender: yup
-    .string()
-    .required("Please select your gender.")      
+    .required('Confirm Password is required'),
+  age: yup.number().positive().integer().required('This field is required.'),
+  city: yup.string().required('This field is required.'),
+  gender: yup.string().required('Please select your gender.'),
 });
 
-const useStyles = makeStyles(theme => ({
-  "@global": {
+const useStyles = makeStyles((theme) => ({
+  '@global': {
     body: {
-      backgroundColor: theme.palette.common.white
-    }
+      backgroundColor: theme.palette.common.white,
+    },
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-
-export const Signup = () => {  
+export const Signup = () => {
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -89,19 +79,19 @@ export const Signup = () => {
         </Typography>
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-            gender: "",
-            age: "",
-            city: ""
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            gender: '',
+            age: '',
+            city: '',
           }}
           validationSchema={SignupSchema}
-          onSubmit={values => {
+          onSubmit={(values) => {
             console.log(values);
-            alert('SUCCESS!!\n\n' + JSON.stringify(values))
+            alert('SUCCESS!!\n\n' + JSON.stringify(values));
           }}
         >
           {({ errors, handleChange, touched }) => (
@@ -198,18 +188,21 @@ export const Signup = () => {
                     }
                   />
                 </Grid>
-                <Grid item xs={12} 
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center" >
-                <FormLabel component="legend">Gender</FormLabel>
-                <Field
-                  name="gender"
-                  id="gender"
-                  options={["Male", "Female", "Other"]}
-                  component={FormikRadioGroup}
-                />
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <FormLabel component="legend">Gender</FormLabel>
+                  <Field
+                    name="gender"
+                    id="gender"
+                    options={['Male', 'Female', 'Other']}
+                    component={FormikRadioGroup}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -222,11 +215,7 @@ export const Signup = () => {
                     label="Age"
                     name="age"
                     autoComplete="age"
-                    helperText={
-                      errors.age && touched.age
-                        ? errors.age
-                        : null
-                    }
+                    helperText={errors.age && touched.age ? errors.age : null}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -241,9 +230,7 @@ export const Signup = () => {
                     name="city"
                     autoComplete="city"
                     helperText={
-                      errors.city && touched.city
-                        ? errors.city
-                        : null
+                      errors.city && touched.city ? errors.city : null
                     }
                   />
                 </Grid>
