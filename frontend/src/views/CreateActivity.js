@@ -1,52 +1,117 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Typography, Container } from "@material-ui/core";
+import "date-fns";
+import {
+  TextField,
+  makeStyles,
+  Divider,
+  Container,
+  Box,
+  Typography,
+  Link,
+  Button,
+} from "@material-ui/core";
+import PickDate from "../components/PickDate";
+import SelectType from "../components/SelectType";
+import RadioButtons from "../components/RadioButtons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
   },
 }));
 
 export default function CreateActivity() {
   const classes = useStyles();
+  const [value, setValue] = React.useState("");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
   return (
-    <div className={classes.root}>
-      <Container component="main" maxWidth="sm">
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Typography component="h1" variant="h5">
-                Create your activity
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>xs=12 sm=6</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>xs=12 sm=6</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
+    <Container maxWidth="md">
+      <form className={classes.root} noValidate autoComplete="off">
+        <Box mt={6} mb={2} ml={14}>
+          <Typography
+            variant="h4"
+            component="h4"
+            color="secondary"
+            gutterBottom
+          >
+            CREATE YOUR ACTIVITY
+          </Typography>
+        </Box>
+        <Box mb={4} mt={2} ml={13}>
+          <TextField
+            id="outlined-multiline-flexible"
+            label="Title"
+            multiline
+            rowsMax={4}
+            value={value}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-multiline-static"
+            label="Description"
+            multiline
+            rows={4}
+            defaultValue=""
+            variant="outlined"
+          />
+
+          <RadioButtons />
+        </Box>
+
+        <Divider variant="middle" />
+
+        <Box m={4} ml={13}>
+          <TextField
+            id="outlined-textarea"
+            label="City"
+            placeholder="Placeholder"
+            multiline
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Street"
+            placeholder="Placeholder"
+            multiline
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Zip"
+            placeholder="Placeholder"
+            multiline
+            variant="outlined"
+          />
+        </Box>
+
+        <Divider variant="middle" />
+
+        <Box m={4} ml={13}>
+          <SelectType />
+        </Box>
+
+        <Divider variant="middle" />
+
+        <Box m={4}>
+          <PickDate />
+        </Box>
+
+        <Box align="center" mb={10} mt={4}>
+          <Link color="inherit" href="">
+            <Button variant="contained" color="primary" size="large">
+              Save
+            </Button>
+          </Link>
+        </Box>
+      </form>
+    </Container>
   );
 }
