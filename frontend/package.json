@@ -12,6 +12,7 @@
     "axios": "^0.20.0",
     "formik": "^2.1.5",
     "material-ui-search-bar": "^1.0.0",
+    "moment": "^2.28.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",
