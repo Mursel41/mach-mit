@@ -7,17 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field } from "formik";
 import FormikRadioGroup from "./radioGroupFormik"
 import FormLabel from '@material-ui/core/FormLabel';
-import { createMuiTheme } from '@material-ui/core/styles';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { Header } from '../Header';
 import * as yup from "yup";
 import axios from 'axios';
 
@@ -88,46 +81,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const stepperTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#f50057'
-    },
-    secondary: {
-      main: '#f44336',
-    },
-  },
-});
-
-
-
-// Stepper with forms
-
-const steps = ['Personal info', 'Personal interests', 'Sucess'];
-
-
-
 
 
 export const Signup = () => {  
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = useState(0);
-  
+  const classes = useStyles();  
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
   
 
   return (
-    <Container maxWidth="lm" >
-    <Header />
-    <MuiThemeProvider theme={stepperTheme} >
-    <Stepper alternativeLabel activeStep={activeStep}>
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      </MuiThemeProvider>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -160,13 +121,11 @@ export const Signup = () => {
             .catch(error => {
               console.log(error);
             });
-            // console.log(values);
-            // alert('SUCCESS!!\n\n' + JSON.stringify(values));
             setSubmitting(false);
           }}
         >
           
-          {({ errors, handleChange, touched, handleSubmit, isSubmitting, values, setFieldValue }) => (
+          {({ errors, handleChange, touched, handleSubmit, values }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -330,7 +289,6 @@ export const Signup = () => {
           )}
         </Formik>
       </div>
-    </Container>
     </Container>
   );
 };
