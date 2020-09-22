@@ -26,8 +26,8 @@ function SignUpVerMsg() {
           flexWrap="wrap"
           mt={2}
         >
-          <Box><Link color="" href="http://localhost:3000/"><LookforButton/></Link></Box>
-          <Box><Link color="" href="http://localhost:3000/"><CreatActivityButton/></Link></Box>
+          <Box><Link color="" href="/"><LookforButton/></Link></Box>
+          <Box><Link color="" href="/createactivity"><CreatActivityButton/></Link></Box>
       </Box>
       
     </Box>
