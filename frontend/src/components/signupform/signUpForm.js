@@ -1,3 +1,4 @@
+<<<<<<< HEAD:frontend/src/components/signupform/signUpForm.js
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -6,74 +7,80 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+=======
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+>>>>>>> master:frontend/src/components/signUpForm.js
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Formik, Form, Field } from "formik";
-import FormikRadioGroup from "./radioGroupFormik"
+import { Formik, Form, Field } from 'formik';
+import FormikRadioGroup from './radioGroupFormik';
 import FormLabel from '@material-ui/core/FormLabel';
-import * as yup from "yup";
+import * as yup from 'yup';
 import axios from 'axios';
 
+<<<<<<< HEAD:frontend/src/components/signupform/signUpForm.js
 // Validation and style
 
+=======
+>>>>>>> master:frontend/src/components/signUpForm.js
 let SignupSchema = yup.object().shape({
   firstName: yup
     .string()
-    .max(30, "Name is too long.")
-    .required("This field is required."),
+    .max(30, 'Name is too long.')
+    .required('This field is required.'),
   lastName: yup
     .string()
-    .max(30, "Last name is too long.")
-    .required("This field is required."),
+    .max(30, 'Last name is too long.')
+    .required('This field is required.'),
   email: yup
     .string()
     .email('Email is invalid')
-    .required("This field is required."),
-  password: yup.string()
+    .required('This field is required.'),
+  password: yup
+    .string()
     .required('Please Enter your password')
     .matches(
-
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
     ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),  
-  age: yup
-    .number()
-    .positive()
-    .integer()
-    .required('This field is required.'),
-  city: yup
-    .string()
-    .required('This field is required.'),
-  gender: yup
-    .string()
-    .required("Please select your gender.")      
+    .required('Confirm Password is required'),
+  age: yup.number().positive().integer().required('This field is required.'),
+  city: yup.string().required('This field is required.'),
+  gender: yup.string().required('Please select your gender.'),
 });
 
-const useStyles = makeStyles(theme => ({
-  "@global": {
+const useStyles = makeStyles((theme) => ({
+  '@global': {
     body: {
-      backgroundColor: theme.palette.common.white
-    }
+      backgroundColor: theme.palette.common.white,
+    },
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
   submit: {
+<<<<<<< HEAD:frontend/src/components/signupform/signUpForm.js
     margin: theme.spacing(3, 0, 2)
   },
   icon: {
@@ -85,32 +92,47 @@ const useStyles = makeStyles(theme => ({
 
 export const Signup = () => {  
   const classes = useStyles();  
+=======
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+export const Signup = () => {
+  const classes = useStyles();
+
+>>>>>>> master:frontend/src/components/signUpForm.js
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-  
+
+  const [emailError, setEmailError] = useState('');
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+<<<<<<< HEAD:frontend/src/components/signupform/signUpForm.js
                 
+=======
+
+>>>>>>> master:frontend/src/components/signUpForm.js
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            gender: "",
-            age: "",
-            city: ""
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            gender: '',
+            age: '',
+            city: '',
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
+<<<<<<< HEAD:frontend/src/components/signupform/signUpForm.js
             axios.post(`${apiUrl}`, JSON.stringify(values), {
               headers: {
                   'Content-Type': 'application/json'
@@ -126,6 +148,33 @@ export const Signup = () => {
         >
           
           {({ errors, handleChange, touched, handleSubmit, values }) => (
+=======
+            axios
+              .post(`${apiUrl}`, JSON.stringify(values), {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((error) => {
+                console.log(error.response);
+                setEmailError(error.response.data.error.message);
+              });
+            setSubmitting(false);
+          }}
+        >
+          {({
+            errors,
+            handleChange,
+            touched,
+            handleSubmit,
+            isSubmitting,
+            values,
+            setFieldValue,
+          }) => (
+>>>>>>> master:frontend/src/components/signUpForm.js
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -169,10 +218,13 @@ export const Signup = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error={errors.email && touched.email}
+                    error={emailError !== '' || (errors.email && touched.email)}
                     variant="outlined"
                     color="secondary"
                     fullWidth
+                    onFocus={() => {
+                      setEmailError('');
+                    }}
                     onChange={handleChange}
                     value={values.email}
                     id="email"
@@ -180,7 +232,11 @@ export const Signup = () => {
                     name="email"
                     autoComplete="email"
                     helperText={
-                      errors.email && touched.email ? errors.email : null
+                      emailError
+                        ? emailError
+                        : errors.email && touched.email
+                        ? errors.email
+                        : null
                     }
                   />
                 </Grid>
@@ -223,19 +279,22 @@ export const Signup = () => {
                     }
                   />
                 </Grid>
-                <Grid item xs={12} 
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center" >
-                <FormLabel component="legend">Gender</FormLabel>
-                <Field
-                  name="gender"
-                  value={values.gender}
-                  id="gender"
-                  options={["Male", "Female", "Other"]}
-                  component={FormikRadioGroup}
-                />
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <FormLabel component="legend">Gender</FormLabel>
+                  <Field
+                    name="gender"
+                    value={values.gender}
+                    id="gender"
+                    options={['Male', 'Female', 'Other']}
+                    component={FormikRadioGroup}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -249,11 +308,7 @@ export const Signup = () => {
                     label="Age"
                     name="age"
                     autoComplete="age"
-                    helperText={
-                      errors.age && touched.age
-                        ? errors.age
-                        : null
-                    }
+                    helperText={errors.age && touched.age ? errors.age : null}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -269,9 +324,7 @@ export const Signup = () => {
                     name="city"
                     autoComplete="city"
                     helperText={
-                      errors.city && touched.city
-                        ? errors.city
-                        : null
+                      errors.city && touched.city ? errors.city : null
                     }
                   />
                 </Grid>

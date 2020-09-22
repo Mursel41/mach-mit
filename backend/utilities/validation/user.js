@@ -5,14 +5,14 @@ module.exports = [
     .optional()
     .trim()
     .escape()
-    .isLength({ min: 2, max: 256 })
-    .withMessage('First name must be between 2 and 256 characters'),
+    .isLength({ min: 2, max: 30 })
+    .withMessage('First name must be between 2 and 30 characters'),
   body('lastName')
     .optional()
     .trim()
     .escape()
-    .isLength({ min: 2, max: 256 })
-    .withMessage('Last name must be between 2 and 256 characters'),
+    .isLength({ min: 2, max: 30 })
+    .withMessage('Last name must be between 2 and 30 characters'),
   body('email')
     .optional()
     .trim()
