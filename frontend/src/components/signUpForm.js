@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,13 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field } from 'formik';
 import FormikRadioGroup from './radioGroupFormik';
 import FormLabel from '@material-ui/core/FormLabel';
-<<<<<<< HEAD
 import * as yup from 'yup';
-=======
-import * as yup from "yup";
 import axios from 'axios';
-
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
 
 let SignupSchema = yup.object().shape({
   firstName: yup
@@ -31,22 +26,14 @@ let SignupSchema = yup.object().shape({
   email: yup
     .string()
     .email('Email is invalid')
-<<<<<<< HEAD
     .required('This field is required.'),
   password: yup
     .string()
-    .min(8, 'Password is too short.')
-    .required('This field is required.'),
-=======
-    .required("This field is required."),
-  password: yup.string()
     .required('Please Enter your password')
     .matches(
-
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
     ),
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
@@ -81,18 +68,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-<<<<<<< HEAD
 export const Signup = () => {
-=======
-
-
-
-export const Signup = () => {  
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
   const classes = useStyles();
-  
+
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-  
+
+  const [emailError, setEmailError] = useState('');
 
   return (
     <Container component="main" maxWidth="xs">
@@ -104,52 +85,44 @@ export const Signup = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        
+
         <Formik
           initialValues={{
-<<<<<<< HEAD
             firstName: '',
             lastName: '',
             email: '',
             password: '',
-            confirmPassword: '',
             gender: '',
             age: '',
             city: '',
           }}
           validationSchema={SignupSchema}
-          onSubmit={(values) => {
-            console.log(values);
-            alert('SUCCESS!!\n\n' + JSON.stringify(values));
-=======
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            gender: "",
-            age: "",
-            city: ""
-          }}
-          validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
-            axios.post(`${apiUrl}`, JSON.stringify(values), {
-              headers: {
-                  'Content-Type': 'application/json'
-              }})
-            .then(res => {
-              console.log(res);
-            })
-            .catch(error => {
-              console.log(error);
-            });
-            console.log(values);
-            // alert('SUCCESS!!\n\n' + JSON.stringify(values));
+            axios
+              .post(`${apiUrl}`, JSON.stringify(values), {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((error) => {
+                console.log(error.response);
+                setEmailError(error.response.data.error.message);
+              });
             setSubmitting(false);
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
           }}
         >
-          
-          {({ errors, handleChange, touched, handleSubmit, isSubmitting, values, setFieldValue }) => (
+          {({
+            errors,
+            handleChange,
+            touched,
+            handleSubmit,
+            isSubmitting,
+            values,
+            setFieldValue,
+          }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -193,10 +166,13 @@ export const Signup = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error={errors.email && touched.email}
+                    error={emailError !== '' || (errors.email && touched.email)}
                     variant="outlined"
                     color="secondary"
                     fullWidth
+                    onFocus={() => {
+                      setEmailError('');
+                    }}
                     onChange={handleChange}
                     value={values.email}
                     id="email"
@@ -204,7 +180,11 @@ export const Signup = () => {
                     name="email"
                     autoComplete="email"
                     helperText={
-                      errors.email && touched.email ? errors.email : null
+                      emailError
+                        ? emailError
+                        : errors.email && touched.email
+                        ? errors.email
+                        : null
                     }
                   />
                 </Grid>
@@ -247,7 +227,6 @@ export const Signup = () => {
                     }
                   />
                 </Grid>
-<<<<<<< HEAD
                 <Grid
                   item
                   xs={12}
@@ -259,25 +238,11 @@ export const Signup = () => {
                   <FormLabel component="legend">Gender</FormLabel>
                   <Field
                     name="gender"
+                    value={values.gender}
                     id="gender"
                     options={['Male', 'Female', 'Other']}
                     component={FormikRadioGroup}
                   />
-=======
-                <Grid item xs={12} 
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center" >
-                <FormLabel component="legend">Gender</FormLabel>
-                <Field
-                  name="gender"
-                  value={values.gender}
-                  id="gender"
-                  options={["Male", "Female", "Other"]}
-                  component={FormikRadioGroup}
-                />
->>>>>>> ea7167cb1fda857cff980715a378b6efc0aac510
                 </Grid>
                 <Grid item xs={12}>
                   <TextField

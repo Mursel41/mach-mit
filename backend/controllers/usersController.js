@@ -16,7 +16,6 @@ exports.addUser = async (req, res, next) => {
   try {
     console.log(req.body);
     const newUser = new User({ ...req.body, role: 'user' });
-    console.log(newUser);
     await newUser.save();
     res.status(201).send(newUser);
   } catch (err) {
