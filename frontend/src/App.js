@@ -8,6 +8,7 @@ import Dashboard from './views/Dashboard';
 import { Signup } from './components/signUpForm';
 import Login from './components/LogIn';
 import NotFound from './views/NotFound';
+import CreateActivity from './views/CreateActivity';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -75,6 +76,9 @@ const App = () => {
               hasLoginError={hasLoginError}
               isLoggedIn={isLoggedIn}
             />
+          </Route>
+          <Route exact path="/createactivity">
+            <CreateActivity />
           </Route>
           <Route>
             <NotFound />
