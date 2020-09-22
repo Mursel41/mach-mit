@@ -1,9 +1,9 @@
 import React from "react";
-import ActivityCard from "./ActivityCard";
+import ActivityCard from "../components/ActivityCard";
 import Container from "@material-ui/core/Container";
-import MainTextHeroImg from "./MainTextHeroImg";
-import SearchBar from "./SearchBar";
-import JoinButton from "./JoinButton";
+import MainTextHeroImg from "../components/MainTextHeroImg";
+import SearchBar from "../components/SearchBar";
+import JoinButton from "../components/JoinButton";
 
 function Homepage() {
   return (
