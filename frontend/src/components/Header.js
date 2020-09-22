@@ -2,12 +2,12 @@ import React from "react";
 import { Button, Box } from "@material-ui/core";
 import logo from "../images/Logo.png";
 
-function Header() {
+export function Header() {
   return (
     <Box
       display="flex"
       flexDirection="row"
-      alignItems="center"
+      // alignItems="center"
       justifyContent="space-between"
       mt={2}
       mr={3}

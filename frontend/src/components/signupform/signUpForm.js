@@ -1,101 +1,135 @@
-import React from 'react';
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import { Formik, Form, Field } from "formik";
-import * as yup from "yup";
-import FormLabel from '@material-ui/core/FormLabel';
 import FormikRadioGroup from "./radioGroupFormik"
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+import FormLabel from '@material-ui/core/FormLabel';
+import { createMuiTheme } from '@material-ui/core/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { Header } from '../Header';
+import * as yup from "yup";
+import axios from 'axios';
 
-
-
-
+// Validation and style
 
 let SignupSchema = yup.object().shape({
-    firstName: yup
-      .string()
-      .max(30, "Name is too long.")
-      .required("This field is required."),
-    lastName: yup
-      .string()
-      .max(30, "Last name is too long.")
-      .required("This field is required."),
-    email: yup
-      .string()
-      .email('Email is invalid')
-      .required("This field is required."),
-    password: yup
-      .string()
-      .min(8, "Password is too short.")
-      .required("This field is required."),  
-    age: yup
-      .number()
-      .positive()
-      .integer()
-      .required('This field is required.'),
-    city: yup
-      .string()
-      .required('This field is required.'),
-    gender: yup
-      .string()
-      .required("Please select your gender.")      
-  });
+  firstName: yup
+    .string()
+    .max(30, "Name is too long.")
+    .required("This field is required."),
+  lastName: yup
+    .string()
+    .max(30, "Last name is too long.")
+    .required("This field is required."),
+  email: yup
+    .string()
+    .email('Email is invalid')
+    .required("This field is required."),
+  password: yup.string()
+    .required('Please Enter your password')
+    .matches(
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100vh',
-  },
-  image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),  
+  age: yup
+    .number()
+    .positive()
+    .integer()
+    .required('This field is required.'),
+  city: yup
+    .string()
+    .required('This field is required.'),
+  gender: yup
+    .string()
+    .required("Please select your gender.")      
+});
+
+const useStyles = makeStyles(theme => ({
+  "@global": {
+    body: {
+      backgroundColor: theme.palette.common.white
+    }
   },
   paper: {
-    margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 2)
   },
+  icon: {
+    color: theme.palette.secondary.main
+  }
 }));
 
-const responseGoogle = (response) => {
-    console.log(response);
-  }
+const stepperTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#f50057'
+    },
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
-const responseFacebook = (response) => {
-    console.log(response);
-  }
 
-export default function SignInSide() {
+
+// Stepper with forms
+
+const steps = ['Personal info', 'Personal interests', 'Sucess'];
+
+
+
+
+
+export const Signup = () => {  
   const classes = useStyles();
+  const [activeStep, setActiveStep] = useState(0);
+  
+  const apiUrl = 'http://localhost:5000/api/v1/users/signup';
+  
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Container maxWidth="lm" >
+    <Header />
+    <MuiThemeProvider theme={stepperTheme} >
+    <Stepper alternativeLabel activeStep={activeStep}>
+        {steps.map(label => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      </MuiThemeProvider>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={6} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <div className={classes.paper}>
       <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -103,35 +137,38 @@ export default function SignInSide() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+                
         <Formik
           initialValues={{
             firstName: "",
             lastName: "",
             email: "",
-            password: "",           
+            password: "",
             gender: "",
             age: "",
             city: ""
           }}
           validationSchema={SignupSchema}
-          onSubmit={values => {
-            console.log(values);
-            alert('SUCCESS!!\n\n' + JSON.stringify(values))
+          onSubmit={(values, { setSubmitting }) => {
+            axios.post(`${apiUrl}`, JSON.stringify(values), {
+              headers: {
+                  'Content-Type': 'application/json'
+              }})
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+            // console.log(values);
+            // alert('SUCCESS!!\n\n' + JSON.stringify(values));
+            setSubmitting(false);
           }}
         >
-          {({ errors, handleChange, touched }) => (
-            <Form className={classes.form}>
+          
+          {({ errors, handleChange, touched, handleSubmit, isSubmitting, values, setFieldValue }) => (
+            <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-              <Grid item xs={12}>
-              <GoogleLogin
-                clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-                />
-                
-                  </ Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     error={errors.firstName && touched.firstName}
@@ -141,6 +178,7 @@ export default function SignInSide() {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
+                    value={values.firstName}
                     id="firstName"
                     label="First Name"
                     autoFocus
@@ -158,6 +196,7 @@ export default function SignInSide() {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
+                    value={values.lastName}
                     id="lastName"
                     label="Last Name"
                     name="lastName"
@@ -176,6 +215,7 @@ export default function SignInSide() {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
+                    value={values.email}
                     id="email"
                     label="Email Address"
                     name="email"
@@ -192,6 +232,7 @@ export default function SignInSide() {
                     color="secondary"
                     fullWidth
                     onChange={handleChange}
+                    value={values.password}
                     name="password"
                     label="Password"
                     type="password"
@@ -204,7 +245,25 @@ export default function SignInSide() {
                     }
                   />
                 </Grid>
-                
+                <Grid item xs={12}>
+                  <TextField
+                    error={errors.confirmPassword && touched.confirmPassword}
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth
+                    onChange={handleChange}
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="confirm-password"
+                    helperText={
+                      errors.confirmPassword && touched.confirmPassword
+                        ? errors.confirmPassword
+                        : null
+                    }
+                  />
+                </Grid>
                 <Grid item xs={12} 
                       container
                       direction="row"
@@ -213,6 +272,7 @@ export default function SignInSide() {
                 <FormLabel component="legend">Gender</FormLabel>
                 <Field
                   name="gender"
+                  value={values.gender}
                   id="gender"
                   options={["Male", "Female", "Other"]}
                   component={FormikRadioGroup}
@@ -225,6 +285,7 @@ export default function SignInSide() {
                     fullWidth
                     color="secondary"
                     onChange={handleChange}
+                    value={values.age}
                     id="age"
                     label="Age"
                     name="age"
@@ -243,6 +304,7 @@ export default function SignInSide() {
                     fullWidth
                     color="secondary"
                     onChange={handleChange}
+                    value={values.city}
                     id="city"
                     label="City"
                     name="city"
@@ -268,7 +330,8 @@ export default function SignInSide() {
           )}
         </Formik>
       </div>
-      </Grid>
-    </Grid>
+    </Container>
+    </Container>
   );
-}
+};
+
