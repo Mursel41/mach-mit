@@ -2,8 +2,8 @@ import React from "react";
 import { Button, Box} from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import LookforButton from "./LookforButton";
-import CreatActivityButton from "./CreateActivityButton";
+import LookforButton from "../components/LookforButton";
+import CreatActivityButton from "../components/CreateActivityButton";
 
 
 

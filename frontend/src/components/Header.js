@@ -14,10 +14,6 @@ function Header(props) {
     props.history.push('/');
   };
 
-<<<<<<< HEAD
-export function Header() {
-=======
->>>>>>> master
   return (
     <Box
       display="flex"

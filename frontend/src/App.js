@@ -1,27 +1,15 @@
-<<<<<<< HEAD
-import React from "react";
-import "./App.scss";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Homepage from "./views/Homepage";
-import { Signup } from "./components/signupform/signUpForm";
-import Login from "./components/LogIn";
-import NotFound from "./views/NotFound";
-import CreateActivity from "./views/CreateActivity";
-=======
 import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Homepage from './components/Homepage';
+import Homepage from './views/Homepage';
 import Dashboard from './views/Dashboard';
-import { Signup } from './components/signUpForm';
+import { Signup } from './components/signupform/signUpForm';
 import Login from './components/LogIn';
 import NotFound from './views/NotFound';
 import CreateActivity from './views/CreateActivity';
->>>>>>> master
+import SignUpVerMsg from './views/SignUpVerifMsg';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -92,6 +80,9 @@ const App = () => {
           </Route>
           <Route exact path="/createactivity">
             <CreateActivity />
+          </Route>
+          <Route exact path="/verifymsg">
+            <SignUpVerMsg />
           </Route>
           <Route>
             <NotFound />
