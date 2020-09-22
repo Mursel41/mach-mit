@@ -35,11 +35,6 @@ const ActivitySchema = new Schema({
     required: true,
     default: Date.now(),
   },
-  endDate: {
-    type: Date,
-    required: true,
-    default: Date.now(),
-  },
   price: {
     type: Number,
     required: true,
@@ -47,7 +42,7 @@ const ActivitySchema = new Schema({
   },
   image: {
     type: String,
-    default: 'backend/assets/img/activity-default.jpg',
+    default: 'assets/img/activity-default.jpg',
   },
 });
 
@@ -61,7 +56,6 @@ ActivitySchema.method('toJSON', function () {
     numberOfAttendee: this.numberOfAttendee,
     address: this.address,
     startDate: this.startDate,
-    endDate: this.endDate,
     price: this.price,
     image: this.image,
   };
