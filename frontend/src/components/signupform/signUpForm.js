@@ -8,10 +8,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Autocomplete } from 'formik-material-ui-lab';
+import MuiTextField from '@material-ui/core/TextField';
 import { Formik, Form, Field } from 'formik';
 import FormikRadioGroup from './radioGroupFormik';
 import FormLabel from '@material-ui/core/FormLabel';
-import MultipleSelect from './selectField';
+import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -33,18 +35,19 @@ let SignupSchema = yup.object().shape({
     .required('This field is required.'),
   password: yup
     .string()
-    .required('Please Enter your password')
+    .required('Please enter your password.')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character.'
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .oneOf([yup.ref('password'), null], 'Passwords must match.')
+    .required('Confirm password is required.'),
   age: yup.number().positive().integer().required('This field is required.'),
   city: yup.string().required('This field is required.'),
   gender: yup.string().required('Please select your gender.'),
+  interests: yup.string().required('Please select your interests.'),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -75,10 +78,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Signup = () => {
+const activities = [
+  { name: 'Football' },
+  { name: 'Volleyball' },
+  { name: 'Basketball' },
+  { name: 'Tennis' },
+  { name: 'Bowling' },
+  { name: 'Cricket' },
+];
+
+const Signup = (props) => {
   const classes = useStyles();
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-
   const [emailError, setEmailError] = useState('');
 
   return (
@@ -101,7 +112,7 @@ export const Signup = () => {
             gender: '',
             age: '',
             city: '',
-            interests: '',
+            interests: [],
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -112,10 +123,13 @@ export const Signup = () => {
                 },
               })
               .then((res) => {
-                console.log(res);
-                if (res.statusCode === 201) {
-                  swal('Success!', 'Register successfully', 'success');
-                } else if (res.statusCode === 500) {
+                if (res.status === 201) {
+                  swal('Success!', 'Register successfully', 'success').then(
+                    () => {
+                      props.history.push('/dashboard');
+                    }
+                  );
+                } else if (res.status === 500) {
                   swal('Error!', res.statusMessage, 'error');
                 }
               })
@@ -126,7 +140,14 @@ export const Signup = () => {
             setSubmitting(false);
           }}
         >
-          {({ errors, handleChange, touched, handleSubmit, values }) => (
+          {({
+            errors,
+            handleChange,
+            touched,
+            handleSubmit,
+            values,
+            isSubmitting,
+          }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -135,7 +156,6 @@ export const Signup = () => {
                     autoComplete="fname"
                     name="firstName"
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     value={values.firstName}
@@ -153,7 +173,6 @@ export const Signup = () => {
                   <TextField
                     error={errors.lastName && touched.lastName}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     value={values.lastName}
@@ -172,7 +191,6 @@ export const Signup = () => {
                   <TextField
                     error={emailError !== '' || (errors.email && touched.email)}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onFocus={() => {
                       setEmailError('');
@@ -196,7 +214,6 @@ export const Signup = () => {
                   <TextField
                     error={errors.password && touched.password}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     value={values.password}
@@ -216,7 +233,6 @@ export const Signup = () => {
                   <TextField
                     error={errors.confirmPassword && touched.confirmPassword}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     name="confirmPassword"
@@ -253,7 +269,6 @@ export const Signup = () => {
                     error={errors.age && touched.age}
                     variant="outlined"
                     fullWidth
-                    color="secondary"
                     onChange={handleChange}
                     value={values.age}
                     id="age"
@@ -268,7 +283,6 @@ export const Signup = () => {
                     error={errors.city && touched.city}
                     variant="outlined"
                     fullWidth
-                    color="secondary"
                     onChange={handleChange}
                     value={values.city}
                     id="city"
@@ -283,11 +297,20 @@ export const Signup = () => {
                 <Grid item xs={12}>
                   <Field
                     name="interests"
-                    component={MultipleSelect}
+                    multiple
+                    component={Autocomplete}
+                    options={activities}
+                    getOptionLabel={(option) => option.name}
                     fullWidth
-                    multiple={true}
-                    value={values.interests}
-                    id="interests"
+                    renderInput={(params) => (
+                      <MuiTextField
+                        {...params}
+                        error={touched['interests'] && !!errors['interests']}
+                        helperText={touched['interests'] && errors['interests']}
+                        label="Your interests"
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
               </Grid>
@@ -296,6 +319,7 @@ export const Signup = () => {
                 fullWidth
                 variant="contained"
                 color="secondary"
+                disabled={isSubmitting}
                 className={classes.submit}
               >
                 Sign Up
@@ -307,3 +331,5 @@ export const Signup = () => {
     </Container>
   );
 };
+
+export default withRouter(Signup);

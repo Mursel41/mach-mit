@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Homepage from './views/Homepage';
 import Dashboard from './views/Dashboard';
-import { Signup } from './components/signupform/signUpForm';
+import Signup from './components/signupform/signUpForm';
 import Login from './components/LogIn';
 import NotFound from './views/NotFound';
 import CreateActivity from './views/CreateActivity';
@@ -69,7 +69,11 @@ const App = () => {
             <Dashboard />
           </Route>
           <Route exact path="/signup">
-            <Signup />
+            <Signup
+            setIsLoggedIn={setIsLoggedIn}
+            setAuth={setAuth}
+            setUser={setUser} 
+            />
           </Route>
           <Route exact path="/login">
             <Login
