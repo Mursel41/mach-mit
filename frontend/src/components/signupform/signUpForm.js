@@ -8,10 +8,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Autocomplete, AutocompleteRenderInputParams } from 'formik-material-ui-lab';
+import MuiTextField from '@material-ui/core/TextField';
 import { Formik, Form, Field } from 'formik';
 import FormikRadioGroup from './radioGroupFormik';
 import FormLabel from '@material-ui/core/FormLabel';
-import MultipleSelect from './selectField';
+import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -34,18 +36,19 @@ let SignupSchema = yup.object().shape({
     .required('This field is required.'),
   password: yup
     .string()
-    .required('Please Enter your password')
+    .required('Please enter your password.')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character.'
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .oneOf([yup.ref('password'), null], 'Passwords must match.')
+    .required('Confirm password is required.'),
   age: yup.number().positive().integer().required('This field is required.'),
   city: yup.string().required('This field is required.'),
   gender: yup.string().required('Please select your gender.'),
+  interests: yup.string().required('Please select your interests.')
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -76,12 +79,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const activities = [
+  {name: 'Football'},
+  {name: 'Volleyball'},
+  {name: 'Basketball'},
+  {name: 'Tennis'},
+  {name: 'Bowling'},
+  {name: 'Cricket'},
+];
 
 
-export const Signup = () => {  
+const Signup = ( props )=> {  
   const classes = useStyles();  
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-
   const [emailError, setEmailError] = useState('');
 
   return (
@@ -104,7 +114,7 @@ export const Signup = () => {
             gender: '',
             age: '',
             city: '',
-            interests: ''
+            interests: [],
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -116,15 +126,18 @@ export const Signup = () => {
               })
               .then((res) => {
                 console.log(res);
-                if (res.statusCode === 201) {
-                  swal("Success!", "Register successfully", "success");
-                } else if (res.statusCode === 500) {
+                if (res.status === 201) {
+                  swal("Success!", "Register successfully", "success")
+                  .then(() => {
+                    props.history.push("/dashboard");
+                  })
+                } else if (res.status === 500) {
                   swal("Error!", res.statusMessage, "error");
                 }
               })
               .catch((error) => {
                 console.log(error.response);
-              //setEmailError(error.response.data.error.message);
+              setEmailError(error.response.data.error.message);
               });
             setSubmitting(false);
           }}
@@ -135,6 +148,7 @@ export const Signup = () => {
             touched,
             handleSubmit,
             values,
+            isSubmitting
           }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
@@ -290,14 +304,24 @@ export const Signup = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field 
-                    name="interests"
-                    component={MultipleSelect}
-                    fullWidth
-                    multiple={true}
-                    value={values.interests}
-                    id="interests"
-                    />                      
+                <Field
+                  name="interests"
+                  multiple
+                  component={Autocomplete}
+                  options={activities}
+                  getOptionLabel={(option: any) => option.name}
+                  fullWidth
+                  renderInput={(params: AutocompleteRenderInputParams) => (
+                <MuiTextField
+                  {...params}
+                  error={touched['interests'] && !!errors['interests']}
+                  helperText={touched['interests'] && errors['interests']}
+                  label="Your interests"
+                  variant="outlined"
+                  color="secondary"  
+                />
+              )}
+            />             
                 </Grid>
               </Grid>
               <Button
@@ -314,6 +338,7 @@ export const Signup = () => {
         </Formik>
       </div>
     </Container>
-  );
+  ); 
 };
 
+export default withRouter(Signup);
