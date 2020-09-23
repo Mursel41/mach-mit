@@ -33,7 +33,4 @@ module.exports = [
   body('image')
     .optional()
     .trim()
-    .escape()
-    .isAlpha()
-    .withMessage('Image must contain only letters'),
 ];
