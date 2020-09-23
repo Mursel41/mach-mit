@@ -125,7 +125,6 @@ const Signup = ( props )=> {
                 },
               })
               .then((res) => {
-                console.log(res);
                 if (res.status === 201) {
                   swal("Success!", "Register successfully", "success")
                   .then(() => {
@@ -158,7 +157,6 @@ const Signup = ( props )=> {
                     autoComplete="fname"
                     name="firstName"
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     value={values.firstName}
@@ -176,7 +174,6 @@ const Signup = ( props )=> {
                   <TextField
                     error={errors.lastName && touched.lastName}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     value={values.lastName}
@@ -195,7 +192,6 @@ const Signup = ( props )=> {
                   <TextField
                     error={emailError !== '' || (errors.email && touched.email)}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onFocus={() => {
                       setEmailError('');
@@ -219,7 +215,6 @@ const Signup = ( props )=> {
                   <TextField
                     error={errors.password && touched.password}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     value={values.password}
@@ -239,7 +234,6 @@ const Signup = ( props )=> {
                   <TextField
                     error={errors.confirmPassword && touched.confirmPassword}
                     variant="outlined"
-                    color="secondary"
                     fullWidth
                     onChange={handleChange}
                     name="confirmPassword"
@@ -276,7 +270,6 @@ const Signup = ( props )=> {
                     error={errors.age && touched.age}
                     variant="outlined"
                     fullWidth
-                    color="secondary"
                     onChange={handleChange}
                     value={values.age}
                     id="age"
@@ -291,7 +284,6 @@ const Signup = ( props )=> {
                     error={errors.city && touched.city}
                     variant="outlined"
                     fullWidth
-                    color="secondary"
                     onChange={handleChange}
                     value={values.city}
                     id="city"
@@ -317,8 +309,7 @@ const Signup = ( props )=> {
                   error={touched['interests'] && !!errors['interests']}
                   helperText={touched['interests'] && errors['interests']}
                   label="Your interests"
-                  variant="outlined"
-                  color="secondary"  
+                  variant="outlined"  
                 />
               )}
             />             
@@ -329,6 +320,7 @@ const Signup = ( props )=> {
                 fullWidth
                 variant="contained"
                 color="secondary"
+                disabled={isSubmitting}
                 className={classes.submit}
               >
                 Sign Up
