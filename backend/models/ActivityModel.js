@@ -20,7 +20,7 @@ const ActivitySchema = new Schema({
   typeOfAttendee: {
     type: String,
     required: true,
-    enum: ['woman only', 'man only', 'mixed only', 'any'],
+    enum: ['Woman only', 'Man only', 'Mixed only', 'Any'],
   },
   numberOfAttendee: {
     type: Number,

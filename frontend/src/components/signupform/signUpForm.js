@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field } from 'formik';
@@ -15,7 +15,6 @@ import MultipleSelect from './selectField';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
-
 
 // Validation and style
 
@@ -69,17 +68,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   icon: {
-    color: theme.palette.secondary.main
-  }
+    color: theme.palette.secondary.main,
+  },
 }));
 
-
-
-export const Signup = () => {  
-  const classes = useStyles();  
+export const Signup = () => {
+  const classes = useStyles();
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
 
   const [emailError, setEmailError] = useState('');
@@ -94,7 +91,7 @@ export const Signup = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-                
+
         <Formik
           initialValues={{
             firstName: '',
@@ -104,7 +101,7 @@ export const Signup = () => {
             gender: '',
             age: '',
             city: '',
-            interests: ''
+            interests: '',
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -117,25 +114,19 @@ export const Signup = () => {
               .then((res) => {
                 console.log(res);
                 if (res.statusCode === 201) {
-                  swal("Success!", "Register successfully", "success");
+                  swal('Success!', 'Register successfully', 'success');
                 } else if (res.statusCode === 500) {
-                  swal("Error!", res.statusMessage, "error");
+                  swal('Error!', res.statusMessage, 'error');
                 }
               })
               .catch((error) => {
                 console.log(error.response);
-              //setEmailError(error.response.data.error.message);
+                setEmailError(error.response.data.error.message);
               });
             setSubmitting(false);
           }}
         >
-          {({
-            errors,
-            handleChange,
-            touched,
-            handleSubmit,
-            values,
-          }) => (
+          {({ errors, handleChange, touched, handleSubmit, values }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -290,14 +281,14 @@ export const Signup = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field 
+                  <Field
                     name="interests"
                     component={MultipleSelect}
                     fullWidth
                     multiple={true}
                     value={values.interests}
                     id="interests"
-                    />                      
+                  />
                 </Grid>
               </Grid>
               <Button
@@ -316,4 +307,3 @@ export const Signup = () => {
     </Container>
   );
 };
-
