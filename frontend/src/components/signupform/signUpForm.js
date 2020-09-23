@@ -6,83 +6,80 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Formik, Form, Field } from 'formik';
-import FormikRadioGroup from './radioGroupFormik';
-import FormLabel from '@material-ui/core/FormLabel';
-import MultipleSelect from './selectField';
-import * as yup from 'yup';
-import axios from 'axios';
-import swal from 'sweetalert';
-
+import Avatar from "@material-ui/core/Avatar";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { Formik, Form, Field } from "formik";
+import FormikRadioGroup from "./radioGroupFormik";
+import FormLabel from "@material-ui/core/FormLabel";
+import MultipleSelect from "./selectField";
+import * as yup from "yup";
+import axios from "axios";
+import swal from "sweetalert";
 
 // Validation and style
 
 let SignupSchema = yup.object().shape({
   firstName: yup
     .string()
-    .max(30, 'Name is too long.')
-    .required('This field is required.'),
+    .max(30, "Name is too long.")
+    .required("This field is required."),
   lastName: yup
     .string()
-    .max(30, 'Last name is too long.')
-    .required('This field is required.'),
+    .max(30, "Last name is too long.")
+    .required("This field is required."),
   email: yup
     .string()
-    .email('Email is invalid')
-    .required('This field is required.'),
+    .email("Email is invalid")
+    .required("This field is required."),
   password: yup
     .string()
-    .required('Please Enter your password')
+    .required("Please Enter your password")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
-  age: yup.number().positive().integer().required('This field is required.'),
-  city: yup.string().required('This field is required.'),
-  gender: yup.string().required('Please select your gender.'),
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+  age: yup.number().positive().integer().required("This field is required."),
+  city: yup.string().required("This field is required."),
+  gender: yup.string().required("Please select your gender."),
 });
 
 const useStyles = makeStyles((theme) => ({
-  '@global': {
+  "@global": {
     body: {
       backgroundColor: theme.palette.common.white,
     },
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   icon: {
-    color: theme.palette.secondary.main
-  }
+    color: theme.palette.secondary.main,
+  },
 }));
 
+export const Signup = () => {
+  const classes = useStyles();
+  const apiUrl = "http://localhost:5000/api/v1/users/signup";
 
-
-export const Signup = () => {  
-  const classes = useStyles();  
-  const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -94,24 +91,24 @@ export const Signup = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-                
+
         <Formik
           initialValues={{
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            gender: '',
-            age: '',
-            city: '',
-            interests: ''
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            gender: "",
+            age: "",
+            city: "",
+            interests: "",
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
             axios
               .post(`${apiUrl}`, JSON.stringify(values), {
                 headers: {
-                  'Content-Type': 'application/json',
+                  "Content-Type": "application/json",
                 },
               })
               .then((res) => {
@@ -124,18 +121,12 @@ export const Signup = () => {
               })
               .catch((error) => {
                 console.log(error.response);
-              //setEmailError(error.response.data.error.message);
+                setEmailError(error.response.data.error.message);
               });
             setSubmitting(false);
           }}
         >
-          {({
-            errors,
-            handleChange,
-            touched,
-            handleSubmit,
-            values,
-          }) => (
+          {({ errors, handleChange, touched, handleSubmit, values }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -179,12 +170,12 @@ export const Signup = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error={emailError !== '' || (errors.email && touched.email)}
+                    error={emailError !== "" || (errors.email && touched.email)}
                     variant="outlined"
                     color="secondary"
                     fullWidth
                     onFocus={() => {
-                      setEmailError('');
+                      setEmailError("");
                     }}
                     onChange={handleChange}
                     value={values.email}
@@ -253,7 +244,7 @@ export const Signup = () => {
                     name="gender"
                     value={values.gender}
                     id="gender"
-                    options={['Male', 'Female', 'Other']}
+                    options={["Male", "Female", "Other"]}
                     component={FormikRadioGroup}
                   />
                 </Grid>
@@ -290,14 +281,14 @@ export const Signup = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Field 
+                  <Field
                     name="interests"
                     component={MultipleSelect}
                     fullWidth
                     multiple={true}
                     value={values.interests}
                     id="interests"
-                    />                      
+                  />
                 </Grid>
               </Grid>
               <Button
@@ -316,4 +307,3 @@ export const Signup = () => {
     </Container>
   );
 };
-
