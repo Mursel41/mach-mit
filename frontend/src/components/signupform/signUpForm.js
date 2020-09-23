@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Autocomplete, AutocompleteRenderInputParams } from 'formik-material-ui-lab';
+import { Autocomplete } from 'formik-material-ui-lab';
 import MuiTextField from '@material-ui/core/TextField';
 import { Formik, Form, Field } from 'formik';
 import FormikRadioGroup from './radioGroupFormik';
@@ -301,9 +301,9 @@ const Signup = ( props )=> {
                   multiple
                   component={Autocomplete}
                   options={activities}
-                  getOptionLabel={(option: any) => option.name}
+                  getOptionLabel={(option) => option.name}
                   fullWidth
-                  renderInput={(params: AutocompleteRenderInputParams) => (
+                  renderInput={(params) => (
                 <MuiTextField
                   {...params}
                   error={touched['interests'] && !!errors['interests']}
