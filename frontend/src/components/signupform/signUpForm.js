@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,34 +8,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { Autocomplete } from "formik-material-ui-lab";
+import MuiTextField from "@material-ui/core/TextField";
 import { Formik, Form, Field } from "formik";
 import FormikRadioGroup from "./radioGroupFormik";
 import FormLabel from "@material-ui/core/FormLabel";
-import MultipleSelect from "./selectField";
+import { withRouter } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import swal from "sweetalert";
-=======
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Autocomplete } from 'formik-material-ui-lab';
-import MuiTextField from '@material-ui/core/TextField';
-import { Formik, Form, Field } from 'formik';
-import FormikRadioGroup from './radioGroupFormik';
-import FormLabel from '@material-ui/core/FormLabel';
-import { withRouter } from 'react-router-dom';
-import * as yup from 'yup';
-import axios from 'axios';
-import swal from 'sweetalert';
->>>>>>> master
 
 // Validation and style
 
@@ -55,34 +35,19 @@ let SignupSchema = yup.object().shape({
     .required("This field is required."),
   password: yup
     .string()
-<<<<<<< HEAD
-    .required("Please Enter your password")
+    .required("Please enter your password.")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character."
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
+    .oneOf([yup.ref("password"), null], "Passwords must match.")
+    .required("Confirm password is required."),
   age: yup.number().positive().integer().required("This field is required."),
   city: yup.string().required("This field is required."),
   gender: yup.string().required("Please select your gender."),
-=======
-    .required('Please enter your password.')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character.'
-    ),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match.')
-    .required('Confirm password is required.'),
-  age: yup.number().positive().integer().required('This field is required.'),
-  city: yup.string().required('This field is required.'),
-  gender: yup.string().required('Please select your gender.'),
-  interests: yup.string().required('Please select your interests.'),
->>>>>>> master
+  interests: yup.string().required("Please select your interests."),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -113,27 +78,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-<<<<<<< HEAD
-export const Signup = () => {
-  const classes = useStyles();
-  const apiUrl = "http://localhost:5000/api/v1/users/signup";
-
-  const [emailError, setEmailError] = useState("");
-=======
 const activities = [
-  { name: 'Football' },
-  { name: 'Volleyball' },
-  { name: 'Basketball' },
-  { name: 'Tennis' },
-  { name: 'Bowling' },
-  { name: 'Cricket' },
+  { name: "Football" },
+  { name: "Volleyball" },
+  { name: "Basketball" },
+  { name: "Tennis" },
+  { name: "Bowling" },
+  { name: "Cricket" },
 ];
 
 const Signup = (props) => {
   const classes = useStyles();
-  const apiUrl = 'http://localhost:5000/api/v1/users/signup';
-  const [emailError, setEmailError] = useState('');
->>>>>>> master
+  const apiUrl = "http://localhost:5000/api/v1/users/signup";
+  const [emailError, setEmailError] = useState("");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -148,7 +105,6 @@ const Signup = (props) => {
 
         <Formik
           initialValues={{
-<<<<<<< HEAD
             firstName: "",
             lastName: "",
             email: "",
@@ -156,17 +112,7 @@ const Signup = (props) => {
             gender: "",
             age: "",
             city: "",
-            interests: "",
-=======
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            gender: '',
-            age: '',
-            city: '',
             interests: [],
->>>>>>> master
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -178,13 +124,13 @@ const Signup = (props) => {
               })
               .then((res) => {
                 if (res.status === 201) {
-                  swal('Success!', 'Register successfully', 'success').then(
+                  swal("Success!", "Register successfully", "success").then(
                     () => {
-                      props.history.push('/dashboard');
+                      props.history.push("/dashboard");
                     }
                   );
                 } else if (res.status === 500) {
-                  swal('Error!', res.statusMessage, 'error');
+                  swal("Error!", res.statusMessage, "error");
                 }
               })
               .catch((error) => {
@@ -194,9 +140,6 @@ const Signup = (props) => {
             setSubmitting(false);
           }}
         >
-<<<<<<< HEAD
-          {({ errors, handleChange, touched, handleSubmit, values }) => (
-=======
           {({
             errors,
             handleChange,
@@ -205,7 +148,6 @@ const Signup = (props) => {
             values,
             isSubmitting,
           }) => (
->>>>>>> master
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -360,21 +302,15 @@ const Signup = (props) => {
                     options={activities}
                     getOptionLabel={(option) => option.name}
                     fullWidth
-<<<<<<< HEAD
-                    multiple={true}
-                    value={values.interests}
-                    id="interests"
-=======
                     renderInput={(params) => (
                       <MuiTextField
                         {...params}
-                        error={touched['interests'] && !!errors['interests']}
-                        helperText={touched['interests'] && errors['interests']}
+                        error={touched["interests"] && !!errors["interests"]}
+                        helperText={touched["interests"] && errors["interests"]}
                         label="Your interests"
                         variant="outlined"
                       />
                     )}
->>>>>>> master
                   />
                 </Grid>
               </Grid>
@@ -395,8 +331,5 @@ const Signup = (props) => {
     </Container>
   );
 };
-<<<<<<< HEAD
-=======
 
 export default withRouter(Signup);
->>>>>>> master
