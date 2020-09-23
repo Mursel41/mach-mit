@@ -3,7 +3,7 @@ import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Homepage from './components/Homepage';
+import Homepage from './views/Homepage';
 import Dashboard from './views/Dashboard';
 import { Signup } from './components/signUpForm';
 import Login from './components/LogIn';
