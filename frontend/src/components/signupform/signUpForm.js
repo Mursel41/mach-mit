@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Autocomplete } from 'formik-material-ui-lab';
@@ -17,7 +17,6 @@ import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
-
 
 // Validation and style
 
@@ -48,7 +47,7 @@ let SignupSchema = yup.object().shape({
   age: yup.number().positive().integer().required('This field is required.'),
   city: yup.string().required('This field is required.'),
   gender: yup.string().required('Please select your gender.'),
-  interests: yup.string().required('Please select your interests.')
+  interests: yup.string().required('Please select your interests.'),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -72,25 +71,24 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   icon: {
-    color: theme.palette.secondary.main
-  }
+    color: theme.palette.secondary.main,
+  },
 }));
 
 const activities = [
-  {name: 'Football'},
-  {name: 'Volleyball'},
-  {name: 'Basketball'},
-  {name: 'Tennis'},
-  {name: 'Bowling'},
-  {name: 'Cricket'},
+  { name: 'Football' },
+  { name: 'Volleyball' },
+  { name: 'Basketball' },
+  { name: 'Tennis' },
+  { name: 'Bowling' },
+  { name: 'Cricket' },
 ];
 
-
-const Signup = ( props )=> {  
-  const classes = useStyles();  
+const Signup = (props) => {
+  const classes = useStyles();
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
   const [emailError, setEmailError] = useState('');
 
@@ -104,7 +102,7 @@ const Signup = ( props )=> {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-                
+
         <Formik
           initialValues={{
             firstName: '',
@@ -126,17 +124,18 @@ const Signup = ( props )=> {
               })
               .then((res) => {
                 if (res.status === 201) {
-                  swal("Success!", "Register successfully", "success")
-                  .then(() => {
-                    props.history.push("/dashboard");
-                  })
+                  swal('Success!', 'Register successfully', 'success').then(
+                    () => {
+                      props.history.push('/dashboard');
+                    }
+                  );
                 } else if (res.status === 500) {
-                  swal("Error!", res.statusMessage, "error");
+                  swal('Error!', res.statusMessage, 'error');
                 }
               })
               .catch((error) => {
                 console.log(error.response);
-              setEmailError(error.response.data.error.message);
+                setEmailError(error.response.data.error.message);
               });
             setSubmitting(false);
           }}
@@ -147,7 +146,7 @@ const Signup = ( props )=> {
             touched,
             handleSubmit,
             values,
-            isSubmitting
+            isSubmitting,
           }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
@@ -296,23 +295,23 @@ const Signup = ( props )=> {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                <Field
-                  name="interests"
-                  multiple
-                  component={Autocomplete}
-                  options={activities}
-                  getOptionLabel={(option) => option.name}
-                  fullWidth
-                  renderInput={(params) => (
-                <MuiTextField
-                  {...params}
-                  error={touched['interests'] && !!errors['interests']}
-                  helperText={touched['interests'] && errors['interests']}
-                  label="Your interests"
-                  variant="outlined"  
-                />
-              )}
-            />             
+                  <Field
+                    name="interests"
+                    multiple
+                    component={Autocomplete}
+                    options={activities}
+                    getOptionLabel={(option) => option.name}
+                    fullWidth
+                    renderInput={(params) => (
+                      <MuiTextField
+                        {...params}
+                        error={touched['interests'] && !!errors['interests']}
+                        helperText={touched['interests'] && errors['interests']}
+                        label="Your interests"
+                        variant="outlined"
+                      />
+                    )}
+                  />
                 </Grid>
               </Grid>
               <Button
@@ -330,7 +329,7 @@ const Signup = ( props )=> {
         </Formik>
       </div>
     </Container>
-  ); 
+  );
 };
 
 export default withRouter(Signup);
