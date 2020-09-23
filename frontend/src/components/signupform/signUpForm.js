@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field } from 'formik';
 import FormikRadioGroup from './radioGroupFormik';
 import FormLabel from '@material-ui/core/FormLabel';
+import MultipleSelect from './selectField';
 import * as yup from 'yup';
 import axios from 'axios';
+import swal from 'sweetalert';
+
+
+// Validation and style
 
 let SignupSchema = yup.object().shape({
   firstName: yup
@@ -64,13 +69,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 2)
   },
+  icon: {
+    color: theme.palette.secondary.main
+  }
 }));
 
-export const Signup = () => {
-  const classes = useStyles();
 
+
+export const Signup = () => {  
+  const classes = useStyles();  
   const apiUrl = 'http://localhost:5000/api/v1/users/signup';
 
   const [emailError, setEmailError] = useState('');
@@ -85,7 +94,7 @@ export const Signup = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-
+                
         <Formik
           initialValues={{
             firstName: '',
@@ -95,6 +104,7 @@ export const Signup = () => {
             gender: '',
             age: '',
             city: '',
+            interests: ''
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -106,10 +116,15 @@ export const Signup = () => {
               })
               .then((res) => {
                 console.log(res);
+                if (res.statusCode === 201) {
+                  swal("Success!", "Register successfully", "success");
+                } else if (res.statusCode === 500) {
+                  swal("Error!", res.statusMessage, "error");
+                }
               })
               .catch((error) => {
                 console.log(error.response);
-                setEmailError(error.response.data.error.message);
+              //setEmailError(error.response.data.error.message);
               });
             setSubmitting(false);
           }}
@@ -119,9 +134,7 @@ export const Signup = () => {
             handleChange,
             touched,
             handleSubmit,
-            isSubmitting,
             values,
-            setFieldValue,
           }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
@@ -276,6 +289,16 @@ export const Signup = () => {
                     }
                   />
                 </Grid>
+                <Grid item xs={12}>
+                  <Field 
+                    name="interests"
+                    component={MultipleSelect}
+                    fullWidth
+                    multiple={true}
+                    value={values.interests}
+                    id="interests"
+                    />                      
+                </Grid>
               </Grid>
               <Button
                 type="submit"
@@ -293,3 +316,4 @@ export const Signup = () => {
     </Container>
   );
 };
+

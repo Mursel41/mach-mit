@@ -18,7 +18,7 @@ function Header(props) {
     <Box
       display="flex"
       flexDirection="row"
-      alignItems="center"
+      // alignItems="center"
       justifyContent="space-between"
       mt={2}
       mr={3}
