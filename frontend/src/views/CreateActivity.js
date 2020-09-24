@@ -53,6 +53,7 @@ export default function CreateActivity() {
             value={value}
             onChange={handleChange}
             variant="outlined"
+            required
           />
           <TextField
             id="outlined-multiline-static"
@@ -75,6 +76,7 @@ export default function CreateActivity() {
             placeholder="Placeholder"
             multiline
             variant="outlined"
+            required
           />
           <TextField
             id="outlined-textarea"
@@ -82,6 +84,7 @@ export default function CreateActivity() {
             placeholder="Placeholder"
             multiline
             variant="outlined"
+            required
           />
           <TextField
             id="outlined-textarea"
@@ -89,6 +92,7 @@ export default function CreateActivity() {
             placeholder="Placeholder"
             multiline
             variant="outlined"
+            required
           />
         </Box>
 
