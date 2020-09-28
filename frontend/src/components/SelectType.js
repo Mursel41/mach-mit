@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, TextField } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -18,10 +18,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectType() {
   const classes = useStyles();
-  const [select, setSelect] = React.useState("");
 
-  const handleChange = (event) => {
-    setSelect(event.target.value);
+  const [selectActivity, setSelectActivity] = React.useState("");
+  const handleChangeActivity = (event) => {
+    setSelectActivity(event.target.value);
+  };
+
+  const [selectAttendee, setSelectAttendee] = React.useState("");
+  const handleChangeAttendee = (event) => {
+    setSelectAttendee(event.target.value);
   };
 
   return (
@@ -33,16 +38,13 @@ export default function SelectType() {
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={select}
-          onChange={handleChange}
+          value={selectActivity}
+          onChange={handleChangeActivity}
           label="Type of activity"
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Footbal</MenuItem>
-          <MenuItem value={20}>Cinema</MenuItem>
-          <MenuItem value={30}>Reading</MenuItem>
+          <MenuItem value>Footbal</MenuItem>
+          <MenuItem value>Cinema</MenuItem>
+          <MenuItem value>Reading</MenuItem>
         </Select>
       </FormControl>
 
@@ -53,36 +55,26 @@ export default function SelectType() {
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={select}
-          onChange={handleChange}
+          value={selectAttendee}
+          onChange={handleChangeAttendee}
           label="Type of attendee"
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>Any</em>
           </MenuItem>
-          <MenuItem value={10}>Men</MenuItem>
-          <MenuItem value={20}>Women</MenuItem>
-          <MenuItem value={30}>Other</MenuItem>
+          <MenuItem value>Man only</MenuItem>
+          <MenuItem value>Woman only</MenuItem>
+          <MenuItem value>Mixed only</MenuItem>
         </Select>
       </FormControl>
 
       <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">Members</InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={select}
-          onChange={handleChange}
-          label="Members"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Unlimited</MenuItem>
-          <MenuItem value={10}>1</MenuItem>
-          <MenuItem value={20}>2</MenuItem>
-          <MenuItem value={30}>3</MenuItem>
-        </Select>
+        <TextField
+          id="outlined-number"
+          label="Number of attendee"
+          type="number"
+          variant="outlined"
+        />
       </FormControl>
     </div>
   );
