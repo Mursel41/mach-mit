@@ -2,9 +2,85 @@ import React from "react";
 import { Box, Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import ActivityCard from "../components/ActivityCard";
 
-export default function SearchBar() {
+
+export default class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activities:[],
+      categories:[],
+      locations:[],
+      //categories for search options
+      inputCategory:[],
+      //loction for search options
+      inputLocation:''
+  };
+
+  this.handleSubmit=this.handleSubmit.bind(this)
+}
+
+
+  componentDidMount(){
+    fetch('http://localhost:5000/api/v1/activities')
+            .then(res=> res.json())
+            .then(activities => this.setState({activities}))
+            .catch(err => console.log(err));       
+
+    fetch('http://localhost:5000/api/v1/categories')
+            .then(res=> res.json())
+            .then(categories => this.setState({categories}))
+            .catch(err => console.log(err));
+    
+    fetch('http://localhost:5000/api/v1/activities/locations')
+            .then(res=> res.json())
+            .then(locations => this.setState({locations}))
+            .catch(err => console.log(err));                
+  }
+
+
+  handleSubmit (evt) {
+    evt.preventDefault();
+    // {console.log(this.state.inputLocation)};
+    // {console.log(this.state.inputCategory._id)};
+    let searchKey='';
+
+    if(this.state.inputCategory.length === 0 && this.state.inputLocation!==''){
+      searchKey= `?address.city=${this.state.inputLocation}`
+
+    }else if(this.state.inputCategory.length !== 0 && this.state.inputLocation===''){
+      searchKey= `?typeOfActivity=${this.state.inputCategory._id}`
+
+    }else if(this.state.inputCategory.length !== 0 && this.state.inputLocation!==''){
+      searchKey= `?typeOfActivity=${this.state.inputCategory._id}&address.city=${this.state.inputLocation}`
+    }
+
+    fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
+            .then(res=> res.json())
+            .then(activities => this.setState({activities}))      
+            .catch(err => console.log(err));   
+
+    this.setState({inputLocation:''});
+    this.setState({inputCategory:[]});
+    console.log("loc: "+this.state.inputLocation);
+    console.log("id: "+this.state.inputCategory);
+    console.log(this.state.activities);
+  };
+
+
+  handleChangeCategory = (evt, val) => {
+    this.setState({ inputCategory: val || []});
+  };
+  
+  handleChangeLocation = (evt, val) => {
+    this.setState({ inputLocation: val });
+  };
+
+render() {
   return (
+<div>
+    <form id="Search" onSubmit={this.handleSubmit}>
     <Box
       display="flex"
       flexDirection="row"
@@ -25,7 +101,11 @@ export default function SearchBar() {
           <Autocomplete
             id="free-solo-demo"
             freeSolo
-            options={activities.map((option) => option.title)}
+            options={this.state.categories.map((option) => option)}
+            getOptionLabel={option => option.name}
+            value={this.state.inputCategory}
+            defaultValue={this.state.inputCategory}
+            onChange={this.handleChangeCategory}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -37,21 +117,27 @@ export default function SearchBar() {
           />
         </Box>
         <Box style={{ width: 300 }}>
+        
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={cities.map((option) => option.title)}
+            options={this.state.locations.map((option) => option)}
+            getOptionLabel={option => option}
+            value={this.state.inputLocation}
+            defaultValue={this.state.inputLocation}
+            onChange={this.handleChangeLocation}
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Select City"
+                label="Select Location"
                 margin="normal"
                 variant="outlined"
                 InputProps={{ ...params.InputProps, type: "search" }}
               />
             )}
           />
+         
         </Box>
       </Box>
       <Box ml={1} mt={1}>
@@ -63,41 +149,15 @@ export default function SearchBar() {
             height: "54px",
           }}
           size="large"
+          type="submit"
         >
           Search
         </Button>
       </Box>
     </Box>
+    </form>
+    <ActivityCard activities={this.state.activities}/>
+    </div>
   );
+  }
 }
-
-// .....
-const cities = [
-  { title: "Berlin" },
-  { title: "Leipzig" },
-  { title: "Dortmund" },
-  { title: "Dresden" },
-  { title: "Cologne" },
-  { title: "Munich" },
-  { title: "Stuttgart" },
-  { title: "Düsseldorf" },
-  { title: "Frankfurt" },
-  { title: "Essen" },
-  { title: "Bremen" },
-  { title: "Hanover" },
-  { title: "Bochum" },
-  { title: "Wiesbaden" },
-  { title: "Erfurt" },
-];
-
-const activities = [
-  { title: "Swimming" },
-  { title: "Volleyball" },
-  { title: "Cinema" },
-  { title: "Cooking" },
-  { title: "Football" },
-  { title: "Meeting" },
-  { title: "Climbing" },
-  { title: "Photo" },
-  { title: "Chess" },
-];
