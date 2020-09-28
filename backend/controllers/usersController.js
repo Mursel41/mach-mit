@@ -5,7 +5,9 @@ const User = require('../models/UserModel');
 
 exports.getUsers = async (req, res, next) => {
   try {
-    const users = await User.find();
+    const users = await User.find()
+      .populate('createdActivities')
+      .populate('participatedActivities');
     res.status(200).send(users);
   } catch (err) {
     next(err);
