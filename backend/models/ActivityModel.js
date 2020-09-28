@@ -44,6 +44,16 @@ const ActivitySchema = new Schema({
     type: String,
     default: 'assets/img/activity-default.jpg',
   },
+  creator: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
+  participants: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+  ],
 });
 
 ActivitySchema.method('toJSON', function () {

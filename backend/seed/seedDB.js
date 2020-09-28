@@ -37,7 +37,21 @@ const seed = async () => {
       )
       .join(' ');
 
-  const typeOfActivities = ['5f620bdbb4fa096f85804726'];
+  const typeOfActivities = [
+    '5f620bdbb4fa096f85804726',
+    '5f620c20f12b4373545185a2',
+    '5f620c2cf12b4373545185a3',
+    '5f620c5af12b4373545185a4',
+    '5f620c6ef12b4373545185a5',
+    '5f620cb1f12b4373545185a6',
+    '5f620cbbf12b4373545185a7',
+    '5f620ccbf12b4373545185a8',
+    '5f620cddf12b4373545185a9',
+    '5f620cf8f12b4373545185ab',
+    '5f620d1cf12b4373545185ad',
+    '5f620d32f12b4373545185ae',
+    '5f620dcfba8dcf75d8ac690c',
+  ];
   const typeOfAttendee = ['Woman only', 'Man only', 'Mixed only', 'Any'];
   const genders = ['Male', 'Female', 'Other'];
 
@@ -50,7 +64,7 @@ const seed = async () => {
     .map(
       (item) =>
         new Activity({
-          title: capitalize(faker.random.words()),
+          title: capitalize(faker.random.words(2)),
           description: capitalize(faker.random.words(6)),
           typeOfActivity: randomItem(typeOfActivities),
           typeOfAttendee: randomItem(typeOfAttendee),
