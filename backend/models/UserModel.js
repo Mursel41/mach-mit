@@ -40,6 +40,15 @@ const UserSchema = new Schema(
       enum: ['Male', 'Female', 'Other'],
       required: true,
     },
+    interests: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        _id: false,
+      },
+    ],
     image: {
       type: String,
       default: 'assets/img/user-profile-default.png',
@@ -60,6 +69,18 @@ const UserSchema = new Schema(
     },
   }
 );
+
+UserSchema.virtual('createdActivities', {
+  ref: 'Activity',
+  localField: '_id',
+  foreignField: 'creator',
+});
+
+UserSchema.virtual('participatedActivities', {
+  ref: 'Activity',
+  localField: '_id',
+  foreignField: 'participants',
+});
 
 UserSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
@@ -90,9 +111,12 @@ UserSchema.method('toJSON', function () {
     email: this.email,
     fullName: this.fullName,
     city: this.city,
+    interests: this.interests,
     age: this.age,
     gender: this.gender,
     image: this.image,
+    createdActivities: this.createdActivities,
+    participatedActivities: this.participatedActivities,
   };
 });
 

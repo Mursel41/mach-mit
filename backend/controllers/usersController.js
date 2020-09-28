@@ -5,7 +5,9 @@ const User = require('../models/UserModel');
 
 exports.getUsers = async (req, res, next) => {
   try {
-    const users = await User.find();
+    const users = await User.find()
+      .populate('createdActivities')
+      .populate('participatedActivities');
     res.status(200).send(users);
   } catch (err) {
     next(err);
@@ -17,7 +19,8 @@ exports.addUser = async (req, res, next) => {
     console.log(req.body);
     const newUser = new User({ ...req.body, role: 'user' });
     await newUser.save();
-    res.status(201).send(newUser);
+    const token = await newUser.generateAuthToken();
+    res.header('X-Auth-Token', token).status(201).send(newUser);
   } catch (err) {
     next(err);
   }

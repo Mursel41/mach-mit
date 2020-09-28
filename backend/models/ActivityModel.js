@@ -20,7 +20,7 @@ const ActivitySchema = new Schema({
   typeOfAttendee: {
     type: String,
     required: true,
-    enum: ['woman only', 'man only', 'mixed only', 'any'],
+    enum: ['Woman only', 'Man only', 'Mixed only', 'Any'],
   },
   numberOfAttendee: {
     type: Number,
@@ -44,6 +44,16 @@ const ActivitySchema = new Schema({
     type: String,
     default: 'assets/img/activity-default.jpg',
   },
+  creator: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
+  participants: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+  ],
 });
 
 ActivitySchema.method('toJSON', function () {
