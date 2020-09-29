@@ -19,6 +19,7 @@ const Category = require('../models/CategoryModel');
   try {
     await User.deleteMany({});
     await Activity.deleteMany({});
+    await Category.deleteMany({});
   } catch (err) {
     console.log(err);
   }

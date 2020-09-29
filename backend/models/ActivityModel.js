@@ -46,12 +46,12 @@ const ActivitySchema = new Schema({
   },
   creator: {
     type: Schema.Types.ObjectId,
-    // required: true,
+    //required: true,
   },
   participants: [
     {
       type: Schema.Types.ObjectId,
-      // required: true,
+      //required: true,
     },
   ],
 });
