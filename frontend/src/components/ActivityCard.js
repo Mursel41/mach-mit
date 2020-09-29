@@ -8,31 +8,11 @@ import Box from "@material-ui/core/Box";
 import moment from "moment";
 
 class ActivityCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activities:[]
-    };
-  }
 
 
-componentDidMount(){
-    console.log('Mounted!');
-    fetch('http://localhost:5000/api/v1/activities')
-            .then(res=> res.json())
-            .then(activities => this.setState({activities}))
-            .catch(err => console.log(err));         
-  }
 
-componentDidUpdate(prevProps, prevState) {
-    console.log('Updated!');
-    console.log(this.props, prevProps);
-}
-
-componentWillUnmount() {
-  console.log('About to unmount!');
-}
-  render() {
+  render(props) {
+    
     return (
       <div>
         <Box
@@ -42,7 +22,7 @@ componentWillUnmount() {
           flexWrap="wrap"
           mt={2}
         >
-      {this.state.activities.map((card) => {
+      {this.props.activities.map((card) => {
             return (
               <Box m={0.5} key={card._id} width={250} p={0.1} mx={0.5} mb={0.5}>
                 <Card>
