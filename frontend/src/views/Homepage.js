@@ -12,7 +12,6 @@ function Homepage() {
       <MainTextHeroImg />
       <JoinButton />
       <SearchBar />
-      <ActivityCard />
     </Container>
   );
 }

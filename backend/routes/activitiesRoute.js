@@ -7,6 +7,7 @@ const {
   getActivity,
   updateActivity,
   deleteActivity,
+  getLocations,
 } = require('../controllers/activitiesController');
 
 const validator = require('../middleware/validator');
@@ -18,10 +19,14 @@ router
   .get(getActivities)
   .post(authorizeToken, validator(activityRules), createActivity);
 
+router.route('/locations').get(getLocations);
+
 router
   .route('/:id')
   .get(getActivity)
   .put(authorizeToken, validator(activityRules), updateActivity)
   .delete(authorizeToken, deleteActivity);
+
+
 
 module.exports = router;
