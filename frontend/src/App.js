@@ -8,7 +8,7 @@ import Dashboard from "./views/Dashboard";
 import Signup from "./components/signupform/signUpForm";
 import Login from "./components/LogIn";
 import NotFound from "./views/NotFound";
-import CreateActivity from "./views/CreateActivity";
+import CreateActivity from "./components/createactivityform/createActivity2";
 import SignUpVerMsg from "./views/SignUpVerifMsg";
 
 const App = () => {
