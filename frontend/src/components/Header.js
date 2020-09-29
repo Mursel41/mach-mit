@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button, Box } from '@material-ui/core';
-import logo from '../images/Logo.png';
-import { NavLink, withRouter } from 'react-router-dom';
+import React from "react";
+import { Button, Box } from "@material-ui/core";
+import logo from "../images/Logo.png";
+import { NavLink, withRouter } from "react-router-dom";
 
 function Header(props) {
   const { isLoggedIn, setIsLoggedIn, setAuth } = props;
@@ -9,9 +9,9 @@ function Header(props) {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setAuth(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    props.history.push('/');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    props.history.push("/");
   };
 
   return (
