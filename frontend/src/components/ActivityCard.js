@@ -8,11 +8,7 @@ import Box from "@material-ui/core/Box";
 import moment from "moment";
 
 class ActivityCard extends React.Component {
-
-
-
   render(props) {
-    
     return (
       <div>
         <Box
@@ -22,7 +18,7 @@ class ActivityCard extends React.Component {
           flexWrap="wrap"
           mt={2}
         >
-      {this.props.activities.map((card) => {
+          {this.props.activities.map((card) => {
             return (
               <Box m={0.5} key={card._id} width={250} p={0.1} mx={0.5} mb={0.5}>
                 <Card>
@@ -36,13 +32,13 @@ class ActivityCard extends React.Component {
                           height={230}
                         />
                       </CardMedia>
-                     <CardContent>
+                      <CardContent>
                         <Typography
                           gutterBottom
                           color="secondary"
                           variant="subtitle2"
                         >
-                          {card.typeOfActivity.name}
+                          {card.typeOfActivity && card.typeOfActivity.name}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="h2">
                           {card.title}
@@ -52,13 +48,10 @@ class ActivityCard extends React.Component {
                           color="textSecondary"
                           component="p"
                         >
-                          <Box>   
+                          <Box>
                             {moment(card.startDate).format("D MMM YYYY")}
                           </Box>
-                          <Box>
-                            0/{card.numberOfAttendee}{" "}
-                            Paticipaters
-                          </Box>
+                          <Box>0/{card.numberOfAttendee} Paticipaters</Box>
                         </Typography>
                         <Box
                           display="flex"
@@ -70,7 +63,7 @@ class ActivityCard extends React.Component {
                           <Box>
                             {" "}
                             <Typography variant="body2" color="Primary">
-                            {card.price===0 ? "Free": "€ "+card.price}
+                              {card.price === 0 ? "Free" : "€ " + card.price}
                             </Typography>
                           </Box>
                           <Box>
@@ -86,8 +79,7 @@ class ActivityCard extends React.Component {
               </Box>
             );
           })}
-      
-      </Box>
+        </Box>
       </div>
     );
   }
