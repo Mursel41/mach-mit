@@ -5,7 +5,8 @@ const Activity = require('../models/ActivityModel');
 
 exports.getActivities = async (req, res, next) => {
   try {
-    const activities = await Activity.find().populate(
+    console.log(req.query);
+    const activities = await Activity.find(req.query).populate(
       'typeOfActivity',
       '-_id name'
     );
@@ -63,6 +64,16 @@ exports.deleteActivity = async (req, res, next) => {
     const deletedActivity = await Activity.findByIdAndRemove(req.params.id);
     if (!deletedActivity) throw new createError.NotFound();
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getLocations = async (req, res, next) => {
+  try {
+    console.log(req.query);
+    const cities = await Activity.find().distinct('address.city');
+    res.status(200).send(cities);
   } catch (error) {
     next(error);
   }
