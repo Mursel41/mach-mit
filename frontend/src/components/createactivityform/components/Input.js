@@ -1,18 +1,33 @@
-import React from 'react'
-import { TextField } from '@material-ui/core';
+import React from "react";
+import { useFormContext, Controller } from "react-hook-form";
+import TextField from "@material-ui/core/TextField";
 
-export default function Input(props) {
+function FormInput(props) {
+  const { control } = useFormContext();
+  const { name, label, required, errorobj } = props;
+  let isError = false;
+  let errorMessage = "";
+  if (errorobj && errorobj.hasOwnProperty(name)) {
+    isError = true;
+    errorMessage = errorobj[name].message;
+  }
 
-    const { name, label, value,error=null, onChange } = props;
-    return (
-        <TextField
-            variant="outlined"
-            label={label}
-            name={name}
-            multiline
-            value={value}
-            onChange={onChange}
-            {...(error && {error:true,helperText:error})}
-        />
-    )
+  return (
+    <Controller
+      as={TextField}
+      name={name}
+      control={control}
+      defaultValue=""
+      label={label}
+      InputLabelProps={{
+        className: required ? "required-label" : "",
+        required: required || false,
+      }}
+      error={isError}
+      helperText={errorMessage}
+      {...props}
+    />
+  );
 }
+
+export default FormInput;

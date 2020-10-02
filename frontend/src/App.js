@@ -10,6 +10,7 @@ import Login from "./components/LogIn";
 import NotFound from "./views/NotFound";
 import CreateActivity from "./components/createactivityform/createActivity2";
 import SignUpVerMsg from "./views/SignUpVerifMsg";
+import ActivityCard from "./components/ActivityCard";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -87,6 +88,9 @@ const App = () => {
           </Route>
           <Route exact path="/verifymsg">
             <SignUpVerMsg />
+          </Route>
+          <Route exact path="/activitycard">
+            <ActivityCard />
           </Route>
           <Route>
             <NotFound />
