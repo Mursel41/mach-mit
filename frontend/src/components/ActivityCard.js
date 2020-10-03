@@ -38,7 +38,7 @@ class ActivityCard extends React.Component {
                           color="secondary"
                           variant="subtitle2"
                         >
-                          {card.typeOfActivity && card.typeOfActivity.name}
+                          {card.typeOfActivity.name}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="h2">
                           {card.title}

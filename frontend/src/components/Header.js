@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box } from "@material-ui/core";
+import { Button, Box, Container } from "@material-ui/core";
 import logo from "../images/Logo.png";
 import { NavLink, withRouter } from "react-router-dom";
 
@@ -15,43 +15,42 @@ function Header(props) {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="row"
-      // alignItems="center"
-      justifyContent="space-between"
-      mt={2}
-      mr={3}
-      ml={4}
-    >
-      <NavLink to="/">
-        <Box>
-          <img src={logo} alt="Logo" width="150" />
+    <Container maxWidth="lg">
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        mt={4}
+      >
+        <NavLink to="/">
+          <Box>
+            <img src={logo} alt="Logo" width="150" />
+          </Box>
+        </NavLink>
+        <Box mt={4}>
+          {isLoggedIn ? (
+            <NavLink to="" onClick={handleLogout}>
+              <Button href="#text-buttons" color="default" size="large">
+                Log out
+              </Button>
+            </NavLink>
+          ) : (
+            <React.Fragment>
+              <NavLink to="/login">
+                <Button href="#text-buttons" color="default" size="large">
+                  Log in
+                </Button>
+              </NavLink>
+              <NavLink to="/signup">
+                <Button href="#text-buttons" color="default" size="large">
+                  Sign up
+                </Button>
+              </NavLink>
+            </React.Fragment>
+          )}
         </Box>
-      </NavLink>
-      <Box>
-        {isLoggedIn ? (
-          <NavLink to="" onClick={handleLogout}>
-            <Button href="#text-buttons" color="default" size="large">
-              Log out
-            </Button>
-          </NavLink>
-        ) : (
-          <React.Fragment>
-            <NavLink to="/login">
-              <Button href="#text-buttons" color="default" size="large">
-                Log in
-              </Button>
-            </NavLink>
-            <NavLink to="/signup">
-              <Button href="#text-buttons" color="default" size="large">
-                Sign up
-              </Button>
-            </NavLink>
-          </React.Fragment>
-        )}
       </Box>
-    </Box>
+    </Container>
   );
 }
 

@@ -3,7 +3,6 @@ import Container from "@material-ui/core/Container";
 import MainTextHeroImg from "../components/MainTextHeroImg";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
-import PersonalizedHomepage from "./PersonalizedHomepage";
 
 function Homepage() {
   return (

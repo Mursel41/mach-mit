@@ -1,96 +1,97 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import ActivityCard from "../components/ActivityCard";
+import {
+  Grid,
+  Typography,
+  Divider,
+  Box,
+  Paper,
+  Container,
+} from "@material-ui/core";
 import SearchBar from "../components/SearchBar";
-import Header from "../components/Header";
-
-import { Box } from "@material-ui/core";
+import axios from "axios";
+import ActivityCard from "../components/ActivityCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+  html: {
+    height: "100%",
+  },
+  "#componentWithId": {
+    height: "100%",
   },
 }));
 
 export default function PersonalizedHomepage() {
   const classes = useStyles();
+  const [activities, setActivities] = useState([]);
+  const [typeOfActivity, setTypeOfActivity] = useState(
+    "5f620c20f12b4373545185a2"
+  );
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:5000/api/v1/activities?typeOfActivity=${typeOfActivity}`
+      )
+      .then((response) => setActivities(response.data))
+      .catch((error) => console.log({ error }));
+  }, []);
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Box>
-            {" "}
-            <Header />
-          </Box>
-        </Grid>
+      <Container maxWidth="lg">
+        <Box m={4} display="flex" flexDirection="row" justifyContent="center">
+          <SearchBar />
+        </Box>
 
-        <Grid item xs={12}>
-          <Box>
-            {" "}
-            <SearchBar />
-          </Box>
-        </Grid>
+        <Box m={6}>
+          <Divider />
+        </Box>
+        <Box>
+          <Paper
+            style={{
+              padding: "20px",
+              backgroundColor: "#FFFBF5",
+              maxWidth: "1200px",
+            }}
+          >
+            <Box m={3}>
+              <Typography variant="h4" component="h4" gutterBottom>
+                Your created activities
+              </Typography>
+            </Box>
 
-        <Grid item xs={12}>
-          <Box>
-            {" "}
-            <ActivityCard />
-          </Box>
-        </Grid>
-      </Grid>
+            <Grid container spacing={3} justify="center">
+              <ActivityCard activities={activities} />
+            </Grid>
+          </Paper>
+        </Box>
+        <Box m={6}>
+          <Divider />
+        </Box>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-      </Grid>
+        <Box>
+          <Paper
+            style={{
+              padding: "20px",
+              backgroundColor: "#FFFBF5",
+              maxWidth: "1200px",
+            }}
+          >
+            <Box m={3}>
+              <Typography variant="h4" component="h4" gutterBottom>
+                Your attended activities
+              </Typography>
+            </Box>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper className={classes.paper}>xs=12 sm=3</Paper>
-        </Grid>
-      </Grid>
+            <Grid container spacing={3} justify="center">
+              <ActivityCard activities={activities} />
+            </Grid>
+          </Paper>
+        </Box>
+      </Container>
     </div>
   );
 }
