@@ -5,22 +5,10 @@ import hero from "../images/hero.jpg";
 function MainTextHeroImg() {
   return (
     <Container maxWidth="lg">
-      <Box mt={10}>
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          flexWrap="wrap"
-        >
-          <Box width="60%">
-            <Typography variant="h3" component="h3" gutterBottom>
-              Meet people near you who share your interests.
-            </Typography>
-          </Box>
-          {/* <Box>
-            <img src={hero} alt="activities" width="400" />
-          </Box> */}
-        </Box>
+      <Box mt={10} width="60%">
+        <Typography variant="h3" component="h3" gutterBottom>
+          Meet people near you who share your interests.
+        </Typography>
       </Box>
     </Container>
   );

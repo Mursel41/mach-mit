@@ -17,6 +17,11 @@ import { Box, Container } from "@material-ui/core";
 
 const styles = {
   paperContainer: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundImage: `url(${Image})`,
     height: `100%`,
     backgroundSize: "cover",
@@ -71,7 +76,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Box style={styles.paperContainer} alignItems="center">
+      <Box style={styles.paperContainer}>
         <Header
           isLoggedIn={isLoggedIn}
           setIsLoggedIn={setIsLoggedIn}
@@ -105,10 +110,6 @@ const App = () => {
             <SignUpVerMsg />
           </Route>
           <Route exact path="/events" component={EventDetails} />
-
-          <Route exact path="/personalizedhomepage">
-            <PersonalizedHomepage />
-          </Route>
 
           <Route>
             <NotFound />
