@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
-const Address = require('./AddressModel');
+const Address = require("./AddressModel");
 
 const ActivitySchema = new Schema({
   title: {
@@ -14,13 +14,13 @@ const ActivitySchema = new Schema({
   },
   typeOfActivity: {
     type: Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: "Category",
     required: true,
   },
   typeOfAttendee: {
     type: String,
     required: true,
-    enum: ['Woman only', 'Man only', 'Mixed only', 'Any'],
+    enum: ["Woman only", "Man only", "Mixed only", "Any"],
   },
   numberOfAttendee: {
     type: Number,
@@ -42,7 +42,7 @@ const ActivitySchema = new Schema({
   },
   image: {
     type: String,
-    default: 'assets/img/activity-default.jpg',
+    default: "assets/img/activity-default.jpg",
   },
   creator: {
     type: Schema.Types.ObjectId,
@@ -56,7 +56,7 @@ const ActivitySchema = new Schema({
   ],
 });
 
-ActivitySchema.method('toJSON', function () {
+ActivitySchema.method("toJSON", function () {
   return {
     _id: this._id,
     title: this.title,
@@ -71,4 +71,4 @@ ActivitySchema.method('toJSON', function () {
   };
 });
 
-module.exports = model('Activity', ActivitySchema);
+module.exports = model("Activity", ActivitySchema);

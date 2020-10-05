@@ -22,8 +22,9 @@ export default function PickDate() {
       <Grid container justify="space-around">
         <KeyboardDatePicker
           margin="normal"
-          id="date-picker-dialog"
+          id="date"
           label="Date"
+          name="date"
           format="MM/dd/yyyy"
           value={selectedDate}
           onChange={handleDateChange}
@@ -33,8 +34,9 @@ export default function PickDate() {
         />
         <KeyboardTimePicker
           margin="normal"
-          id="time-picker"
+          id="time"
           label="Time"
+          name="time"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
