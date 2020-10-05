@@ -1,32 +1,16 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import "./App.scss";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Homepage from "./views/Homepage";
-import Dashboard from "./views/Dashboard";
-import Signup from "./components/signupform/signUpForm";
-import Login from "./components/LogIn";
-import NotFound from "./views/NotFound";
-import CreateActivity from "./components/createactivityform/createActivity2";
-import SignUpVerMsg from "./views/SignUpVerifMsg";
-import ActivityCard from "./components/ActivityCard";
-=======
 import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Homepage from './views/Homepage';
+import Homepage from './views/Homepage'
 import Dashboard from './views/Dashboard';
 import Signup from './components/signupform/signUpForm';
 import Login from './components/LogIn';
 import NotFound from './views/NotFound';
-import CreateActivity from './views/CreateActivity';
+import CreateActivity from './components/createactivityform/createActivity2';
 import SignUpVerMsg from './views/SignUpVerifMsg';
 import EventDetails from './views/EventDetails';
->>>>>>> master
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -105,13 +89,7 @@ const App = () => {
           <Route exact path="/verifymsg">
             <SignUpVerMsg />
           </Route>
-<<<<<<< HEAD
-          <Route exact path="/activitycard">
-            <ActivityCard />
-          </Route>
-=======
           <Route exact path="/events" component={EventDetails} />
->>>>>>> master
           <Route>
             <NotFound />
           </Route>

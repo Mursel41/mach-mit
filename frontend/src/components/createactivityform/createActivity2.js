@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { Autocomplete } from "formik-material-ui-lab";
-import { Select } from "formik-material-ui";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker } from 'formik-material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import MenuItem from "@material-ui/core/MenuItem";
+import { TextField } from "formik-material-ui";
 import MuiTextField from "@material-ui/core/TextField";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import { Formik, Form, Field } from "formik";
 import FormikRadioGroup from "./radioGroupFormik";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -27,33 +23,45 @@ import swal from "sweetalert";
 // Validation and style
 
 let SignupSchema = yup.object().shape({
-  firstName: yup
+  title: yup
     .string()
-    .max(30, "Name is too long.")
+    .min(5, "Title is too short.")
+    .max(30, "Title is too long.")
     .required("This field is required."),
-  lastName: yup
+  description: yup
     .string()
-    .max(30, "Last name is too long.")
+    .min(10, "Description is too short.")
+    .max(256, "Description is too long.")
     .required("This field is required."),
-  email: yup
+  paid: yup
     .string()
-    .email("Email is invalid")
     .required("This field is required."),
-  password: yup
+  price: yup
+    .number()
+    .positive()
+    .integer(),
+  city: yup
     .string()
-    .required("Please enter your password.")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character."
-    ),
-  confirmPassword: yup
+    .required("Please select event location."),
+  street: yup
     .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match.")
-    .required("Confirm password is required."),
-  age: yup.number().positive().integer().required("This field is required."),
-  city: yup.string().required("This field is required."),
-  gender: yup.string().required("Please select your gender."),
-  interests: yup.string().required("Please select your interests."),
+    .required("This field is required."),
+  zip: yup
+    .string()
+    .required("This field is required."),
+  typeOfActivity: yup
+    .string()
+    .required("Please select type of activity."),
+  typeOfAttendee: yup
+    .string()
+    .required("This field is required."),
+  numberOfAttendee: yup
+    .number()
+    .positive()
+    .integer()
+    .required("This field is required."),
+  startDate: yup
+    .date().required("This field is required."),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -84,38 +92,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const activities = [
-  { name: "Football" },
-  { name: "Volleyball" },
-  { name: "Basketball" },
-  { name: "Tennis" },
-  { name: "Bowling" },
-  { name: "Cricket" },
-];
 
-const ranges = [
-  {
-    value: 'none',
-    label: 'None',
-  },
-  {
-    value: '0-20',
-    label: '0 to 20',
-  },
-  {
-    value: '21-50',
-    label: '21 to 50',
-  },
-  {
-    value: '51-100',
-    label: '51 to 100',
-  },
-];
 
-const Signup = (props) => {
+const CreateActivity = (props) => {
   const classes = useStyles();
-  const apiUrl = "http://localhost:5000/api/v1/users/signup";
-  const [emailError, setEmailError] = useState("");
+  const apiUrl = "http://localhost:5000/api/v1/categories";
+  const apiUrlPost = "http://localhost:5000/api/v1/activities";
+  const [categories, setCategories] = useState([]);
+
+
+  useEffect(()=> {
+    async function fetchData() {
+    const result = await axios.get(`${apiUrl}`);
+    setCategories(result.data);
+    }
+    fetchData();
+  },[])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -134,16 +126,34 @@ const Signup = (props) => {
             title: "",
             description: "",
             paid: "",
-            paidamount: "",
-            gender: "",
+            price: "",
             street: "",
             city: "",
             zip: "",
-            typeofactivity: [],
+            typeOfActivity: "",
+            typeOfAttendee: "",
+            numberOfAttendee: "",
+            startDate: new Date(),
           }}
           validationSchema={SignupSchema}
-          onSubmit={(values, {setSubmitting}) => {
-            alert(JSON.stringify(values, null, 2));
+          onSubmit={(values, { setSubmitting }) => {
+             axios
+              .post(`${apiUrlPost}`, JSON.stringify(values), {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+              .then((res) => {
+                if (res.status === 201) {
+                  swal("Success!", "Create event successfully", "success");
+                } else if (res.status === 500) {
+                  swal("Error!", res.statusMessage, "error");
+                }
+              })
+              .catch((error) => {
+                console.log(error.response);
+              }); 
+            setSubmitting(false);
           }}
         >
           {({
@@ -154,10 +164,11 @@ const Signup = (props) => {
             values,
             isSubmitting,
           }) => (
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <TextField
+                  <MuiTextField
                     error={errors.title && touched.title}
                     autoComplete="title"
                     name="title"
@@ -176,7 +187,7 @@ const Signup = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  <MuiTextField
                     error={errors.description && touched.description}
                     variant="outlined"
                     fullWidth
@@ -206,30 +217,31 @@ const Signup = (props) => {
                   <FormLabel component="legend">Paid?</FormLabel>
                   <Field
                     name="paid"
+                    onChange={handleChange}
                     value={values.paid}
                     id="paid"
                     options={["Yes", "No"]}
                     component={FormikRadioGroup}
                   />
                   {values.paid === "Yes" ? 
-                  <TextField
-                  error={errors.paidamount && touched.paidamount}
+                  <MuiTextField
+                  error={errors.price && touched.price}
                   variant="outlined"
                   fullWidth
                   onChange={handleChange}
-                  value={values.paidamount}
+                  value={values.price}
                   InputProps={{
                     inputProps: { 
                         max: 100, min: 1 
                     }
                 }}
-                  name="paidamount"
+                  name="price"
                   label="Amount in €"
                   type="number"
-                  id="paidamount"
+                  id="price"
                   helperText={
-                    errors.paidamount && touched.paidamount
-                      ? errors.paidamount
+                    errors.price && touched.price
+                      ? errors.price
                       : null
                   }
                   />
@@ -239,7 +251,7 @@ const Signup = (props) => {
                 <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                <TextField
+                <MuiTextField
                     error={errors.city && touched.city}
                     variant="outlined"
                     fullWidth
@@ -255,7 +267,7 @@ const Signup = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                <TextField
+                <MuiTextField
                     error={errors.street && touched.street}
                     variant="outlined"
                     fullWidth
@@ -271,7 +283,7 @@ const Signup = (props) => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                <TextField
+                <MuiTextField
                     error={errors.zip && touched.zip}
                     variant="outlined"
                     fullWidth
@@ -291,23 +303,78 @@ const Signup = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                 <Field
-                    name="typeofactivity"
-                    component={Autocomplete}
-                    options={activities.map(option => option.name)}
-                    fullWidth
-                    renderInput={(params) => (
-                      <MuiTextField
-                        {...params}
-                        error={touched["typeofactivity"] && !!errors["typeofactivity"]}
-                        helperText={touched["typeofactivity"] && errors["typeofactivity"]}
-                        label="Type of activity"
-                        variant="outlined"
-                      />
-                    )}
+                component={TextField}
+                type="text"
+                name="typeOfActivity"
+                onChange={handleChange}
+                label="Type of activity"
+                value={values.typeOfActivity}
+                select
+                fullWidth
+                variant="outlined"
+                InputLabelProps={{
+                shrink: true,
+              }}
+            >
+              {categories.map((option) => (
+                <MenuItem key={option._id} value={option.name || ''}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </Field>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <Field
+                    name="typeOfAttendee"
+                    value={values.typeOfAttendee}
+                    onChange={handleChange}
+                    id="typeOfAttendee"
+                    options={["Man only", "Woman only", "Mixed"]}
+                    component={FormikRadioGroup}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  
+                <MuiTextField
+                  error={errors.numberOfAttendee && touched.numberOfAttendee}
+                  variant="outlined"
+                  fullWidth
+                  onChange={handleChange}
+                  value={values.numberOfAttendee}
+                  InputProps={{
+                    inputProps: { 
+                        max: 50, min: 1 
+                    }
+                }}
+                  name="numberOfAttendee"
+                  label="Number of attendee"
+                  type="number"
+                  id="numberOfAttendee"
+                  helperText={
+                    errors.numberOfAttendee && touched.numberOfAttendee
+                      ? errors.numberOfAttendee
+                      : null
+                  }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                <Divider /> 
+                </Grid>
+                <Grid item xs={12}>
+                <Field
+                component={KeyboardDateTimePicker}
+                fullWidth
+                name="startDate"
+                ampm={false}
+                disablePast={true}
+                label="Date and time"
+            />
                 </Grid>
               </Grid>
               <Button
@@ -318,9 +385,10 @@ const Signup = (props) => {
                 disabled={isSubmitting}
                 className={classes.submit}
               >
-                Sign Up
+                Add
               </Button>
             </Form>
+            </MuiPickersUtilsProvider>
           )}
         </Formik>
       </div>
@@ -328,52 +396,4 @@ const Signup = (props) => {
   );
 };
 
-export default withRouter(Signup);
-
-
-/* (values, { setSubmitting }) => {
-  axios
-    .post(`${apiUrl}`, JSON.stringify(values), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      if (res.status === 201) {
-        swal("Success!", "Register successfully", "success").then(
-          () => {
-            props.history.push("/dashboard");
-          }
-        );
-      } else if (res.status === 500) {
-        swal("Error!", res.statusMessage, "error");
-      }
-    })
-    .catch((error) => {
-      console.log(error.response);
-      setEmailError(error.response.data.error.message);
-    });
-  setSubmitting(false);
-}}
-*/
-
-
-
-/*<Field
-                    name="interests"
-                    multiple
-                    component={Autocomplete}
-                    options={activities}
-                    getOptionLabel={(option) => option.name}
-                    fullWidth
-                    renderInput={(params) => (
-                      <MuiTextField
-                        {...params}
-                        error={touched["interests"] && !!errors["interests"]}
-                        helperText={touched["interests"] && errors["interests"]}
-                        label="Your interests"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-                  */
+export default withRouter(CreateActivity);
