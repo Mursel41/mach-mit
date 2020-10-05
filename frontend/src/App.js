@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Footer from './components/Footer';
 import Header from './components/Header';
 import Homepage from './views/Homepage';
 import Dashboard from './views/Dashboard';
@@ -11,6 +10,26 @@ import NotFound from './views/NotFound';
 import CreateActivity from './views/CreateActivity';
 import SignUpVerMsg from './views/SignUpVerifMsg';
 import EventDetails from './views/EventDetails';
+import UserProfilePage from './views/UserProfilePage';
+import Image from './images/background.jpg';
+import { Box } from '@material-ui/core';
+
+const styles = {
+  paperContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundImage: `url(${Image})`,
+    height: `100%`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    width: `100%`,
+    margin: -24,
+    padding: 24,
+  },
+};
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,7 +75,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div>
+      <Box style={styles.paperContainer}>
         <Header
           isLoggedIn={isLoggedIn}
           setIsLoggedIn={setIsLoggedIn}
@@ -100,12 +119,14 @@ const App = () => {
               />
             )}
           />
+          <Route exact path="/profile">
+            <UserProfilePage auth={auth} user={user} />
+          </Route>
           <Route>
             <NotFound />
           </Route>
         </Switch>
-        <Footer />
-      </div>
+      </Box>
     </BrowserRouter>
   );
 };
