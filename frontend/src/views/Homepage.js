@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import MainTextHeroImg from "../components/MainTextHeroImg";
-import SearchBar from "../components/SearchBar";
-import JoinButton from "../components/JoinButton";
+import MainTextHeroImg from '../components/MainTextHeroImg';
+import SearchBar from '../components/SearchBar';
+import JoinButton from '../components/JoinButton';
 
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
   Typography,
@@ -12,20 +12,20 @@ import {
   Box,
   Paper,
   Container,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import axios from "axios";
-import ActivityCard from "../components/ActivityCard";
+import axios from 'axios';
+import ActivityCard from '../components/ActivityCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   html: {
-    height: "100%",
+    height: '100%',
   },
-  "#componentWithId": {
-    height: "100%",
+  '#componentWithId': {
+    height: '100%',
   },
 }));
 
@@ -33,7 +33,7 @@ function Homepage(props) {
   const classes = useStyles();
   const [activities, setActivities] = useState([]);
   const [typeOfActivity, setTypeOfActivity] = useState(
-    "5f620c20f12b4373545185a2"
+    '5f620c20f12b4373545185a2'
   );
   useEffect(() => {
     axios
@@ -59,7 +59,7 @@ function Homepage(props) {
           <MainTextHeroImg />
         </Box>
 
-        {!isLoggedIn ? <JoinButton /> : ""}
+        {!isLoggedIn ? <JoinButton /> : ''}
 
         <Box>
           <SearchBar />
@@ -72,9 +72,9 @@ function Homepage(props) {
         <Box>
           <Paper
             style={{
-              padding: "10px",
-              backgroundColor: "#FFFBF5",
-              maxWidth: "1400px",
+              padding: '10px',
+              backgroundColor: '#FFFBF5',
+              maxWidth: '1400px',
             }}
           >
             <Box m={3}>
@@ -100,9 +100,9 @@ function Homepage(props) {
         <Box>
           <Paper
             style={{
-              padding: "10px",
-              backgroundColor: "#FFFBF5",
-              maxWidth: "1400px",
+              padding: '10px',
+              backgroundColor: '#FFFBF5',
+              maxWidth: '1400px',
             }}
           >
             <Box m={3}>
