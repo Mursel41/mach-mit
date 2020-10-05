@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Homepage from "./views/Homepage";
 import Dashboard from "./views/Dashboard";
@@ -11,9 +10,9 @@ import NotFound from "./views/NotFound";
 import CreateActivity from "./views/CreateActivity";
 import SignUpVerMsg from "./views/SignUpVerifMsg";
 import EventDetails from "./views/EventDetails";
-import PersonalizedHomepage from "./views/PersonalizedHomepage";
+
 import Image from "./images/background.jpg";
-import { Box, Container } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 const styles = {
   paperContainer: {
@@ -33,7 +32,7 @@ const styles = {
 };
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({});
   const [auth, setAuth] = useState(null);
   const [hasLoginError, setHasLoginError] = useState(false);
