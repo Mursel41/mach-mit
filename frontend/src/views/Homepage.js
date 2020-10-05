@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Homepage() {
+function Homepage(props) {
   const classes = useStyles();
   const [activities, setActivities] = useState([]);
   const [typeOfActivity, setTypeOfActivity] = useState(
@@ -44,6 +44,8 @@ function Homepage() {
       .catch((error) => console.log({ error }));
   }, []);
 
+  const isLoggedIn = props.isLoggedIn;
+
   return (
     <Container maxWidth="lg">
       <Box
@@ -57,7 +59,7 @@ function Homepage() {
           <MainTextHeroImg />
         </Box>
 
-        <JoinButton />
+        {!isLoggedIn ? <JoinButton /> : ""}
 
         <Box>
           <SearchBar />

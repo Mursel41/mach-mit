@@ -1,7 +1,18 @@
 import React from "react";
-import { Button, Box, Container, Paper } from "@material-ui/core";
+import { Button, Box, Paper } from "@material-ui/core";
 import logo from "../images/Logo.png";
 import { NavLink, withRouter } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    margin: theme.spacing(1),
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+    backgroundColor: theme.palette.secondary.main,
+  },
+}));
 
 function Header(props) {
   const { isLoggedIn, setIsLoggedIn, setAuth } = props;
@@ -13,6 +24,7 @@ function Header(props) {
     localStorage.removeItem("user");
     props.history.push("/");
   };
+  const classes = useStyles();
 
   return (
     <Box>
@@ -39,11 +51,16 @@ function Header(props) {
           </NavLink>
           <Box mr={5} mt={2}>
             {isLoggedIn ? (
-              <NavLink to="" onClick={handleLogout}>
-                <Button href="#text-buttons" color="default" size="large">
-                  Log out
-                </Button>
-              </NavLink>
+              <Box display="flex" flexDirection="row">
+                <NavLink to="" onClick={handleLogout}>
+                  <Button href="#text-buttons" color="default" size="large">
+                    Log out
+                  </Button>
+                </NavLink>
+                <NavLink to="/profile">
+                  <Avatar className={classes.avatar} />
+                </NavLink>
+              </Box>
             ) : (
               <React.Fragment>
                 <NavLink to="/login">

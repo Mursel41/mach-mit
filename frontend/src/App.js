@@ -10,7 +10,7 @@ import NotFound from "./views/NotFound";
 import CreateActivity from "./views/CreateActivity";
 import SignUpVerMsg from "./views/SignUpVerifMsg";
 import EventDetails from "./views/EventDetails";
-
+import UserProfilePage from "./views/UserProfilePage";
 import Image from "./images/background.jpg";
 import { Box } from "@material-ui/core";
 
@@ -83,7 +83,7 @@ const App = () => {
         />
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Homepage isLoggedIn={isLoggedIn} />
           </Route>
           <Route exact path="/dashboard">
             <Dashboard />
@@ -107,6 +107,9 @@ const App = () => {
           </Route>
           <Route exact path="/verifymsg">
             <SignUpVerMsg />
+          </Route>
+          <Route exact path="/profile">
+            <UserProfilePage auth={auth} user={user} />
           </Route>
           <Route exact path="/events" component={EventDetails} />
 
