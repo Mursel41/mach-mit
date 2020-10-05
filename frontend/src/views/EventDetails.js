@@ -57,11 +57,15 @@ class EventDetails extends Component {
     } = this.state.data;
 
     const handleClick = () => {
-      //console.log(typeof this.props.user._id);
+      console.log(this.props.user._id);
       if (!this.props.isLoggedIn) return this.props.history.push('/login');
 
-      // if (participants.includes(this.props.user._id))
-      //   return swal('You have already joined this activity');
+      if (
+        participants.findIndex(
+          (participant) => participant._id === this.props.user._id
+        ) !== -1
+      )
+        return swal('', 'You have already joined this activity.', 'info');
 
       if (participants.length === numberOfAttendee)
         return swal('This activity has accessed its participants limit :(');

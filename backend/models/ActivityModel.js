@@ -45,7 +45,7 @@ const ActivitySchema = new Schema(
     },
     image: {
       type: String,
-      default: 'assets/img/activity-default.jpg',
+      default: '/assets/img/activity-default.jpg',
     },
     creator: {
       type: Schema.Types.ObjectId,
