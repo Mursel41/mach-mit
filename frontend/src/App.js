@@ -64,7 +64,7 @@ const App = () => {
         />
         <Switch>
           <Route exact path="/">
-            <Homepage />
+            <Homepage isLoggedIn={isLoggedIn} />
           </Route>
           <Route exact path="/dashboard">
             <Dashboard />
@@ -89,7 +89,17 @@ const App = () => {
           <Route exact path="/verifymsg">
             <SignUpVerMsg />
           </Route>
-          <Route exact path="/events" component={EventDetails} />
+          <Route
+            exact
+            path="/events/:id"
+            render={(routerProps) => (
+              <EventDetails
+                {...routerProps}
+                isLoggedIn={isLoggedIn}
+                user={user}
+              />
+            )}
+          />
           <Route>
             <NotFound />
           </Route>

@@ -1,18 +1,15 @@
-import React from "react";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import moment from "moment";
+import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import moment from 'moment';
+import { withRouter } from 'react-router-dom';
 
 class ActivityCard extends React.Component {
-
-
-
   render(props) {
-    
     return (
       <div>
         <Box
@@ -22,9 +19,17 @@ class ActivityCard extends React.Component {
           flexWrap="wrap"
           mt={2}
         >
-      {this.props.activities.map((card) => {
+          {this.props.activities.map((card) => {
             return (
-              <Box m={0.5} key={card._id} width={250} p={0.1} mx={0.5} mb={0.5}>
+              <Box
+                m={0.5}
+                key={card._id}
+                width={250}
+                p={0.1}
+                mx={0.5}
+                mb={0.5}
+                onClick={() => this.props.history.push(`/events/${card._id}`)}
+              >
                 <Card>
                   <Box>
                     <CardActionArea>
@@ -36,7 +41,7 @@ class ActivityCard extends React.Component {
                           height={230}
                         />
                       </CardMedia>
-                     <CardContent>
+                      <CardContent>
                         <Typography
                           gutterBottom
                           color="secondary"
@@ -52,12 +57,12 @@ class ActivityCard extends React.Component {
                           color="textSecondary"
                           component="p"
                         >
-                          <Box>   
-                            {moment(card.startDate).format("D MMM YYYY")}
+                          <Box>
+                            {moment(card.startDate).format('D MMM YYYY')}
                           </Box>
                           <Box>
-                            0/{card.numberOfAttendee}{" "}
-                            Paticipaters
+                            {card.participants.length}/{card.numberOfAttendee}{' '}
+                            Participants
                           </Box>
                         </Typography>
                         <Box
@@ -68,9 +73,9 @@ class ActivityCard extends React.Component {
                           mt={2}
                         >
                           <Box>
-                            {" "}
+                            {' '}
                             <Typography variant="body2" color="Primary">
-                            {card.price===0 ? "Free": "€ "+card.price}
+                              {card.price === 0 ? 'Free' : '€ ' + card.price}
                             </Typography>
                           </Box>
                           <Box>
@@ -86,11 +91,10 @@ class ActivityCard extends React.Component {
               </Box>
             );
           })}
-      
-      </Box>
+        </Box>
       </div>
     );
   }
 }
 
-export default ActivityCard;
+export default withRouter(ActivityCard);
