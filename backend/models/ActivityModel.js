@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-const Address = require('./AddressModel');
 
 const ActivitySchema = new Schema({
   title: {
@@ -11,34 +10,45 @@ const ActivitySchema = new Schema({
   description: {
     type: String,
     trim: true,
+    required: true,
   },
   typeOfActivity: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category',
+    type: String,
     required: true,
   },
   typeOfAttendee: {
     type: String,
     required: true,
-    enum: ['Woman only', 'Man only', 'Mixed only', 'Any'],
+    enum: ['Man only', 'Woman only', 'Mixed'],
   },
   numberOfAttendee: {
     type: Number,
     required: true,
   },
-  address: {
-    type: Address,
+  paid: {
+    type: String
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  street: {
+    type: String,
+    required: true,
+  },
+  zip: {
+    type: String,
     required: true,
   },
   startDate: {
     type: Date,
     required: true,
-    default: Date.now(),
+    //default: Date.now(),
   },
   price: {
     type: Number,
-    required: true,
-    default: 0,
+    // required: true,
+    default: 1,
   },
   image: {
     type: String,
@@ -64,7 +74,9 @@ ActivitySchema.method('toJSON', function () {
     typeOfActivity: this.typeOfActivity,
     typeOfAttendee: this.typeOfAttendee,
     numberOfAttendee: this.numberOfAttendee,
-    address: this.address,
+    street: this.street,
+    city: this.city,
+    zip: this.zip,
     startDate: this.startDate,
     price: this.price,
     image: this.image,
