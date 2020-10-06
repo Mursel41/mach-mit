@@ -1,8 +1,8 @@
-import React from "react";
-import { Box, Button, Paper, Typography, Divider } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import ActivityCard from "../components/ActivityCard";
+import React from 'react';
+import { Box, Button, Paper, Typography, Divider } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import ActivityCard from '../components/ActivityCard';
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -13,8 +13,8 @@ export default class SearchBar extends React.Component {
       locations: [],
       //categories for search options
       inputCategory: [],
-      //loction for search options
-      inputLocation: "",
+      //location for search options
+      inputLocation: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,16 +22,16 @@ export default class SearchBar extends React.Component {
 
   componentDidMount() {
     // fetch('http://localhost:5000/api/v1/activities')
-    //         .then(res=> res.json())
-    //         .then(activities => this.setState({activities}))
-    //         .catch(err => console.log(err));
+    //   .then((res) => res.json())
+    //   .then((activities) => this.setState({ activities }))
+    //   .catch((err) => console.log(err));
 
-    fetch("http://localhost:5000/api/v1/categories")
+    fetch('http://localhost:5000/api/v1/categories')
       .then((res) => res.json())
       .then((categories) => this.setState({ categories }))
       .catch((err) => console.log(err));
 
-    fetch("http://localhost:5000/api/v1/activities/locations")
+    fetch('http://localhost:5000/api/v1/activities/locations')
       .then((res) => res.json())
       .then((locations) => this.setState({ locations }))
       .catch((err) => console.log(err));
@@ -41,21 +41,21 @@ export default class SearchBar extends React.Component {
     evt.preventDefault();
     // {console.log(this.state.inputLocation)};
     // {console.log(this.state.inputCategory._id)};
-    let searchKey = "";
+    let searchKey = '';
 
     if (
       this.state.inputCategory.length === 0 &&
-      this.state.inputLocation !== ""
+      this.state.inputLocation !== ''
     ) {
       searchKey = `?address.city=${this.state.inputLocation}`;
     } else if (
       this.state.inputCategory.length !== 0 &&
-      this.state.inputLocation === ""
+      this.state.inputLocation === ''
     ) {
       searchKey = `?typeOfActivity=${this.state.inputCategory._id}`;
     } else if (
       this.state.inputCategory.length !== 0 &&
-      this.state.inputLocation !== ""
+      this.state.inputLocation !== ''
     ) {
       searchKey = `?typeOfActivity=${this.state.inputCategory._id}&address.city=${this.state.inputLocation}`;
     }
@@ -65,11 +65,11 @@ export default class SearchBar extends React.Component {
       .then((activities) => this.setState({ activities }))
       .catch((err) => console.log(err));
 
-    this.setState({ inputLocation: "" });
+    this.setState({ inputLocation: '' });
     this.setState({ inputCategory: [] });
-    console.log("loc: " + this.state.inputLocation);
-    console.log("id: " + this.state.inputCategory);
-    console.log(this.state.activities);
+    // console.log('loc: ' + this.state.inputLocation);
+    // console.log('id: ' + this.state.inputCategory);
+    // console.log(this.state.activities);
   }
 
   handleChangeCategory = (evt, val) => {
@@ -86,9 +86,9 @@ export default class SearchBar extends React.Component {
         <div>
           <Paper
             style={{
-              height: "85px",
-              width: "800px",
-              backgroundColor: "#FFFBF5",
+              height: '85px',
+              width: '800px',
+              backgroundColor: '#FFFBF5',
             }}
           >
             <form id="Search" onSubmit={this.handleSubmit}>
@@ -120,7 +120,7 @@ export default class SearchBar extends React.Component {
                       renderInput={(params) => (
                         <TextField
                           style={{
-                            backgroundColor: "#FFFFFF",
+                            backgroundColor: '#FFFFFF',
                           }}
                           {...params}
                           label="Search Activity"
@@ -143,13 +143,13 @@ export default class SearchBar extends React.Component {
                       renderInput={(params) => (
                         <TextField
                           style={{
-                            backgroundColor: "#FFFFFF",
+                            backgroundColor: '#FFFFFF',
                           }}
                           {...params}
                           label="Select Location"
                           margin="normal"
                           variant="outlined"
-                          InputProps={{ ...params.InputProps, type: "search" }}
+                          InputProps={{ ...params.InputProps, type: 'search' }}
                         />
                       )}
                     />
@@ -159,10 +159,10 @@ export default class SearchBar extends React.Component {
                   <Button
                     variant="contained"
                     style={{
-                      backgroundColor: "#90E2D8",
-                      color: "#272C34",
-                      height: "54px",
-                      width: "150px",
+                      backgroundColor: '#90E2D8',
+                      color: '#272C34',
+                      height: '54px',
+                      width: '150px',
                     }}
                     type="submit"
                   >
@@ -173,31 +173,33 @@ export default class SearchBar extends React.Component {
             </form>
           </Paper>
         </div>
-        <div>
-          <Box m={2}>
-            <Paper
-              style={{
-                padding: "10px",
-                backgroundColor: "#FFFBF5",
-                maxWidth: "1400px",
-              }}
-            >
-              <Box m={3}>
-                <Typography variant="h4" component="h4" gutterBottom>
-                  Your mached activities
-                </Typography>
-              </Box>
+        {this.state.activities.length > 0 && (
+          <div>
+            <Box m={2}>
+              <Paper
+                style={{
+                  padding: '10px',
+                  backgroundColor: '#FFFBF5',
+                  maxWidth: '1400px',
+                }}
+              >
+                <Box m={3}>
+                  <Typography variant="h4" component="h4" gutterBottom>
+                    Results
+                  </Typography>
+                </Box>
 
-              <Box m={2}>
-                <Divider />
-              </Box>
+                <Box m={2}>
+                  <Divider />
+                </Box>
 
-              <Box m={2}>
-                <ActivityCard activities={this.state.activities} />
-              </Box>
-            </Paper>
-          </Box>
-        </div>
+                <Box m={2}>
+                  <ActivityCard activities={this.state.activities} />
+                </Box>
+              </Paper>
+            </Box>
+          </div>
+        )}
       </Box>
     );
   }

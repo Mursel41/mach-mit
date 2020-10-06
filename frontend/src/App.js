@@ -83,7 +83,12 @@ const App = () => {
         />
         <Switch>
           <Route exact path="/">
-            <Homepage isLoggedIn={isLoggedIn} />
+            <Homepage
+              isLoggedIn={isLoggedIn}
+              user={user}
+              setUser={setUser}
+              auth={auth}
+            />
           </Route>
           <Route exact path="/dashboard">
             <Dashboard />

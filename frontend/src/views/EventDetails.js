@@ -40,7 +40,7 @@ class EventDetails extends Component {
   }
 
   render() {
-    console.log(this.state.data);
+    //console.log(this.state.data);
     const {
       _id,
       description,
@@ -86,7 +86,7 @@ class EventDetails extends Component {
                 'Content-Type': 'application/json',
               },
             })
-              .then(() => this.props.history.push('/dashboard'))
+              .then(() => this.props.history.push('/'))
               .catch((err) => console.log(err));
           });
         }
@@ -176,7 +176,11 @@ class EventDetails extends Component {
             </Typography>
           </Grid>
           {participants.length === 0 ? (
-            'So far there is no one joining to this activity. Be first to enjoy the activity'
+            <Typography>
+              {' '}
+              So far there is nobody joining to this activity. Be first to enjoy
+              the activity.
+            </Typography>
           ) : (
             <Grid item container xs={12} md={9} justify="flex-start">
               {participants.map((participant) => (
