@@ -45,7 +45,6 @@ class EventDetails extends Component {
       _id,
       description,
       address: { city, street, zip },
-      image,
       creator,
       participants,
       numberOfAttendee,
