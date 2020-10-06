@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Grid, Paper } from '@material-ui/core';
+import { Card, Grid } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -19,7 +19,8 @@ class ActivityCard extends React.Component {
         {this.props.activities && this.props.activities.length < 1 ? (
           <p>You don't have any activities yet</p>
         ) : (
-          this.props.activities && this.props.activities.map((card) => {
+          this.props.activities &&
+          this.props.activities.map((card) => {
             return (
               <Box
                 m={0.5}

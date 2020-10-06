@@ -1,6 +1,5 @@
-import React from "react";
-import { Box, Container, Typography } from "@material-ui/core";
-import hero from "../images/hero.jpg";
+import React from 'react';
+import { Box, Container, Typography } from '@material-ui/core';
 
 function MainTextHeroImg() {
   return (

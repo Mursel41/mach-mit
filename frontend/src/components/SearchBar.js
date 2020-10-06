@@ -15,6 +15,7 @@ export default class SearchBar extends React.Component {
       inputCategory: [],
       //location for search options
       inputLocation: '',
+      message: '',
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,8 +40,6 @@ export default class SearchBar extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    // {console.log(this.state.inputLocation)};
-    // {console.log(this.state.inputCategory._id)};
     let searchKey = '';
 
     if (
@@ -48,28 +47,32 @@ export default class SearchBar extends React.Component {
       this.state.inputLocation !== ''
     ) {
       searchKey = `?address.city=${this.state.inputLocation}`;
+      this.setState({ message: `${this.state.inputLocation}` });
     } else if (
       this.state.inputCategory.length !== 0 &&
       this.state.inputLocation === ''
     ) {
       searchKey = `?typeOfActivity=${this.state.inputCategory._id}`;
+      this.setState({ message: `${this.state.inputCategory.name}` });
     } else if (
       this.state.inputCategory.length !== 0 &&
       this.state.inputLocation !== ''
     ) {
       searchKey = `?typeOfActivity=${this.state.inputCategory._id}&address.city=${this.state.inputLocation}`;
+      this.setState({
+        message: `${this.state.inputCategory.name} in ${this.state.inputLocation}`,
+      });
     }
 
-    fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
-      .then((res) => res.json())
-      .then((activities) => this.setState({ activities }))
-      .catch((err) => console.log(err));
+    if (searchKey !== '') {
+      fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
+        .then((res) => res.json())
+        .then((activities) => this.setState({ activities }))
+        .catch((err) => console.log(err));
 
-    this.setState({ inputLocation: '' });
-    this.setState({ inputCategory: [] });
-    // console.log('loc: ' + this.state.inputLocation);
-    // console.log('id: ' + this.state.inputCategory);
-    // console.log(this.state.activities);
+      this.setState({ inputLocation: '' });
+      this.setState({ inputCategory: [] });
+    }
   }
 
   handleChangeCategory = (evt, val) => {
@@ -185,7 +188,7 @@ export default class SearchBar extends React.Component {
               >
                 <Box m={3}>
                   <Typography variant="h4" component="h4" gutterBottom>
-                    Results
+                    {`Results for ${this.state.message}`}
                   </Typography>
                 </Box>
 
