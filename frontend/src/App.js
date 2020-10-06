@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -13,6 +14,21 @@ import EventDetails from "./views/EventDetails";
 import UserProfilePage from "./views/UserProfilePage";
 import Image from "./images/background.jpg";
 import { Box } from "@material-ui/core";
+=======
+import React, { useState, useEffect } from 'react';
+import './App.scss';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Homepage from './views/Homepage';
+import Signup from './components/signupform/signUpForm';
+import Login from './components/LogIn';
+import NotFound from './views/NotFound';
+import CreateActivity from './components/createactivityform/createActivity2';
+import EventDetails from './views/EventDetails';
+import UserProfilePage from './views/UserProfilePage';
+import Image from './images/background.jpg';
+import { Box } from '@material-ui/core';
+>>>>>>> master
 
 const styles = {
   paperContainer: {
@@ -88,9 +104,6 @@ const App = () => {
               auth={auth}
             />
           </Route>
-          <Route exact path="/dashboard">
-            <Dashboard />
-          </Route>
           <Route exact path="/signup">
             <Signup
               setIsLoggedIn={setIsLoggedIn}
@@ -107,10 +120,14 @@ const App = () => {
           </Route>
           <Route exact path="/createactivity">
             <CreateActivity auth={auth} />
+<<<<<<< HEAD
           </Route>
           <Route exact path="/verifymsg">
             <SignUpVerMsg />
+=======
+>>>>>>> master
           </Route>
+
           <Route
             exact
             path="/events/:id"
