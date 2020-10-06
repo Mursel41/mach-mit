@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, Paper } from "@material-ui/core";
+import { Button, Box, Paper, Container } from "@material-ui/core";
 import logo from "../images/Logo.png";
 import { NavLink, withRouter } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
@@ -27,12 +27,12 @@ function Header(props) {
   const classes = useStyles();
 
   return (
-    <Box>
+    <Container>
       <Paper
         style={{
           height: "130px",
-          maxWidth: "1200px",
-          minWidth: "1000px",
+
+          backgroundColor: "#EEFAFF",
         }}
       >
         <Box
@@ -40,7 +40,6 @@ function Header(props) {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
-          mt={4}
           p={2}
         >
           <NavLink to="/">
@@ -77,7 +76,7 @@ function Header(props) {
           </Box>
         </Box>
       </Paper>
-    </Box>
+    </Container>
   );
 }
 

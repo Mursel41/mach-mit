@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import MainTextHeroImg from "../components/MainTextHeroImg";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
 import CreateActivityButton from "../components/CreateActivityButton";
-import { Typography, Divider, Box, Paper, Container } from "@material-ui/core";
+import {
+  Typography,
+  Divider,
+  Box,
+  Paper,
+  Container,
+  Grid,
+} from "@material-ui/core";
 import ActivityCard from "../components/ActivityCard";
 
 function Homepage(props) {
@@ -30,86 +37,82 @@ function Homepage(props) {
     })();
   }, [auth]);
 
-  //console.log(user);
   return (
-    <Container maxWidth="lg">
-      <Box
-        m={4}
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Box>
-          <MainTextHeroImg />
-        </Box>
+    <Container fixed>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={9}>
+          <Grid item>
+            <MainTextHeroImg />
+          </Grid>
+          <Grid item>
+            {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
+          </Grid>
+        </Grid>
 
-        {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
-
-        <Box>
+        <Grid item xs={12} md={9}>
           <SearchBar />
-        </Box>
+        </Grid>
 
-        {isLoggedIn && user && (
-          <React.Fragment>
-            <Box m={6}>
-              <Divider />
-            </Box>
+        <Grid item xs={12} md={9}>
+          {isLoggedIn && user && (
+            <React.Fragment>
+              <Box m={2}>
+                <Divider />
+              </Box>
 
-            <Box>
-              <Paper
-                style={{
-                  padding: "10px",
-                  backgroundColor: "#FFFBF5",
-                  maxWidth: "1400px",
-                }}
-              >
-                <Box m={3}>
-                  <Typography variant="h4" component="h4" gutterBottom>
-                    Created activities
-                  </Typography>
-                </Box>
+              <Box>
+                <Paper
+                  style={{
+                    padding: "10px",
+                    backgroundColor: "#EEFAFF",
+                  }}
+                >
+                  <Box>
+                    <Typography variant="h4" component="h4" gutterBottom>
+                      Created activities
+                    </Typography>
+                  </Box>
 
-                <Box m={2}>
-                  <Divider />
-                </Box>
+                  <Box>
+                    <Divider />
+                  </Box>
 
-                <Box m={2}>
-                  <ActivityCard activities={user.createdActivities} />
-                </Box>
-              </Paper>
-            </Box>
+                  <Box>
+                    <ActivityCard activities={user.createdActivities} />
+                  </Box>
+                </Paper>
+              </Box>
 
-            <Box m={6}>
-              <Divider />
-            </Box>
+              <Box m={2}>
+                <Divider />
+              </Box>
 
-            <Box>
-              <Paper
-                style={{
-                  padding: "10px",
-                  backgroundColor: "#FFFBF5",
-                  maxWidth: "1400px",
-                }}
-              >
-                <Box m={3}>
-                  <Typography variant="h4" component="h4" gutterBottom>
-                    Participated activities
-                  </Typography>
-                </Box>
+              <Box>
+                <Paper
+                  style={{
+                    padding: "10px",
+                    backgroundColor: "#EEFAFF",
+                  }}
+                >
+                  <Box>
+                    <Typography variant="h4" component="h4" gutterBottom>
+                      Participated activities
+                    </Typography>
+                  </Box>
 
-                <Box m={2}>
-                  <Divider />
-                </Box>
+                  <Box m={3}>
+                    <Divider />
+                  </Box>
 
-                <Box m={2}>
-                  <ActivityCard activities={user.participatedActivities} />
-                </Box>
-              </Paper>
-            </Box>
-          </React.Fragment>
-        )}
-      </Box>
+                  <Box>
+                    <ActivityCard activities={user.participatedActivities} />
+                  </Box>
+                </Paper>
+              </Box>
+            </React.Fragment>
+          )}
+        </Grid>
+      </Grid>
     </Container>
   );
 }
