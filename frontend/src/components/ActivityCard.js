@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Grid, Paper } from '@material-ui/core';
+import { Card, Grid } from '@material-ui/core';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
