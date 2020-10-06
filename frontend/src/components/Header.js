@@ -33,7 +33,6 @@ function Header(props) {
           height: "130px",
           maxWidth: "1200px",
           minWidth: "1000px",
-          backgroundColor: "#FFFBF5",
         }}
       >
         <Box

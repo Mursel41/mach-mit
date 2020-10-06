@@ -88,7 +88,6 @@ export default class SearchBar extends React.Component {
             style={{
               height: "85px",
               width: "800px",
-              backgroundColor: "#FFFBF5",
             }}
           >
             <form id="Search" onSubmit={this.handleSubmit}>
@@ -119,9 +118,6 @@ export default class SearchBar extends React.Component {
                       onChange={this.handleChangeCategory}
                       renderInput={(params) => (
                         <TextField
-                          style={{
-                            backgroundColor: "#FFFFFF",
-                          }}
                           {...params}
                           label="Search Activity"
                           margin="normal"
@@ -142,9 +138,6 @@ export default class SearchBar extends React.Component {
                       onChange={this.handleChangeLocation}
                       renderInput={(params) => (
                         <TextField
-                          style={{
-                            backgroundColor: "#FFFFFF",
-                          }}
                           {...params}
                           label="Select Location"
                           margin="normal"
@@ -178,7 +171,6 @@ export default class SearchBar extends React.Component {
             <Paper
               style={{
                 padding: "10px",
-                backgroundColor: "#FFFBF5",
                 maxWidth: "1400px",
               }}
             >

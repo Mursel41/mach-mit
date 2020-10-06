@@ -1,36 +1,12 @@
 import React, { useState, useEffect } from "react";
-
 import MainTextHeroImg from "../components/MainTextHeroImg";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
-
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  Typography,
-  Divider,
-  Box,
-  Paper,
-  Container,
-} from "@material-ui/core";
-
+import { Typography, Divider, Box, Paper, Container } from "@material-ui/core";
 import axios from "axios";
 import ActivityCard from "../components/ActivityCard";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  html: {
-    height: "100%",
-  },
-  "#componentWithId": {
-    height: "100%",
-  },
-}));
-
 function Homepage(props) {
-  const classes = useStyles();
   const [activities, setActivities] = useState([]);
   const [typeOfActivity, setTypeOfActivity] = useState(
     "5f620c20f12b4373545185a2"
@@ -73,7 +49,6 @@ function Homepage(props) {
           <Paper
             style={{
               padding: "10px",
-              backgroundColor: "#FFFBF5",
               maxWidth: "1400px",
             }}
           >
@@ -101,7 +76,6 @@ function Homepage(props) {
           <Paper
             style={{
               padding: "10px",
-              backgroundColor: "#FFFBF5",
               maxWidth: "1400px",
             }}
           >
