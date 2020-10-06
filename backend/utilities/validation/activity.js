@@ -30,7 +30,5 @@ module.exports = [
     .escape()
     .isNumeric()
     .withMessage('Price must contain only numbers'),
-  body('image')
-    .optional()
-    .trim()
+  body('image').optional().trim(),
 ];

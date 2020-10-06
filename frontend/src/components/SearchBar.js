@@ -13,7 +13,7 @@ export default class SearchBar extends React.Component {
       locations: [],
       //categories for search options
       inputCategory: [],
-      //loction for search options
+      //location for search options
       inputLocation: "",
     };
 
@@ -22,9 +22,9 @@ export default class SearchBar extends React.Component {
 
   componentDidMount() {
     // fetch('http://localhost:5000/api/v1/activities')
-    //         .then(res=> res.json())
-    //         .then(activities => this.setState({activities}))
-    //         .catch(err => console.log(err));
+    //   .then((res) => res.json())
+    //   .then((activities) => this.setState({ activities }))
+    //   .catch((err) => console.log(err));
 
     fetch("http://localhost:5000/api/v1/categories")
       .then((res) => res.json())
@@ -67,9 +67,9 @@ export default class SearchBar extends React.Component {
 
     this.setState({ inputLocation: "" });
     this.setState({ inputCategory: [] });
-    console.log("loc: " + this.state.inputLocation);
-    console.log("id: " + this.state.inputCategory);
-    console.log(this.state.activities);
+    // console.log('loc: ' + this.state.inputLocation);
+    // console.log('id: ' + this.state.inputCategory);
+    // console.log(this.state.activities);
   }
 
   handleChangeCategory = (evt, val) => {
@@ -88,6 +88,7 @@ export default class SearchBar extends React.Component {
             style={{
               height: "85px",
               width: "800px",
+              backgroundColor: "#FFFBF5",
             }}
           >
             <form id="Search" onSubmit={this.handleSubmit}>
@@ -118,6 +119,9 @@ export default class SearchBar extends React.Component {
                       onChange={this.handleChangeCategory}
                       renderInput={(params) => (
                         <TextField
+                          style={{
+                            backgroundColor: "#FFFFFF",
+                          }}
                           {...params}
                           label="Search Activity"
                           margin="normal"
@@ -138,6 +142,9 @@ export default class SearchBar extends React.Component {
                       onChange={this.handleChangeLocation}
                       renderInput={(params) => (
                         <TextField
+                          style={{
+                            backgroundColor: "#FFFFFF",
+                          }}
                           {...params}
                           label="Select Location"
                           margin="normal"
@@ -166,30 +173,33 @@ export default class SearchBar extends React.Component {
             </form>
           </Paper>
         </div>
-        <div>
-          <Box m={2}>
-            <Paper
-              style={{
-                padding: "10px",
-                maxWidth: "1400px",
-              }}
-            >
-              <Box m={3}>
-                <Typography variant="h4" component="h4" gutterBottom>
-                  Your mached activities
-                </Typography>
-              </Box>
+        {this.state.activities.length > 0 && (
+          <div>
+            <Box m={2}>
+              <Paper
+                style={{
+                  padding: "10px",
+                  backgroundColor: "#FFFBF5",
+                  maxWidth: "1400px",
+                }}
+              >
+                <Box m={3}>
+                  <Typography variant="h4" component="h4" gutterBottom>
+                    Results
+                  </Typography>
+                </Box>
 
-              <Box m={2}>
-                <Divider />
-              </Box>
+                <Box m={2}>
+                  <Divider />
+                </Box>
 
-              <Box m={2}>
-                <ActivityCard activities={this.state.activities} />
-              </Box>
-            </Paper>
-          </Box>
-        </div>
+                <Box m={2}>
+                  <ActivityCard activities={this.state.activities} />
+                </Box>
+              </Paper>
+            </Box>
+          </div>
+        )}
       </Box>
     );
   }
