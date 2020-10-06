@@ -38,17 +38,18 @@ let CreateActivitySchema = yup.object().shape({
     .required("This field is required."),
   price: yup
     .number()
-    .positive()
     .integer(),
-  city: yup
+  address: yup.object().shape({
+    city: yup
     .string()
     .required("Please select event location."),
-  street: yup
+    street: yup
     .string()
     .required("This field is required."),
-  zip: yup
+    zip: yup
     .string()
     .required("This field is required."),
+  }),  
   typeOfActivity: yup
     .string()
     .required("Please select type of activity."),
@@ -126,10 +127,12 @@ const CreateActivity = (props) => {
             title: "",
             description: "",
             paid: "",
-            price: "",
-            street: "",
-            city: "",
-            zip: "",
+            price: 0,
+            address: {
+              city: "",
+              street: "",
+              zip: "",
+            },
             typeOfActivity: "",
             typeOfAttendee: "",
             numberOfAttendee: "",
@@ -141,14 +144,13 @@ const CreateActivity = (props) => {
               .post(`${apiUrlPost}`, JSON.stringify(values), {
                 headers: {
                   "Content-Type": "application/json",
+                  "x-auth-token": props.auth,
                 },
               })
               .then((res) => {
+                console.log(res.data);
                 if (res.status === 201) {
-                  swal("Success!", "Created event successfully", "success").then(() => {
-                    const token = res.headers['x-auth-token'];
-                    props.setAuth(token);
-                    localStorage.setItem('token', JSON.stringify(token));   
+                  swal("Success!", "Created event successfully", "success").then(() => {   
                     props.history.push('/');
                   })
                 } else if (res.status === 500) {
@@ -237,7 +239,7 @@ const CreateActivity = (props) => {
                   value={values.price}
                   InputProps={{
                     inputProps: { 
-                        max: 5000, min: 1 
+                        max: 5000, min: 0 
                     }
                 }}
                   name="price"
@@ -261,10 +263,10 @@ const CreateActivity = (props) => {
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
-                    value={values.city}
+                    value={values.address.city}
                     id="city"
                     label="City"
-                    name="city"
+                    name="address.city"
                     autoComplete="city"
                     helperText={
                       errors.city && touched.city ? errors.city : null
@@ -277,10 +279,10 @@ const CreateActivity = (props) => {
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
-                    value={values.street}
+                    value={values.address.street}
                     id="street"
                     label="Street"
-                    name="street"
+                    name="address.street"
                     autoComplete="street"
                     helperText={
                       errors.street && touched.street ? errors.street : null
@@ -293,10 +295,10 @@ const CreateActivity = (props) => {
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
-                    value={values.zip}
+                    value={values.address.zip}
                     id="zip"
                     label="Zip"
-                    name="zip"
+                    name="address.zip"
                     autoComplete="zip"
                     helperText={
                       errors.zip && touched.zip ? errors.zip : null
@@ -322,7 +324,7 @@ const CreateActivity = (props) => {
               }}
             >
               {categories.map((option) => (
-                <MenuItem key={option._id} value={option.name || ''}>
+                <MenuItem key={option._id} value={option._id || ''}>
                   {option.name}
                 </MenuItem>
               ))}

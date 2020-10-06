@@ -19,6 +19,7 @@ exports.getActivities = async (req, res, next) => {
 exports.createActivity = async (req, res, next) => {
   try {
     const newActivity = new Activity(req.body);
+    newActivity.creator = req.user._id;
     await newActivity.save();
     res.status(201).send(newActivity);
   } catch (error) {
