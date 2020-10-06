@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
-//const moment = require('moment');
-
 const Address = require('./AddressModel');
+
 
 const ActivitySchema = new Schema(
   {
@@ -36,7 +35,6 @@ const ActivitySchema = new Schema(
       type: Date,
       required: true,
       default: Date.now(),
-      //default: () => moment().format('D MMM YYYY'),
     },
     price: {
       type: Number,
