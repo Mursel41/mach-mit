@@ -40,7 +40,7 @@ class EventDetails extends Component {
   }
 
   render() {
-    //console.log(this.state.data);
+    console.log(this.state.data);
     const {
       _id,
       description,
@@ -132,7 +132,7 @@ class EventDetails extends Component {
                   <ScheduleIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={moment(startDate).format('D MMM YYYY')}
+                  primary={moment(startDate).format('D MMM YYYY, hh:mm')}
                 />
               </ListItem>
               <Divider />

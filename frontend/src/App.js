@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './App.scss';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Homepage from './views/Homepage';
+import Homepage from './views/Homepage'
 import Dashboard from './views/Dashboard';
 import Signup from './components/signupform/signUpForm';
 import Login from './components/LogIn';
 import NotFound from './views/NotFound';
-import CreateActivity from './views/CreateActivity';
+import CreateActivity from './components/createactivityform/createActivity2';
 import SignUpVerMsg from './views/SignUpVerifMsg';
 import EventDetails from './views/EventDetails';
 import UserProfilePage from './views/UserProfilePage';
@@ -108,7 +108,9 @@ const App = () => {
             />
           </Route>
           <Route exact path="/createactivity">
-            <CreateActivity />
+            <CreateActivity
+            auth={auth} 
+            />
           </Route>
           <Route exact path="/verifymsg">
             <SignUpVerMsg />
