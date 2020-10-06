@@ -1,12 +1,12 @@
-import React from 'react';
-import { Button, Box, Container } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import { Button, Box, Container } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 function JoinButton() {
   const history = useHistory();
 
   const handleClick = () => {
-    history.push('/signup');
+    history.push("/signup");
   };
 
   return (
@@ -16,9 +16,9 @@ function JoinButton() {
           onClick={handleClick}
           variant="contained"
           color="secondary"
-          size="large"
           style={{
-            height: '54px',
+            height: "60px",
+            width: "150px",
           }}
         >
           Join us

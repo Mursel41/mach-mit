@@ -8,6 +8,8 @@ const {
   updateActivity,
   deleteActivity,
   getLocations,
+  joinActivity,
+  leaveActivity,
 } = require('../controllers/activitiesController');
 
 const validator = require('../middleware/validator');
@@ -27,6 +29,7 @@ router
   .put(authorizeToken, validator(activityRules), updateActivity)
   .delete(authorizeToken, deleteActivity);
 
-
+router.route('/:id/join').post(joinActivity);
+router.route('/:id/leave').post(leaveActivity);
 
 module.exports = router;

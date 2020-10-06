@@ -7,11 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Autocomplete } from "formik-material-ui-lab";
 import MuiTextField from "@material-ui/core/TextField";
 import { Formik, Form, Field } from "formik";
-import FormikRadioGroup from "./radioGroupFormik";
+import FormikRadioGroup from "../components/signupform/radioGroupFormik";
 import FormLabel from "@material-ui/core/FormLabel";
 import { withRouter } from "react-router-dom";
 import * as yup from "yup";
@@ -23,31 +22,20 @@ import swal from "sweetalert";
 let SignupSchema = yup.object().shape({
   firstName: yup
     .string()
-    .max(30, "Name is too long.")
-    .required("This field is required."),
+    .required()
+    .max(30, "Name is too long."),
   lastName: yup
     .string()
-    .max(30, "Last name is too long.")
-    .required("This field is required."),
+    .required()
+    .max(30, "Last name is too long."),
   email: yup
     .string()
-    .email("Email is invalid")
-    .required("This field is required."),
-  password: yup
-    .string()
-    .required("Please enter your password.")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character."
-    ),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match.")
-    .required("Confirm password is required."),
-  age: yup.number().positive().integer().required("This field is required."),
-  city: yup.string().required("This field is required."),
-  gender: yup.string().required("Please select your gender."),
-  interests: yup.string().required("Please select your interests."),
+    .required()
+    .email("Email is invalid"),
+  age: yup.number().required().positive().integer(),
+  city: yup.string().required(),
+  gender: yup.string().required(),
+  interests: yup.string(),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -78,51 +66,87 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signup = (props) => {
-  const classes = useStyles();
-  const apiUrl = "http://localhost:5000/api/v1/users/signup";
-  const [emailError, setEmailError] = useState("");
 
+
+const Profile = (props) => {
+
+  const [user, setUser ]= useState(null);
   const [categories, setCategories]=useState([]);
 
-  useEffect(async ()=>{
-    const result= await axios.get(`http://localhost:5000/api/v1/categories`);
-    setCategories(result.data);
-  },[])
+  const classes = useStyles();
+
+  const [emailError, setEmailError] = useState("");
+
+  useEffect(()=>{
+    
+    async function fetchMyAPI() {
+      
+      const result1= await axios.get(`http://localhost:5000/api/v1/categories`,{headers: {'X-Auth-Token': props.auth}});
+      setCategories(result1.data);
+      
+      const result2= await axios.get(`http://localhost:5000/api/v1/users/${props.user._id}`,{headers: {'X-Auth-Token': props.auth}});
+      setUser(result2.data);
+    }
+      fetchMyAPI()
+    },[props])
+  
+ 
+  useEffect(()=>{
+    async function fetchMyAPI() {
+   
+    const newCategories = categories.filter((category)=> 
+      {const index = user.interests.findIndex(interest=> category.name===interest.name)
+       
+        return index===-1
+      }
+      )
+
+    setCategories(newCategories)
+    }
+    fetchMyAPI()
+    
+  },[user && user.interests])
 
   return (
-    <Container component="main" maxWidth="xs">
+
+  
+<Container component="main" maxWidth="xs">
+
+
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Profile
         </Typography>
-
-        <Formik
+       { user && <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            gender: "",
-            age: "",
-            city: "",
-            interests: [],
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            gender: user.gender,
+            age: user.age,
+            city: user.city,
+            interests: user.interests,
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
-            axios
-              .post(`${apiUrl}`, JSON.stringify(values), {
+
+            console.log(values)
+           
+              fetch(`http://localhost:5000/api/v1/users/${props.user._id}`, {
+                method:'PUT',
                 headers: {
                   "Content-Type": "application/json",
+                  'X-Auth-Token': props.auth
                 },
+                body:JSON.stringify(values),
               })
               .then((res) => {
-                if (res.status === 201) {
-                  swal("Success!", "Register successfully", "success").then(
+                if (res.status === 200) {
+                  swal("Success!", "Updated successfully", "success").then(
                     () => {
                       props.history.push("/dashboard");
                     }
@@ -153,7 +177,6 @@ const Signup = (props) => {
                     error={errors.firstName && touched.firstName}
                     autoComplete="fname"
                     name="firstName"
-                    variant="outlined"
                     fullWidth
                     onChange={handleChange}
                     value={values.firstName}
@@ -170,7 +193,6 @@ const Signup = (props) => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     error={errors.lastName && touched.lastName}
-                    variant="outlined"
                     fullWidth
                     onChange={handleChange}
                     value={values.lastName}
@@ -188,7 +210,6 @@ const Signup = (props) => {
                 <Grid item xs={12}>
                   <TextField
                     error={emailError !== "" || (errors.email && touched.email)}
-                    variant="outlined"
                     fullWidth
                     onFocus={() => {
                       setEmailError("");
@@ -204,43 +225,6 @@ const Signup = (props) => {
                         ? emailError
                         : errors.email && touched.email
                         ? errors.email
-                        : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    error={errors.password && touched.password}
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.password}
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    helperText={
-                      errors.password && touched.password
-                        ? errors.password
-                        : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    error={errors.confirmPassword && touched.confirmPassword}
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleChange}
-                    name="confirmPassword"
-                    label="Confirm Password"
-                    type="password"
-                    id="confirmPassword"
-                    autoComplete="confirm-password"
-                    helperText={
-                      errors.confirmPassword && touched.confirmPassword
-                        ? errors.confirmPassword
                         : null
                     }
                   />
@@ -265,7 +249,6 @@ const Signup = (props) => {
                 <Grid item xs={12}>
                   <TextField
                     error={errors.age && touched.age}
-                    variant="outlined"
                     fullWidth
                     onChange={handleChange}
                     value={values.age}
@@ -279,7 +262,6 @@ const Signup = (props) => {
                 <Grid item xs={12}>
                   <TextField
                     error={errors.city && touched.city}
-                    variant="outlined"
                     fullWidth
                     onChange={handleChange}
                     value={values.city}
@@ -305,8 +287,7 @@ const Signup = (props) => {
                         {...params}
                         error={touched["interests"] && !!errors["interests"]}
                         helperText={touched["interests"] && errors["interests"]}
-                        label="Your interests"
-                        variant="outlined"
+                        label="My interests"
                       />
                     )}
                   />
@@ -320,14 +301,14 @@ const Signup = (props) => {
                 disabled={isSubmitting}
                 className={classes.submit}
               >
-                Sign Up
+                Update
               </Button>
             </Form>
           )}
         </Formik>
-      </div>
+}      </div>
     </Container>
   );
 };
 
-export default withRouter(Signup);
+export default withRouter(Profile);

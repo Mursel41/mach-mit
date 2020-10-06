@@ -31,10 +31,10 @@ exports.getActivity = async (req, res, next) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
       throw new createError.NotFound();
-    const activity = await Activity.findById(req.params.id).populate(
-      'typeOfActivity',
-      '-_id name'
-    );
+    const activity = await Activity.findById(req.params.id)
+      .populate('typeOfActivity', '-_id name')
+      .populate('creator')
+      .populate('participants');
     if (!activity) throw new createError.NotFound();
     res.status(200).send(activity);
   } catch (error) {
@@ -75,6 +75,29 @@ exports.getLocations = async (req, res, next) => {
     console.log(req.query);
     const cities = await Activity.find().distinct('address.city');
     res.status(200).send(cities);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.joinActivity = async (req, res, next) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+      throw new createError.NotFound();
+    const updatedActivity = await Activity.findByIdAndUpdate(
+      req.params.id,
+      { $push: { participants: req.body._id } },
+      { new: true, runValidators: true }
+    );
+    if (!updatedActivity) throw new createError.NotFound();
+    res.status(200).send(updatedActivity);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.leaveActivity = async (req, res, next) => {
+  try {
   } catch (error) {
     next(error);
   }

@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles, TextField } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -37,10 +36,11 @@ export default function SelectType() {
         </InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
+          id="typeOfActivity"
           value={selectActivity}
           onChange={handleChangeActivity}
           label="Type of activity"
+          name="typeOfActivity"
         >
           <MenuItem value>Footbal</MenuItem>
           <MenuItem value>Cinema</MenuItem>
@@ -54,10 +54,11 @@ export default function SelectType() {
         </InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
+          id="typeOfAttendee"
           value={selectAttendee}
           onChange={handleChangeAttendee}
           label="Type of attendee"
+          name="typeOfAttendee"
         >
           <MenuItem value="">
             <em>Any</em>
@@ -70,8 +71,9 @@ export default function SelectType() {
 
       <FormControl variant="outlined" className={classes.formControl}>
         <TextField
-          id="outlined-number"
+          id="numberOfAttendee"
           label="Number of attendee"
+          name="numberOfAttendee"
           type="number"
           variant="outlined"
         />
