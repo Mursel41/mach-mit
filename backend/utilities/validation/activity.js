@@ -5,8 +5,8 @@ module.exports = [
     .optional()
     .trim()
     .escape()
-    .isLength({ min: 5, max: 30 })
-    .withMessage('Title must be between 5 and 30 characters'),
+    .isLength({ min: 5, max: 20 })
+    .withMessage('Title must be between 5 and 20 characters'),
   body('description')
     .optional()
     .trim()
@@ -21,14 +21,15 @@ module.exports = [
     .escape()
     .isNumeric()
     .withMessage('Type of attendee must contain only numbers'),
-  body('city').optional().trim().escape(),
-  body('street').optional().trim().escape(),
-  body('zip').optional().trim().escape(),
-  body('paid').optional().trim().escape(),
+  body('address.city').optional().trim().escape(),
+  body('address.street').optional().trim().escape(),
+  body('address.zip').optional().trim().escape(),
   body('price')
     .optional()
     .trim()
-    .escape(),
+    .escape()
+    .isNumeric()
+    .withMessage('Price must contain only numbers'),
   body('image')
     .optional()
     .trim()

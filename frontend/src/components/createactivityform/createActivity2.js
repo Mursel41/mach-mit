@@ -22,11 +22,11 @@ import swal from "sweetalert";
 
 // Validation and style
 
-let SignupSchema = yup.object().shape({
+let CreateActivitySchema = yup.object().shape({
   title: yup
     .string()
     .min(5, "Title is too short.")
-    .max(30, "Title is too long.")
+    .max(20, "Title is too long.")
     .required("This field is required."),
   description: yup
     .string()
@@ -135,7 +135,7 @@ const CreateActivity = (props) => {
             numberOfAttendee: "",
             startDate: new Date(),
           }}
-          validationSchema={SignupSchema}
+          validationSchema={CreateActivitySchema}
           onSubmit={(values, { setSubmitting }) => {
              axios
               .post(`${apiUrlPost}`, JSON.stringify(values), {
@@ -145,7 +145,12 @@ const CreateActivity = (props) => {
               })
               .then((res) => {
                 if (res.status === 201) {
-                  swal("Success!", "Create event successfully", "success");
+                  swal("Success!", "Created event successfully", "success").then(() => {
+                    const token = res.headers['x-auth-token'];
+                    props.setAuth(token);
+                    localStorage.setItem('token', JSON.stringify(token));   
+                    props.history.push('/');
+                  })
                 } else if (res.status === 500) {
                   swal("Error!", res.statusMessage, "error");
                 }
@@ -232,7 +237,7 @@ const CreateActivity = (props) => {
                   value={values.price}
                   InputProps={{
                     inputProps: { 
-                        max: 100, min: 1 
+                        max: 5000, min: 1 
                     }
                 }}
                   name="price"
@@ -336,7 +341,7 @@ const CreateActivity = (props) => {
                     value={values.typeOfAttendee}
                     onChange={handleChange}
                     id="typeOfAttendee"
-                    options={["Man only", "Woman only", "Mixed"]}
+                    options={["Man only", "Woman only", "Mixed only", "Any"]}
                     component={FormikRadioGroup}
                   />
                 </Grid>

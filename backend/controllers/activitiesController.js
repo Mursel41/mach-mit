@@ -18,7 +18,6 @@ exports.getActivities = async (req, res, next) => {
 
 exports.createActivity = async (req, res, next) => {
   try {
-    console.log(req.body);
     const newActivity = new Activity(req.body);
     await newActivity.save();
     res.status(201).send(newActivity);

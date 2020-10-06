@@ -103,7 +103,9 @@ const App = () => {
             />
           </Route>
           <Route exact path="/createactivity">
-            <CreateActivity />
+            <CreateActivity
+            setAuth={setAuth} 
+            />
           </Route>
           <Route exact path="/verifymsg">
             <SignUpVerMsg />

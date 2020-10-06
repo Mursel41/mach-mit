@@ -19,7 +19,7 @@ const authorizeToken = require('../middleware/tokenAuth');
 router
   .route('/')
   .get(getActivities)
-  .post(validator(activityRules), createActivity);
+  .post(authorizeToken, validator(activityRules), createActivity);
 
 router.route('/locations').get(getLocations);
 
