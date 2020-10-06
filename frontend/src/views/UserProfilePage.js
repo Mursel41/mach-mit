@@ -84,13 +84,13 @@ const Profile = (props) => {
       const result1= await axios.get(`http://localhost:5000/api/v1/categories`,{headers: {'X-Auth-Token': props.auth}});
       setCategories(result1.data);
       
-      const result2= await axios.get(`http://localhost:5000/api/v1/users/${props.user._id}`,{headers: {'X-Auth-Token': props.auth}});
+      const result2= await axios.get(`http://localhost:5000/api/v1/users/${props.match.params.id}`,{headers: {'X-Auth-Token': props.auth}});
       setUser(result2.data);
     }
       fetchMyAPI()
     },[props])
   
- 
+ console.log(props)
   useEffect(()=>{
     async function fetchMyAPI() {
    
