@@ -89,8 +89,7 @@ const Profile = (props) => {
     }
       fetchMyAPI()
     },[props])
-  
- console.log(props)
+
   useEffect(()=>{
     async function fetchMyAPI() {
    
@@ -109,19 +108,19 @@ const Profile = (props) => {
 
   return (
 
-  
+
+
 <Container component="main" maxWidth="xs">
 
 
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+       
 
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Profile
-        </Typography>
-       { user && <Formik
+        {/* see own profile page starts here */}
+          
+        
+       {props.match.params.id===props.user._id && user &&<Formik
           initialValues={{
             firstName: user.firstName,
             lastName: user.lastName,
@@ -148,7 +147,7 @@ const Profile = (props) => {
                 if (res.status === 200) {
                   swal("Success!", "Updated successfully", "success").then(
                     () => {
-                      props.history.push("/dashboard");
+                      props.history.push("/");
                     }
                   );
                 } else if (res.status === 500) {
@@ -172,6 +171,14 @@ const Profile = (props) => {
           }) => (
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
+              <Grid item xs={12}>
+              <Avatar className={classes.avatar}>
+              
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Profile
+              </Typography>
+              </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     error={errors.firstName && touched.firstName}
@@ -306,7 +313,87 @@ const Profile = (props) => {
             </Form>
           )}
         </Formik>
-}      </div>
+}
+
+{/* see own profile page ends here */}
+
+{/* see others profile page starts here */}
+
+{props.match.params.id!==props.user._id && user && <Grid container spacing={1}>
+              <Grid item xs={12}>
+              <Avatar className={classes.avatar}>
+              
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Profile
+              </Typography>
+              </Grid>
+                <Grid item xs={6}>
+                <TextField
+                  id="standard-read-only-input"
+                  label="First Name"
+                  defaultValue={user.firstName}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+                  id="standard-read-only-input"
+                  label="Last Name"
+                  defaultValue={user.lastName}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+                  id="standard-read-only-input"
+                  label="Gender"
+                  defaultValue={user.gender}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                </Grid>
+                <Grid item xs={6}>
+                <TextField
+                  id="standard-read-only-input"
+                  label="Age"
+                  defaultValue={user.age}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                  id="standard-read-only-input"
+                  label="City"
+                  fullWidth
+                  defaultValue={user.city}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                  id="standard-read-only-input"
+                  label="Interests"
+                  fullWidth
+                  defaultValue={user.interests.map(interest => interest.name)}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+                </Grid>
+    </Grid>}
+
+{/* see others profile page ends here */}        
+      </div>
     </Container>
   );
 };

@@ -100,7 +100,7 @@ class EventDetails extends Component {
           </Grid>
           <Grid container item xs={12} alignItems="center" spacing={1}>
             <Grid item>
-              <Avatar
+              <Avatar  onClick={() => this.props.history.push(`/profile/${creator._id}`)}
                 alt={creator.fullName}
                 src="/static/images/avatar/1.jpg"
               />
@@ -195,6 +195,7 @@ class EventDetails extends Component {
                 >
                   <Grid item>
                     <Avatar
+                      onClick={() => this.props.history.push(`/profile/${participant._id}`)}
                       alt={participant.fullName}
                       src="/static/images/avatar/1.jpg"
                     />
