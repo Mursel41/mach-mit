@@ -12,7 +12,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import MenuItem from "@material-ui/core/MenuItem";
 import { TextField } from "formik-material-ui";
 import MuiTextField from "@material-ui/core/TextField";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, getIn } from "formik";
 import FormikRadioGroup from "./radioGroupFormik";
 import FormLabel from "@material-ui/core/FormLabel";
 import { withRouter } from "react-router-dom";
@@ -88,10 +88,21 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  icon: {
-    color: theme.palette.secondary.main,
-  },
 }));
+
+const typeOfItems = [{
+  name: "Man only"
+},
+{
+  name: "Woman only"
+},
+{
+  name: "Mixed only"
+},
+{
+  name: "Any"
+}
+];
 
 
 
@@ -148,7 +159,6 @@ const CreateActivity = (props) => {
                 },
               })
               .then((res) => {
-                console.log(res.data);
                 if (res.status === 201) {
                   swal("Success!", "Created event successfully", "success").then(() => {   
                     props.history.push('/');
@@ -259,7 +269,7 @@ const CreateActivity = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                 <MuiTextField
-                    error={errors.city && touched.city}
+                    error={errors.address && touched.address}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -268,14 +278,12 @@ const CreateActivity = (props) => {
                     label="City"
                     name="address.city"
                     autoComplete="city"
-                    helperText={
-                      errors.city && touched.city ? errors.city : null
-                    }
+                    helperText={getIn(errors, "address.city") && getIn(touched, "address.city") ? getIn(errors, "address.city") : null}
                   />
                 </Grid>
                 <Grid item xs={12}>
                 <MuiTextField
-                    error={errors.street && touched.street}
+                    error={errors.address && touched.address}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -284,14 +292,12 @@ const CreateActivity = (props) => {
                     label="Street"
                     name="address.street"
                     autoComplete="street"
-                    helperText={
-                      errors.street && touched.street ? errors.street : null
-                    }
+                    helperText={getIn(errors, "address.street") && getIn(touched, "address.street") ? getIn(errors, "address.street") : null}
                   />
                 </Grid>
                 <Grid item xs={12}>
                 <MuiTextField
-                    error={errors.zip && touched.zip}
+                    error={errors.address && touched.address}
                     variant="outlined"
                     fullWidth
                     onChange={handleChange}
@@ -300,9 +306,7 @@ const CreateActivity = (props) => {
                     label="Zip"
                     name="address.zip"
                     autoComplete="zip"
-                    helperText={
-                      errors.zip && touched.zip ? errors.zip : null
-                    }
+                    helperText={getIn(errors, "address.zip") && getIn(touched, "address.zip") ? getIn(errors, "address.zip") : null}
                   /> 
                 </Grid>
                 <Grid item xs={12}>
@@ -330,22 +334,27 @@ const CreateActivity = (props) => {
               ))}
             </Field>
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Field
-                    name="typeOfAttendee"
-                    value={values.typeOfAttendee}
-                    onChange={handleChange}
-                    id="typeOfAttendee"
-                    options={["Man only", "Woman only", "Mixed only", "Any"]}
-                    component={FormikRadioGroup}
-                  />
+                <Grid item xs={12}>
+                <Field
+                component={TextField}
+                type="text"
+                name="typeOfAttendee"
+                onChange={handleChange}
+                label="Type of attendee"
+                value={values.typeOfAttendee}
+                select
+                fullWidth
+                variant="outlined"
+                InputLabelProps={{
+                shrink: true,
+              }}
+            >
+              {typeOfItems.map((option) => (
+                <MenuItem key={option.name} value={option.name || ''}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </Field>
                 </Grid>
                 <Grid item xs={12}>
                 <MuiTextField
@@ -404,3 +413,22 @@ const CreateActivity = (props) => {
 };
 
 export default withRouter(CreateActivity);
+
+
+/* <Grid
+                  item
+                  xs={12}
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <Field
+                    name="typeOfAttendee"
+                    value={values.typeOfAttendee}
+                    onChange={handleChange}
+                    id="typeOfAttendee"
+                    options={["Man only", "Woman only", "Mixed only", "Any"]}
+                    component={FormikRadioGroup}
+                  />
+                </Grid> */
