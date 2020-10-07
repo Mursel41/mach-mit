@@ -19,6 +19,7 @@ import { withRouter } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import swal from "sweetalert";
+import { Box } from "@material-ui/core";
 
 // Validation and style
 
@@ -122,7 +123,7 @@ const CreateActivity = (props) => {
   },[])
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography 
@@ -132,7 +133,8 @@ const CreateActivity = (props) => {
             gutterBottom>
           Create Your Activity
         </Typography>
-
+        </div>
+        <div className={classes.paper}>
         <Formik
           initialValues={{
             title: "",
@@ -184,7 +186,7 @@ const CreateActivity = (props) => {
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <MuiTextField
                     error={errors.title && touched.title}
                     autoComplete="title"
@@ -202,27 +204,7 @@ const CreateActivity = (props) => {
                         : null
                     }
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  <MuiTextField
-                    error={errors.description && touched.description}
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleChange}
-                    value={values.description}
-                    id="description"
-                    label="Description"
-                    multiline
-                    rows={4}
-                    name="description"
-                    autoComplete="desc"
-                    helperText={
-                      errors.description && touched.description
-                        ? errors.description
-                        : null
-                    }
-                  />
-                </Grid>
+                <Box mt={2}>
                 <Grid
                   item
                   xs={12}
@@ -264,10 +246,8 @@ const CreateActivity = (props) => {
                   />
                   : null}
                 </Grid>
-                <Grid item xs={12}>
-                <Divider />
-                </Grid>
-                <Grid item xs={12}>
+                </Box>
+                <Box mt={2}>
                 <MuiTextField
                     error={errors.address && touched.address}
                     variant="outlined"
@@ -279,9 +259,9 @@ const CreateActivity = (props) => {
                     name="address.city"
                     autoComplete="city"
                     helperText={getIn(errors, "address.city") && getIn(touched, "address.city") ? getIn(errors, "address.city") : null}
-                  />
-                </Grid>
-                <Grid item xs={12}>
+                  />  
+                </Box>
+                <Box mt={2}>
                 <MuiTextField
                     error={errors.address && touched.address}
                     variant="outlined"
@@ -293,9 +273,9 @@ const CreateActivity = (props) => {
                     name="address.street"
                     autoComplete="street"
                     helperText={getIn(errors, "address.street") && getIn(touched, "address.street") ? getIn(errors, "address.street") : null}
-                  />
-                </Grid>
-                <Grid item xs={12}>
+                  />  
+                </Box>
+                <Box mt={2}>
                 <MuiTextField
                     error={errors.address && touched.address}
                     variant="outlined"
@@ -307,12 +287,29 @@ const CreateActivity = (props) => {
                     name="address.zip"
                     autoComplete="zip"
                     helperText={getIn(errors, "address.zip") && getIn(touched, "address.zip") ? getIn(errors, "address.zip") : null}
-                  /> 
+                  />  
+                </Box>
                 </Grid>
-                <Grid item xs={12}>
-                <Divider /> 
-                </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
+                  <MuiTextField
+                    error={errors.description && touched.description}
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    value={values.description}
+                    id="description"
+                    label="Description"
+                    multiline
+                    rows={5}
+                    name="description"
+                    autoComplete="desc"
+                    helperText={
+                      errors.description && touched.description
+                        ? errors.description
+                        : null
+                    }
+                  />
+                <Box mt={5}>
                 <Field
                 component={TextField}
                 type="text"
@@ -332,9 +329,9 @@ const CreateActivity = (props) => {
                   {option.name}
                 </MenuItem>
               ))}
-            </Field>
-                </Grid>
-                <Grid item xs={12}>
+            </Field>  
+                </Box>
+                <Box mt={2}>
                 <Field
                 component={TextField}
                 type="text"
@@ -355,8 +352,8 @@ const CreateActivity = (props) => {
                 </MenuItem>
               ))}
             </Field>
-                </Grid>
-                <Grid item xs={12}>
+                </Box>
+                <Box mt={2}>
                 <MuiTextField
                   error={errors.numberOfAttendee && touched.numberOfAttendee}
                   variant="outlined"
@@ -378,6 +375,7 @@ const CreateActivity = (props) => {
                       : null
                   }
                   />
+                </Box>  
                 </Grid>
                 <Grid item xs={12}>
                 <Divider /> 
@@ -413,22 +411,3 @@ const CreateActivity = (props) => {
 };
 
 export default withRouter(CreateActivity);
-
-
-/* <Grid
-                  item
-                  xs={12}
-                  container
-                  direction="row"
-                  justify="space-evenly"
-                  alignItems="center"
-                >
-                  <Field
-                    name="typeOfAttendee"
-                    value={values.typeOfAttendee}
-                    onChange={handleChange}
-                    id="typeOfAttendee"
-                    options={["Man only", "Woman only", "Mixed only", "Any"]}
-                    component={FormikRadioGroup}
-                  />
-                </Grid> */

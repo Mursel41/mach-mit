@@ -17,6 +17,7 @@ import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
+import { Box } from '@material-ui/core';
 
 // Validation and style
 
@@ -95,14 +96,15 @@ const Signup = (props) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
+      <div className={classes.paper} >
+        <Box mt={-4}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-
+        </Box>
         <Formik
           initialValues={{
             firstName: '',
@@ -162,11 +164,11 @@ const Signup = (props) => {
                     autoComplete="fname"
                     name="firstName"
                     variant="outlined"
-                    fullWidth
+                    fullWidth              
                     onChange={handleChange}
                     value={values.firstName}
                     id="firstName"
-                    label="First Name"
+                    label="First Name*"
                     autoFocus
                     helperText={
                       errors.firstName && touched.firstName
@@ -183,7 +185,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                     value={values.lastName}
                     id="lastName"
-                    label="Last Name"
+                    label="Last Name*"
                     name="lastName"
                     autoComplete="lname"
                     helperText={
@@ -204,7 +206,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                     value={values.email}
                     id="email"
-                    label="Email Address"
+                    label="Email Address*"
                     name="email"
                     autoComplete="email"
                     helperText={
@@ -224,7 +226,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                     value={values.password}
                     name="password"
-                    label="Password"
+                    label="Password*"
                     type="password"
                     id="password"
                     autoComplete="current-password"
@@ -242,7 +244,7 @@ const Signup = (props) => {
                     fullWidth
                     onChange={handleChange}
                     name="confirmPassword"
-                    label="Confirm Password"
+                    label="Confirm Password*"
                     type="password"
                     id="confirmPassword"
                     autoComplete="confirm-password"
@@ -278,7 +280,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                     value={values.age}
                     id="age"
-                    label="Age"
+                    label="Age*"
                     name="age"
                     autoComplete="age"
                     helperText={errors.age && touched.age ? errors.age : null}
@@ -292,7 +294,7 @@ const Signup = (props) => {
                     onChange={handleChange}
                     value={values.city}
                     id="city"
-                    label="City"
+                    label="City*"
                     name="city"
                     autoComplete="city"
                     helperText={
