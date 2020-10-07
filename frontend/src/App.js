@@ -1,34 +1,16 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import "./App.scss";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Homepage from "./views/Homepage";
-import Dashboard from "./views/Dashboard";
 import Signup from "./components/signupform/signUpForm";
 import Login from "./components/LogIn";
 import NotFound from "./views/NotFound";
 import CreateActivity from "./components/createactivityform/createActivity2";
-import SignUpVerMsg from "./views/SignUpVerifMsg";
 import EventDetails from "./views/EventDetails";
 import UserProfilePage from "./views/UserProfilePage";
 import Image from "./images/background.jpg";
 import { Box } from "@material-ui/core";
-=======
-import React, { useState, useEffect } from 'react';
-import './App.scss';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Homepage from './views/Homepage';
-import Signup from './components/signupform/signUpForm';
-import Login from './components/LogIn';
-import NotFound from './views/NotFound';
-import CreateActivity from './components/createactivityform/createActivity2';
-import EventDetails from './views/EventDetails';
-import UserProfilePage from './views/UserProfilePage';
-import Image from './images/background.jpg';
-import { Box } from '@material-ui/core';
->>>>>>> master
 
 const styles = {
   paperContainer: {
@@ -89,12 +71,12 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Header
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        setAuth={setAuth}
+      />
       <Box style={styles.paperContainer}>
-        <Header
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-          setAuth={setAuth}
-        />
         <Switch>
           <Route exact path="/">
             <Homepage
@@ -120,12 +102,6 @@ const App = () => {
           </Route>
           <Route exact path="/createactivity">
             <CreateActivity auth={auth} />
-<<<<<<< HEAD
-          </Route>
-          <Route exact path="/verifymsg">
-            <SignUpVerMsg />
-=======
->>>>>>> master
           </Route>
 
           <Route

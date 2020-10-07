@@ -39,7 +39,7 @@ function Homepage(props) {
 
   return (
     <Container fixed>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justify="center">
         <Grid item xs={12} md={9}>
           <Grid item>
             <MainTextHeroImg />
@@ -60,55 +60,55 @@ function Homepage(props) {
                 <Divider />
               </Box>
 
-              <Box>
+              <Grid item>
                 <Paper
                   style={{
                     padding: "10px",
-                    backgroundColor: "#EEFAFF",
+                    backgroundColor: "rgba(238,250,255, 0.5)",
                   }}
                 >
-                  <Box>
+                  <Grid item>
                     <Typography variant="h4" component="h4" gutterBottom>
                       Created activities
                     </Typography>
-                  </Box>
+                  </Grid>
 
-                  <Box>
+                  <Box m={2}>
                     <Divider />
                   </Box>
 
-                  <Box>
+                  <Grid item>
                     <ActivityCard activities={user.createdActivities} />
-                  </Box>
+                  </Grid>
                 </Paper>
-              </Box>
+              </Grid>
 
               <Box m={2}>
                 <Divider />
               </Box>
 
-              <Box>
+              <Grid item>
                 <Paper
                   style={{
                     padding: "10px",
-                    backgroundColor: "#EEFAFF",
+                    backgroundColor: "rgba(238,250,255, 0.5)",
                   }}
                 >
-                  <Box>
+                  <Grid item>
                     <Typography variant="h4" component="h4" gutterBottom>
                       Participated activities
                     </Typography>
-                  </Box>
+                  </Grid>
 
-                  <Box m={3}>
+                  <Grid item>
                     <Divider />
-                  </Box>
+                  </Grid>
 
-                  <Box>
+                  <Grid item>
                     <ActivityCard activities={user.participatedActivities} />
-                  </Box>
+                  </Grid>
                 </Paper>
-              </Box>
+              </Grid>
             </React.Fragment>
           )}
         </Grid>

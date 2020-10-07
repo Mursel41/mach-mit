@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, Paper, Container } from "@material-ui/core";
+import { Button, Box, Grid } from "@material-ui/core";
 import logo from "../images/Logo.png";
 import { NavLink, withRouter } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
@@ -27,56 +27,75 @@ function Header(props) {
   const classes = useStyles();
 
   return (
-    <Container>
-      <Paper
-        style={{
-          height: "130px",
-
-          backgroundColor: "#EEFAFF",
-        }}
+    <Grid
+      Container
+      style={{
+        height: "90px",
+        backgroundColor: "#102e4a",
+      }}
+    >
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          p={2}
-        >
-          <NavLink to="/">
-            <Box ml={5}>
-              <img src={logo} alt="Logo" width="120" />
-            </Box>
-          </NavLink>
-          <Box mr={5} mt={2}>
-            {isLoggedIn ? (
-              <Box display="flex" flexDirection="row">
-                <NavLink to="" onClick={handleLogout}>
-                  <Button href="#text-buttons" color="default" size="large">
-                    Log out
-                  </Button>
-                </NavLink>
-                <NavLink to="/profile">
-                  <Avatar className={classes.avatar} />
-                </NavLink>
-              </Box>
-            ) : (
-              <React.Fragment>
-                <NavLink to="/login">
-                  <Button href="#text-buttons" color="default" size="large">
-                    Log in
-                  </Button>
-                </NavLink>
-                <NavLink to="/signup">
-                  <Button href="#text-buttons" color="default" size="large">
-                    Sign up
-                  </Button>
-                </NavLink>
-              </React.Fragment>
-            )}
+        <NavLink to="/">
+          <Box ml={5}>
+            <img src={logo} alt="Logo" width="90" />
           </Box>
+        </NavLink>
+        <Box mr={5}>
+          {isLoggedIn ? (
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <NavLink
+                to=""
+                onClick={handleLogout}
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  href="#text-buttons"
+                  style={{
+                    color: "white",
+                  }}
+                  size="large"
+                >
+                  Log out
+                </Button>
+              </NavLink>
+              <NavLink to="/profile">
+                <Avatar className={classes.avatar} />
+              </NavLink>
+            </Box>
+          ) : (
+            <React.Fragment>
+              <NavLink to="/login" style={{ textDecoration: "none" }}>
+                <Button
+                  href="#text-buttons"
+                  size="large"
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Log in
+                </Button>
+              </NavLink>
+              <NavLink to="/signup" style={{ textDecoration: "none" }}>
+                <Button
+                  href="#text-buttons"
+                  size="large"
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Sign up
+                </Button>
+              </NavLink>
+            </React.Fragment>
+          )}
         </Box>
-      </Paper>
-    </Container>
+      </Box>
+    </Grid>
   );
 }
 

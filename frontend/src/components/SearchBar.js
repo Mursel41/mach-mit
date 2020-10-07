@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, Paper, Typography, Divider } from "@material-ui/core";
+import {
+  Container,
+  Button,
+  Paper,
+  Typography,
+  Divider,
+  Grid,
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ActivityCard from "../components/ActivityCard";
@@ -85,119 +92,109 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <Box mt={3} mb={8}>
+      <Container fixed>
         <Paper
           style={{
-            height: "85px",
-            width: "850px",
-            backgroundColor: "#EEFAFF",
+            backgroundColor: "white",
+            width: "100%",
+            padding: "5px",
           }}
         >
           <form id="Search" onSubmit={this.handleSubmit}>
-            <Box
-              display="flex"
-              flexDirection="row"
-              flexWrap="wrap"
-              justifyContent="center"
-              alignItems="center"
-              mt={8}
-              mb={5}
-            >
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="center"
-                alignItems="center"
-                flexWrap="wrap"
-              >
-                <Box style={{ width: 300 }}>
-                  <Autocomplete
-                    id="free-solo-demo"
-                    freeSolo
-                    options={this.state.categories.map((option) => option)}
-                    getOptionLabel={(option) => option.name}
-                    value={this.state.inputCategory}
-                    defaultValue={this.state.inputCategory}
-                    onChange={this.handleChangeCategory}
-                    renderInput={(params) => (
-                      <TextField
-                        style={{
-                          backgroundColor: "#FFFFFF",
-                        }}
-                        {...params}
-                        label="Search Activity"
-                        margin="normal"
-                        variant="outlined"
-                      />
-                    )}
-                  />
-                </Box>
-                <Box style={{ width: 300 }}>
-                  <Autocomplete
-                    freeSolo
-                    id="free-solo-2-demo"
-                    disableClearable
-                    options={this.state.locations.map((option) => option)}
-                    getOptionLabel={(option) => option}
-                    value={this.state.inputLocation}
-                    defaultValue={this.state.inputLocation}
-                    onChange={this.handleChangeLocation}
-                    renderInput={(params) => (
-                      <TextField
-                        style={{
-                          backgroundColor: "#FFFFFF",
-                        }}
-                        {...params}
-                        label="Select Location"
-                        margin="normal"
-                        variant="outlined"
-                        InputProps={{ ...params.InputProps, type: "search" }}
-                      />
-                    )}
-                  />
-                </Box>
-              </Box>
-              <Box ml={1} mt={1}>
+            <Grid container spacing={1} justify="center" alignItems="center">
+              <Grid item xs={12} sm={5} md={5}>
+                <Autocomplete
+                  id="free-solo-demo"
+                  freeSolo
+                  options={this.state.categories.map((option) => option)}
+                  getOptionLabel={(option) => option.name}
+                  value={this.state.inputCategory}
+                  defaultValue={this.state.inputCategory}
+                  onChange={this.handleChangeCategory}
+                  renderInput={(params) => (
+                    <TextField
+                      style={{
+                        backgroundColor: "#FFFFFF",
+                      }}
+                      {...params}
+                      label="Search Activity"
+                      margin="normal"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={5} md={5}>
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={this.state.locations.map((option) => option)}
+                  getOptionLabel={(option) => option}
+                  value={this.state.inputLocation}
+                  defaultValue={this.state.inputLocation}
+                  onChange={this.handleChangeLocation}
+                  renderInput={(params) => (
+                    <TextField
+                      style={{
+                        backgroundColor: "#FFFFFF",
+                      }}
+                      {...params}
+                      label="Select Location"
+                      margin="normal"
+                      variant="outlined"
+                      InputProps={{ ...params.InputProps, type: "search" }}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={2} md={2}>
                 <Button
                   variant="contained"
                   style={{
                     backgroundColor: "#90E2D8",
-                    color: "#272C34",
+                    color: "rgb(16, 46, 74)",
                     height: "54px",
-                    width: "150px",
+                    width: "110px",
+                    marginTop: "6px",
+                    fontSize: ".9rem",
                   }}
                   type="submit"
                 >
                   Search
                 </Button>
-              </Box>
-            </Box>
+              </Grid>
+            </Grid>
           </form>
         </Paper>
 
-        {this.state.activities.length > 0 && (
-          <Box m={2}>
-            <Paper
-              style={{
-                padding: "10px",
-                backgroundColor: "#EEFAFF",
-              }}
-            >
-              <Box m={3}>
+        <Paper
+          style={{
+            backgroundColor: "rgba(238,250,255, 0.5)",
+            width: "100%",
+            padding: "5px",
+          }}
+        >
+          {this.state.activities.length > 0 && (
+            <Grid item xs={12} md={9}>
+              <Grid item>
                 <Typography variant="h4" component="h4" gutterBottom>
                   {`Results for ${this.state.message}`}
                 </Typography>
-              </Box>
-              <Box m={2}>
+              </Grid>
+
+              <Grid item>
                 <Divider />
-              </Box>
-              <Box>
+              </Grid>
+
+              <Grid item xs={12} md={9} justify="center">
                 <ActivityCard activities={this.state.activities} />
-              </Box>
-            </Paper>
-          </Box>
-        )}
-      </Box>
+              </Grid>
+            </Grid>
+          )}
+        </Paper>
+      </Container>
     );
   }
 }
