@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header(props) {
-  const { isLoggedIn, setIsLoggedIn, setAuth } = props;
+  const { isLoggedIn, setIsLoggedIn, setAuth, user } = props;
+
+  console.log(props)
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -57,9 +59,9 @@ function Header(props) {
                     Log out
                   </Button>
                 </NavLink>
-                <NavLink to="/profile">
+                <Box  onClick={() => props.history.push(`/profile/${user._id}`)}>
                   <Avatar className={classes.avatar} />
-                </NavLink>
+                </Box>
               </Box>
             ) : (
               <React.Fragment>

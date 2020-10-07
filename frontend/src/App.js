@@ -19,7 +19,7 @@ const styles = {
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundImage: `url(${Image})`,
+    // backgroundImage: `url(${Image})`,
     height: `100%`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -78,6 +78,7 @@ const App = () => {
           isLoggedIn={isLoggedIn}
           setIsLoggedIn={setIsLoggedIn}
           setAuth={setAuth}
+          user={user}
         />
         <Switch>
           <Route exact path="/">
@@ -117,9 +118,18 @@ const App = () => {
               />
             )}
           />
-          <Route exact path="/profile">
-            <UserProfilePage auth={auth} user={user} />
-          </Route>
+          <Route
+            exact
+            path="/profile/:id"
+            render={(routerProps) => (
+              <UserProfilePage
+                {...routerProps}
+                isLoggedIn={isLoggedIn}
+                user={user}
+                auth={auth}
+              />
+            )}
+          />
           <Route>
             <NotFound />
           </Route>
