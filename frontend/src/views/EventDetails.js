@@ -209,16 +209,18 @@ class EventDetails extends Component {
               ))}
             </Grid>
           )}
-          <Grid item xs={12}>
-            <Button
-              onClick={handleClick}
-              variant="contained"
-              color="secondary"
-              size="large"
-            >
-              Join
-            </Button>
-          </Grid>
+          {this.props.user._id !== creator._id && (
+            <Grid item xs={12}>
+              <Button
+                onClick={handleClick}
+                variant="contained"
+                color="secondary"
+                size="large"
+              >
+                Join
+              </Button>
+            </Grid>
+          )}
         </Grid>
       </Container>
     );
