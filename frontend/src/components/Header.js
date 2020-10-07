@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, Paper } from "@material-ui/core";
+import { Button, Box, Grid } from "@material-ui/core";
 import logo from "../images/Logo.png";
 import { NavLink, withRouter } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 function Header(props) {
   const { isLoggedIn, setIsLoggedIn, setAuth, user } = props;
 
-  console.log(props)
+  console.log(props);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -29,58 +29,75 @@ function Header(props) {
   const classes = useStyles();
 
   return (
-    <Box>
-      <Paper
-        style={{
-          height: "130px",
-          maxWidth: "1200px",
-          minWidth: "1000px",
-          backgroundColor: "#FFFBF5",
-        }}
+    <Grid
+      Container
+      style={{
+        height: "90px",
+        backgroundColor: "#102e4a",
+      }}
+    >
+      <Box
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          mt={4}
-          p={2}
-        >
-          <NavLink to="/">
-            <Box ml={5}>
-              <img src={logo} alt="Logo" width="120" />
-            </Box>
-          </NavLink>
-          <Box mr={5} mt={2}>
-            {isLoggedIn ? (
-              <Box display="flex" flexDirection="row">
-                <NavLink to="" onClick={handleLogout}>
-                  <Button href="#text-buttons" color="default" size="large">
-                    Log out
-                  </Button>
-                </NavLink>
-                <Box  onClick={() => props.history.push(`/profile/${user._id}`)}>
-                  <Avatar className={classes.avatar} />
-                </Box>
-              </Box>
-            ) : (
-              <React.Fragment>
-                <NavLink to="/login">
-                  <Button href="#text-buttons" color="default" size="large">
-                    Log in
-                  </Button>
-                </NavLink>
-                <NavLink to="/signup">
-                  <Button href="#text-buttons" color="default" size="large">
-                    Sign up
-                  </Button>
-                </NavLink>
-              </React.Fragment>
-            )}
+        <NavLink to="/">
+          <Box ml={5}>
+            <img src={logo} alt="Logo" width="90" />
           </Box>
+        </NavLink>
+        <Box mr={5}>
+          {isLoggedIn ? (
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <NavLink
+                to=""
+                onClick={handleLogout}
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  href="#text-buttons"
+                  style={{
+                    color: "white",
+                  }}
+                  size="large"
+                >
+                  Log out
+                </Button>
+              </NavLink>
+              <NavLink to="/profile">
+                <Avatar className={classes.avatar} />
+              </NavLink>
+            </Box>
+          ) : (
+            <React.Fragment>
+              <NavLink to="/login" style={{ textDecoration: "none" }}>
+                <Button
+                  href="#text-buttons"
+                  size="large"
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Log in
+                </Button>
+              </NavLink>
+              <NavLink to="/signup" style={{ textDecoration: "none" }}>
+                <Button
+                  href="#text-buttons"
+                  size="large"
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Sign up
+                </Button>
+              </NavLink>
+            </React.Fragment>
+          )}
         </Box>
-      </Paper>
-    </Box>
+      </Box>
+    </Grid>
   );
 }
 

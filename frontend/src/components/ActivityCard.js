@@ -1,12 +1,12 @@
-import React from 'react';
-import { Card, Grid } from '@material-ui/core';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import moment from 'moment';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import { Card, Grid } from "@material-ui/core";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import moment from "moment";
+import { withRouter } from "react-router-dom";
 
 class ActivityCard extends React.Component {
   constructor(props) {
@@ -58,11 +58,11 @@ class ActivityCard extends React.Component {
                           component="p"
                         >
                           <Box>
-                            {moment(card.startDate).format('D MMM YYYY')}
+                            {moment(card.startDate).format("D MMM YYYY")}
                           </Box>
                           <Box>
-                            {' '}
-                            {card.participants.length}/{card.numberOfAttendee}{' '}
+                            {" "}
+                            {card.participants.length}/{card.numberOfAttendee}{" "}
                             Participants
                           </Box>
                         </Typography>
@@ -74,9 +74,9 @@ class ActivityCard extends React.Component {
                           mt={2}
                         >
                           <Box>
-                            {' '}
+                            {" "}
                             <Typography variant="body2" color="Primary">
-                              {card.price === 0 ? 'Free' : '€ ' + card.price}
+                              {card.price === 0 ? "Free" : "€ " + card.price}
                             </Typography>
                           </Box>
                           <Box>

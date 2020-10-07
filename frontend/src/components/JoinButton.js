@@ -11,7 +11,7 @@ function JoinButton() {
 
   return (
     <Container maxWidth="lg">
-      <Box mb={8} mt={2}>
+      <Box mb={10} mt={2} ml={-4}>
         <Button
           onClick={handleClick}
           variant="contained"
