@@ -24,7 +24,8 @@ router.route('/login').post(loginUser);
 
 router
   .route('/:id')
-  .get(authorizeToken, authorizeUser, getUser)
+  // .get(authorizeToken, authorizeUser, getUser)
+  .get(authorizeToken, getUser)
   .put(authorizeToken, authorizeUser, validator(userRules), updateUser)
   .delete(authorizeToken, authorizeUser, deleteUser);
 
