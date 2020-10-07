@@ -75,6 +75,7 @@ const App = () => {
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
         setAuth={setAuth}
+        user={user}
       />
       <Box style={styles.paperContainer}>
         <Switch>
