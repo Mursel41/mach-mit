@@ -1,18 +1,18 @@
-import React from 'react';
-import { Button, Box, Container } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import { Button, Box, Container } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
 
 function CreateActivityButton(props) {
   return (
     <Container maxWidth="lg">
-      <Box mb={3} mt={3}>
+      <Box mb={10} mt={3} ml={-4}>
         <Button
-          onClick={() => props.history.push('/createactivity')}
+          onClick={() => props.history.push("/createactivity")}
           variant="contained"
           color="secondary"
           size="large"
           style={{
-            height: '54px',
+            height: "54px",
           }}
         >
           Create Activity
