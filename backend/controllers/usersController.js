@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const createError = require('http-errors');
-
 const User = require('../models/UserModel');
 
 exports.getUsers = async (req, res, next) => {
@@ -35,7 +34,15 @@ exports.getUser = async (req, res, next) => {
       throw new createError.NotFound();
     const user = await User.findById(req.params.id)
       .populate('createdActivities')
-      .populate('participatedActivities');
+      .populate({
+        path: 'createdActivities',
+        populate: { path: 'typeOfActivity' },
+      })
+      .populate('participatedActivities')
+      .populate({
+        path: 'participatedActivities',
+        populate: { path: 'typeOfActivity' },
+      });
     if (!user) throw new createError.NotFound();
     res.status(200).send(user);
   } catch (err) {
