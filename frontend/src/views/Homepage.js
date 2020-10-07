@@ -9,8 +9,6 @@ import ActivityCard from '../components/ActivityCard';
 function Homepage(props) {
   const { isLoggedIn, auth, user, setUser } = props;
 
-  console.log(auth);
-
   useEffect(() => {
     (async () => {
       if (isLoggedIn && auth) {
@@ -22,7 +20,6 @@ function Homepage(props) {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             setUser(data);
           })
           .catch((error) => console.log(error));
@@ -47,7 +44,7 @@ function Homepage(props) {
         {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
 
         <Box>
-          <SearchBar />
+        <SearchBar city={user.city} isLoggedIn={isLoggedIn}/>
         </Box>
 
         {isLoggedIn && user && (

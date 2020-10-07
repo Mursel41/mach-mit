@@ -14,10 +14,9 @@ export default class SearchBar extends React.Component {
       //categories for search options
       inputCategory: [],
       //location for search options
-      inputLocation: '',
+      inputLocation:'',
       message: '',
     };
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -36,6 +35,14 @@ export default class SearchBar extends React.Component {
       .then((res) => res.json())
       .then((locations) => this.setState({ locations }))
       .catch((err) => console.log(err));
+
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.city !== this.props.city) {    
+      this.setState({inputLocation: this.props.city})
+    }
   }
 
   handleSubmit(evt) {
@@ -141,7 +148,7 @@ export default class SearchBar extends React.Component {
                       options={this.state.locations.map((option) => option)}
                       getOptionLabel={(option) => option}
                       value={this.state.inputLocation}
-                      defaultValue={this.state.inputLocation}
+                      defaultValue={this.props.city && this.props.city}
                       onChange={this.handleChangeLocation}
                       renderInput={(params) => (
                         <TextField

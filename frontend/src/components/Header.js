@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 function Header(props) {
   const { isLoggedIn, setIsLoggedIn, setAuth, user } = props;
 
-  console.log(props)
 
   const handleLogout = () => {
     setIsLoggedIn(false);
