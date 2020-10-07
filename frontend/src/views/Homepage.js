@@ -92,6 +92,7 @@ function Homepage(props) {
                   style={{
                     padding: "10px",
                     backgroundColor: "rgba(238,250,255, 0.5)",
+                    marginBottom: "30px",
                   }}
                 >
                   <Grid item>
@@ -100,9 +101,9 @@ function Homepage(props) {
                     </Typography>
                   </Grid>
 
-                  <Grid item>
+                  <Box m={2}>
                     <Divider />
-                  </Grid>
+                  </Box>
 
                   <Grid item>
                     <ActivityCard activities={user.participatedActivities} />

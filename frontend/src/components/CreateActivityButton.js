@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 function CreateActivityButton(props) {
   return (
     <Container maxWidth="lg">
-      <Box mb={10} mt={3} ml={-4}>
+      <Box mb={10} mt={3}>
         <Button
           onClick={() => props.history.push("/createactivity")}
           variant="contained"
