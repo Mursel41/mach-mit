@@ -60,17 +60,17 @@ function Homepage(props) {
               <Grid item>
                 <Paper
                   style={{
-                    padding: "10px",
+                    padding: "30px",
                     backgroundColor: "rgba(238,250,255, 0.5)",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                   }}
                 >
-                  <Grid item>
-                    <Box p={1}>
-                      <Typography variant="h4" component="h4" gutterBottom>
-                        Created activities
-                      </Typography>
-                    </Box>
-                  </Grid>
+                  <Box>
+                    <Typography variant="h4" component="h4" gutterBottom>
+                      Created activities
+                    </Typography>
+                  </Box>
 
                   <Box m={1}>
                     <Divider />
@@ -82,28 +82,25 @@ function Homepage(props) {
                 </Paper>
               </Grid>
 
-              <Box m={2}>
+              <Box mb={2}>
                 <Divider />
               </Box>
 
-              <Grid item>
+              <Box>
                 <Paper
                   style={{
                     padding: "30px",
-                    backgroundColor: "rgba(238,250,255, 0.6)",
+                    backgroundColor: "rgba(238,250,255, 0.5)",
                     marginBottom: "30px",
                     marginTop: "30px",
                   }}
                 >
-                  <Grid item>
-                    <Box p={1}>
-                      <Typography variant="h4" component="h4" gutterBottom>
-                        Participated activities
-                      </Typography>
-                    </Box>
-                  </Grid>
-
-                  <Box m={1}>
+                  <Box>
+                    <Typography variant="h4" component="h4" gutterBottom>
+                      Participated activities
+                    </Typography>
+                  </Box>
+                  <Box mb={1}>
                     <Divider />
                   </Box>
 
@@ -111,7 +108,7 @@ function Homepage(props) {
                     <ActivityCard activities={user.participatedActivities} />
                   </Grid>
                 </Paper>
-              </Grid>
+              </Box>
             </React.Fragment>
           )}
         </Grid>

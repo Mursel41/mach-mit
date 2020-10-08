@@ -184,21 +184,18 @@ export default class SearchBar extends React.Component {
         {this.state.firstSearch && (
           <Paper
             style={{
+              padding: "30px",
               backgroundColor: "rgba(238,250,255, 0.5)",
-              width: "100%",
-              padding: "5px",
-              marginTop: "30px",
+              marginBottom: "5px",
+              marginTop: "60px",
             }}
           >
-            <Box p={3}>
+            <Box>
               <Box>
                 <Typography variant="h4" component="h4" gutterBottom>
                   {this.state.activities.length > 0 ? (
                     <React.Fragment>
                       Activities for {this.state.message}
-                      <Box m={1}>
-                        <Divider />
-                      </Box>
                     </React.Fragment>
                   ) : (
                     this.state.firstSearch &&
@@ -206,8 +203,10 @@ export default class SearchBar extends React.Component {
                   )}
                 </Typography>
               </Box>
-
-              <Grid item justify="center">
+              <Box mb={1}>
+                <Divider />
+              </Box>
+              <Grid item>
                 <ActivityCard activities={this.state.activities} />
               </Grid>
             </Box>
