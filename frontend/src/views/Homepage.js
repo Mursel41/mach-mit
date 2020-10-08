@@ -47,7 +47,7 @@ function Homepage(props) {
         </Grid>
 
         <Grid item xs={12} md={9}>
-          <SearchBar city={user.city}/>
+          <SearchBar city={user.city} />
         </Grid>
 
         <Grid item xs={12} md={9}>
@@ -89,9 +89,10 @@ function Homepage(props) {
               <Grid item>
                 <Paper
                   style={{
-                    padding: "10px",
-                    backgroundColor: "rgba(238,250,255, 0.5)",
+                    padding: "30px",
+                    backgroundColor: "rgba(238,250,255, 0.6)",
                     marginBottom: "30px",
+                    marginTop: "30px",
                   }}
                 >
                   <Grid item>
