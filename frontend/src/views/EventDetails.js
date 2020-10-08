@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Avatar,
   Container,
@@ -6,21 +6,21 @@ import {
   Typography,
   Box,
   Button,
-} from '@material-ui/core';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import CategoryIcon from '@material-ui/icons/Category';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import WcIcon from '@material-ui/icons/Wc';
-import RoomIcon from '@material-ui/icons/Room';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import hero from '../images/hero.jpg';
-import { withRouter } from 'react-router-dom';
-import swal from 'sweetalert';
-import moment from 'moment';
+} from "@material-ui/core";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import CategoryIcon from "@material-ui/icons/Category";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import WcIcon from "@material-ui/icons/Wc";
+import RoomIcon from "@material-ui/icons/Room";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import hero from "../images/hero.jpg";
+import { withRouter } from "react-router-dom";
+import swal from "sweetalert";
+import moment from "moment";
 
 class EventDetails extends Component {
   constructor(props) {
@@ -57,35 +57,35 @@ class EventDetails extends Component {
 
     const handleClick = () => {
       console.log(this.props.user._id);
-      if (!this.props.isLoggedIn) return this.props.history.push('/login');
+      if (!this.props.isLoggedIn) return this.props.history.push("/login");
 
       if (
         participants.findIndex(
           (participant) => participant._id === this.props.user._id
         ) !== -1
       )
-        return swal('', 'You have already joined this activity.', 'info');
+        return swal("", "You have already joined this activity.", "info");
 
       if (participants.length === numberOfAttendee)
-        return swal('This activity has accessed its participants limit :(');
+        return swal("This activity has accessed its participants limit :(");
 
       swal({
-        text: 'Do you want to join this activity?',
-        icon: 'info',
+        text: "Do you want to join this activity?",
+        icon: "info",
         buttons: true,
       }).then((willJoin) => {
         if (willJoin) {
-          swal('Enjoy your activity', {
-            icon: 'success',
+          swal("Enjoy your activity", {
+            icon: "success",
           }).then(() => {
             fetch(`http://localhost:5000/api/v1/activities/${_id}/join`, {
-              method: 'POST',
+              method: "POST",
               body: JSON.stringify({ _id: this.props.user._id }),
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
               },
             })
-              .then(() => this.props.history.push('/'))
+              .then(() => this.props.history.push("/"))
               .catch((err) => console.log(err));
           });
         }
@@ -96,23 +96,28 @@ class EventDetails extends Component {
       <Container fixed>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h4"> {title}</Typography>
+            <Box mb={3} mt={6}>
+              <Typography variant="h4"> {title}</Typography>
+            </Box>
           </Grid>
           <Grid container item xs={12} alignItems="center" spacing={1}>
             <Grid item>
-              <Avatar  onClick={() => this.props.history.push(`/profile/${creator._id}`)}
+              <Avatar
+                onClick={() =>
+                  this.props.history.push(`/profile/${creator._id}`)
+                }
                 alt={creator.fullName}
                 src="/static/images/avatar/1.jpg"
               />
             </Grid>
             <Grid item>
               <Typography variant="subtitle2">
-                {' '}
+                {" "}
                 Created by <br /> {creator.fullName}
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={8} md={6}>
             <Box>
               <img alt={name} src={hero} width="100%" />
             </Box>
@@ -131,7 +136,7 @@ class EventDetails extends Component {
                   <ScheduleIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={moment(startDate).format('D MMM YYYY, hh:mm')}
+                  primary={moment(startDate).format("D MMM YYYY, hh:mm")}
                 />
               </ListItem>
               <Divider />
@@ -153,7 +158,7 @@ class EventDetails extends Component {
                 <ListItemIcon>
                   <AttachMoneyIcon />
                 </ListItemIcon>
-                <ListItemText primary={price ? `€ ${price}` : 'Free'} />
+                <ListItemText primary={price ? `€ ${price}` : "Free"} />
               </ListItem>
               <Divider />
             </List>
@@ -165,18 +170,18 @@ class EventDetails extends Component {
             <Typography variant="body1">
               {description
                 ? description
-                : 'There is no available description for this activity...'}
+                : "There is no available description for this activity..."}
             </Typography>
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography variant="h6">
-              {' '}
+              {" "}
               Participants({participants.length})
             </Typography>
           </Grid>
           {participants.length === 0 ? (
             <Typography>
-              {' '}
+              {" "}
               So far there is nobody joining to this activity. Be first to enjoy
               the activity.
             </Typography>
@@ -195,7 +200,9 @@ class EventDetails extends Component {
                 >
                   <Grid item>
                     <Avatar
-                      onClick={() => this.props.history.push(`/profile/${participant._id}`)}
+                      onClick={() =>
+                        this.props.history.push(`/profile/${participant._id}`)
+                      }
                       alt={participant.fullName}
                       src="/static/images/avatar/1.jpg"
                     />
@@ -210,14 +217,16 @@ class EventDetails extends Component {
             </Grid>
           )}
           <Grid item xs={12}>
-            <Button
-              onClick={handleClick}
-              variant="contained"
-              color="secondary"
-              size="large"
-            >
-              Join
-            </Button>
+            <Box mb={6} mt={3}>
+              <Button
+                onClick={handleClick}
+                variant="contained"
+                color="secondary"
+                size="large"
+              >
+                Join
+              </Button>
+            </Box>
           </Grid>
         </Grid>
       </Container>

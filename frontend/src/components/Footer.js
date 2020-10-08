@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 
 function Footer(props) {
   const isLoggedIn = props.isLoggedIn;
