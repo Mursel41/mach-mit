@@ -84,10 +84,7 @@ export default class SearchBar extends React.Component {
 
       fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
         .then((res) => res.json())
-        .then((activities) => {
-            this.setState({ activities })
-        })
-        .then()
+        .then((activities) => {this.setState({ activities })})
         .catch((err) => console.log(err));
 
        
