@@ -24,8 +24,8 @@ export default class SearchBar extends React.Component {
       //location for search options
       inputLocation: "",
       message: "",
+      firstSearch: false,
     };
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -46,6 +46,12 @@ export default class SearchBar extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.city !== this.props.city) {
+      this.setState({ inputLocation: this.props.city });
+    }
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
     let searchKey = "";
@@ -55,31 +61,36 @@ export default class SearchBar extends React.Component {
       this.state.inputLocation !== ""
     ) {
       searchKey = `?address.city=${this.state.inputLocation}`;
-      this.setState({ message: `${this.state.inputLocation}` });
+      this.setState({ message: ` ${this.state.inputLocation}` });
     } else if (
       this.state.inputCategory.length !== 0 &&
       this.state.inputLocation === ""
     ) {
       searchKey = `?typeOfActivity=${this.state.inputCategory._id}`;
-      this.setState({ message: `${this.state.inputCategory.name}` });
+      this.setState({ message: ` ${this.state.inputCategory.name}` });
     } else if (
       this.state.inputCategory.length !== 0 &&
       this.state.inputLocation !== ""
     ) {
       searchKey = `?typeOfActivity=${this.state.inputCategory._id}&address.city=${this.state.inputLocation}`;
       this.setState({
-        message: `${this.state.inputCategory.name} in ${this.state.inputLocation}`,
+        message: ` ${this.state.inputCategory.name} in ${this.state.inputLocation}`,
       });
     }
 
     if (searchKey !== "") {
+      this.setState({ activities: [] });
+
       fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
         .then((res) => res.json())
-        .then((activities) => this.setState({ activities }))
+        .then((activities) => {
+          this.setState({ activities });
+        })
         .catch((err) => console.log(err));
 
       this.setState({ inputLocation: "" });
       this.setState({ inputCategory: [] });
+      this.setState({ firstSearch: true });
     }
   }
 
@@ -170,33 +181,38 @@ export default class SearchBar extends React.Component {
             </form>
           </Paper>
         </Grid>
-
-        <Paper
-          style={{
-            backgroundColor: "rgba(238,250,255, 0.5)",
-            width: "100%",
-            padding: "5px",
-            marginTop: "30px",
-          }}
-        >
-          {this.state.activities.length > 0 && (
+        {this.state.firstSearch && (
+          <Paper
+            style={{
+              backgroundColor: "rgba(238,250,255, 0.5)",
+              width: "100%",
+              padding: "5px",
+              marginTop: "30px",
+            }}
+          >
             <Box p={3}>
               <Box>
                 <Typography variant="h4" component="h4" gutterBottom>
-                  {`Results for ${this.state.message}`}
+                  {this.state.activities.length > 0 ? (
+                    <React.Fragment>
+                      Activities for {this.state.message}
+                      <Box m={1}>
+                        <Divider />
+                      </Box>
+                    </React.Fragment>
+                  ) : (
+                    this.state.firstSearch &&
+                    `Sorry, there are no activities for ${this.state.message}`
+                  )}
                 </Typography>
-              </Box>
-
-              <Box m={1}>
-                <Divider />
               </Box>
 
               <Grid item justify="center">
                 <ActivityCard activities={this.state.activities} />
               </Grid>
             </Box>
-          )}
-        </Paper>
+          </Paper>
+        )}
       </Container>
     );
   }

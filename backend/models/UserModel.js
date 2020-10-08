@@ -1,7 +1,4 @@
 const { Schema, model } = require('mongoose');
-
-const Address = require('./AddressModel');
-
 const { encrypt, check } = require('../utilities/encryption');
 const { sign, verify } = require('../utilities/authentication');
 
