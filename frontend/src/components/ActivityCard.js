@@ -16,7 +16,9 @@ class ActivityCard extends React.Component {
   render() {
     return (
       <Grid container spacing={1} justify="center">
-        {
+        {this.props.activities && this.props.activities.length < 1 ? (
+          <p> You don't have any activities yet!</p>
+        ) : (
           this.props.activities &&
           this.props.activities.map((card) => {
             return (
@@ -90,8 +92,7 @@ class ActivityCard extends React.Component {
               </Box>
             );
           })
-        // )
-        }
+        )}
       </Grid>
     );
   }
