@@ -6,6 +6,7 @@ import {
   Typography,
   Divider,
   Grid,
+  Box,
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -21,9 +22,9 @@ export default class SearchBar extends React.Component {
       //categories for search options
       inputCategory: [],
       //location for search options
-      inputLocation:'',
-      message: '',
-      firstSearch: false
+      inputLocation: "",
+      message: "",
+      firstSearch: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -43,12 +44,11 @@ export default class SearchBar extends React.Component {
       .then((res) => res.json())
       .then((locations) => this.setState({ locations }))
       .catch((err) => console.log(err));
-
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.city !== this.props.city) {    
-      this.setState({inputLocation: this.props.city})
+    if (prevProps.city !== this.props.city) {
+      this.setState({ inputLocation: this.props.city });
     }
   }
 
@@ -79,15 +79,14 @@ export default class SearchBar extends React.Component {
     }
 
     if (searchKey !== "") {
-
-      this.setState({ activities:[] })
+      this.setState({ activities: [] });
 
       fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
         .then((res) => res.json())
-        .then((activities) => {this.setState({ activities })})
+        .then((activities) => {
+          this.setState({ activities });
+        })
         .catch((err) => console.log(err));
-
-       
 
       this.setState({ inputLocation: "" });
       this.setState({ inputCategory: [] });
@@ -105,110 +104,115 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <Container fixed>
-        <Paper
-          style={{
-            backgroundColor: "white",
-            width: "100%",
-            padding: "10px",
-          }}
-        >
-          <form id="Search" onSubmit={this.handleSubmit}>
-            <Grid container spacing={1} justify="center" alignItems="center">
-              <Grid item xs={12} sm={5} md={5}>
-                <Autocomplete
-                  id="free-solo-demo"
-                  freeSolo
-                  options={this.state.categories.map((option) => option)}
-                  getOptionLabel={(option) => option.name}
-                  value={this.state.inputCategory}
-                  defaultValue={this.state.inputCategory}
-                  onChange={this.handleChangeCategory}
-                  renderInput={(params) => (
-                    <TextField
-                      style={{
-                        backgroundColor: "#FFFFFF",
-                      }}
-                      {...params}
-                      label="Search Activity"
-                      margin="normal"
-                      variant="outlined"
-                    />
-                  )}
-                />
+      <Container>
+        <Grid container justify="center" alignItems="center">
+          <Paper
+            style={{
+              backgroundColor: "rgba(238,250,255, 0.5)",
+              width: "100%",
+              padding: "5px",
+            }}
+          >
+            <form id="Search" onSubmit={this.handleSubmit}>
+              <Grid container justify="center" alignItems="center" spacing={1}>
+                <Grid item xs={12} sm={5}>
+                  <Autocomplete
+                    id="free-solo-demo"
+                    freeSolo
+                    options={this.state.categories.map((option) => option)}
+                    getOptionLabel={(option) => option.name}
+                    value={this.state.inputCategory}
+                    defaultValue={this.state.inputCategory}
+                    onChange={this.handleChangeCategory}
+                    renderInput={(params) => (
+                      <TextField
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                        }}
+                        {...params}
+                        label="Search Activity"
+                        margin="normal"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                  <Autocomplete
+                    freeSolo
+                    id="free-solo-2-demo"
+                    disableClearable
+                    options={this.state.locations.map((option) => option)}
+                    getOptionLabel={(option) => option}
+                    value={this.state.inputLocation}
+                    defaultValue={this.state.inputLocation}
+                    onChange={this.handleChangeLocation}
+                    renderInput={(params) => (
+                      <TextField
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                        }}
+                        {...params}
+                        label="Select Location"
+                        margin="normal"
+                        variant="outlined"
+                        InputProps={{ ...params.InputProps, type: "search" }}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <Button
+                    variant="contained"
+                    fullWidth={true}
+                    style={{
+                      backgroundColor: "#90E2D8",
+                      color: "rgb(16, 46, 74)",
+                      height: "54px",
+                      marginTop: "6px",
+                      fontSize: ".9rem",
+                    }}
+                    type="submit"
+                  >
+                    Search
+                  </Button>
+                </Grid>
               </Grid>
-
-              <Grid item xs={12} sm={5} md={5}>
-                <Autocomplete
-                  freeSolo
-                  id="free-solo-2-demo"
-                  disableClearable
-                  options={this.state.locations.map((option) => option)}
-                  getOptionLabel={(option) => option}
-                  value={this.state.inputLocation}
-                  defaultValue={this.state.inputLocation}
-                  onChange={this.handleChangeLocation}
-                  renderInput={(params) => (
-                    <TextField
-                      style={{
-                        backgroundColor: "#FFFFFF",
-                      }}
-                      {...params}
-                      label="Select Location"
-                      margin="normal"
-                      variant="outlined"
-                      InputProps={{ ...params.InputProps, type: "search" }}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} sm={2} md={2}>
-                <Button
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#90E2D8",
-                    color: "rgb(16, 46, 74)",
-                    height: "54px",
-                    width: "110px",
-                    marginTop: "6px",
-                    fontSize: ".9rem",
-                  }}
-                  type="submit"
-                >
-                  Search
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </Paper>
-
-        <Paper
-          style={{
-            backgroundColor: "rgba(238,250,255, 0.5)",
-            width: "100%",
-            padding: "0px 10px",
-          }}
-        >
-            <Grid item xs={12}>
-              <Grid item>
+            </form>
+          </Paper>
+        </Grid>
+        {this.state.firstSearch && (
+          <Paper
+            style={{
+              backgroundColor: "rgba(238,250,255, 0.5)",
+              width: "100%",
+              padding: "5px",
+              marginTop: "30px",
+            }}
+          >
+            <Box p={3}>
+              <Box>
                 <Typography variant="h4" component="h4" gutterBottom>
-                {this.state.activities.length > 0 ? 
-                  <React.Fragment>
-                        Activities for {this.state.message} 
-                      <Grid item>
+                  {this.state.activities.length > 0 ? (
+                    <React.Fragment>
+                      Activities for {this.state.message}
+                      <Box m={1}>
                         <Divider />
-                      </Grid>
-                  </React.Fragment> :
-                  this.state.firstSearch && `Sorry, there are no activities for ${this.state.message}`
-                  }
+                      </Box>
+                    </React.Fragment>
+                  ) : (
+                    this.state.firstSearch &&
+                    `Sorry, there are no activities for ${this.state.message}`
+                  )}
                 </Typography>
+              </Box>
+
+              <Grid item justify="center">
+                <ActivityCard activities={this.state.activities} />
               </Grid>
-                  <Grid item xs={12} justify="center">
-                    <ActivityCard activities={this.state.activities} />
-                  </Grid>
-           
-            </Grid>
-        </Paper>
+            </Box>
+          </Paper>
+        )}
       </Container>
     );
   }

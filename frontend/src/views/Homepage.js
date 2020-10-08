@@ -65,12 +65,14 @@ function Homepage(props) {
                   }}
                 >
                   <Grid item>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                      Created activities
-                    </Typography>
+                    <Box p={1}>
+                      <Typography variant="h4" component="h4" gutterBottom>
+                        Created activities
+                      </Typography>
+                    </Box>
                   </Grid>
 
-                  <Box m={2}>
+                  <Box m={1}>
                     <Divider />
                   </Box>
 
@@ -89,17 +91,20 @@ function Homepage(props) {
                   style={{
                     padding: "10px",
                     backgroundColor: "rgba(238,250,255, 0.5)",
+                    marginBottom: "30px",
                   }}
                 >
                   <Grid item>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                      Participated activities
-                    </Typography>
+                    <Box p={1}>
+                      <Typography variant="h4" component="h4" gutterBottom>
+                        Participated activities
+                      </Typography>
+                    </Box>
                   </Grid>
 
-                  <Grid item>
+                  <Box m={1}>
                     <Divider />
-                  </Grid>
+                  </Box>
 
                   <Grid item>
                     <ActivityCard activities={user.participatedActivities} />
