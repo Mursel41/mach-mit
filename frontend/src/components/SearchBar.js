@@ -176,16 +176,18 @@ export default class SearchBar extends React.Component {
             backgroundColor: "rgba(238,250,255, 0.5)",
             width: "100%",
             padding: "5px",
-            marginTop: "10px",
+            marginTop: "30px",
           }}
         >
           {this.state.activities.length > 0 && (
-            <Box>
+            <Box p={3}>
               <Box>
                 <Typography variant="h4" component="h4" gutterBottom>
                   {`Results for ${this.state.message}`}
                 </Typography>
+              </Box>
 
+              <Box m={1}>
                 <Divider />
               </Box>
 
