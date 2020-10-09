@@ -91,8 +91,7 @@ class ActivityCard extends React.Component {
               </Box>
             );
           })
-        )
-        }
+        )}
       </Grid>
     );
   }
