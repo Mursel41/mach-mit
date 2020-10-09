@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ActivityCard from "../components/ActivityCard";
 
+
 export default class SearchBar extends React.Component {
   constructor(props) {
     super(props);
@@ -30,11 +31,6 @@ export default class SearchBar extends React.Component {
   }
 
   componentDidMount() {
-    // fetch('http://localhost:5000/api/v1/activities')
-    //   .then((res) => res.json())
-    //   .then((activities) => this.setState({ activities }))
-    //   .catch((err) => console.log(err));
-
     fetch("http://localhost:5000/api/v1/categories")
       .then((res) => res.json())
       .then((categories) => this.setState({ categories }))
@@ -84,7 +80,11 @@ export default class SearchBar extends React.Component {
       fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
         .then((res) => res.json())
         .then((activities) => {
-          this.setState({ activities });
+            activities.sort(function(a, b) {
+            let x = a.startDate; let y = b.startDate;
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });       
+        this.setState({ activities: activities.filter( activity => new Date(activity.startDate).getTime() > new Date().getTime()) });
         })
         .catch((err) => console.log(err));
 

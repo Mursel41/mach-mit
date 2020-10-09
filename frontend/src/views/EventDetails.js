@@ -17,7 +17,6 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import WcIcon from "@material-ui/icons/Wc";
 import RoomIcon from "@material-ui/icons/Room";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import hero from "../images/hero.jpg";
 import { withRouter } from "react-router-dom";
 import swal from "sweetalert";
 import moment from "moment";
@@ -40,9 +39,9 @@ class EventDetails extends Component {
   }
 
   render() {
-    console.log(this.state.data);
     const {
       _id,
+      image,
       description,
       address: { city, street, zip },
       creator,
@@ -119,7 +118,7 @@ class EventDetails extends Component {
           </Grid>
           <Grid item xs={8} md={6}>
             <Box>
-              <img alt={name} src={hero} width="100%" />
+              <img alt={name} src={image} width="100%" />
             </Box>
           </Grid>
           <Grid item xs={12} md={3}>

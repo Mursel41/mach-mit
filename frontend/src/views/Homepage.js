@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import MainTextHeroImg from "../components/MainTextHeroImg";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
@@ -15,6 +15,8 @@ import ActivityCard from "../components/ActivityCard";
 
 function Homepage(props) {
   const { isLoggedIn, auth, user, setUser } = props;
+  const [createdActivities, setCreatedActivities ]= useState([]);
+  const [participatedActivities, setParticipatedActivities ]= useState([]);
 
   useEffect(() => {
     (async () => {
@@ -28,6 +30,8 @@ function Homepage(props) {
           .then((res) => res.json())
           .then((data) => {
             setUser(data);
+            setCreatedActivities(data.createdActivities);
+            setParticipatedActivities(data.participatedActivities);
           })
           .catch((error) => console.log(error));
       }
@@ -75,9 +79,10 @@ function Homepage(props) {
                   <Box m={1}>
                     <Divider />
                   </Box>
-
                   <Grid item>
-                    <ActivityCard activities={user.createdActivities} />
+                    <ActivityCard activities={createdActivities.sort(function(a, b) {
+                          let x = a.startDate; let y = b.startDate;
+                          return ((x < y) ? 1 : ((x > y) ? -1 : 0))})} />
                   </Grid>
                 </Paper>
               </Grid>
@@ -105,9 +110,10 @@ function Homepage(props) {
                   <Box m={1}>
                     <Divider />
                   </Box>
-
                   <Grid item>
-                    <ActivityCard activities={user.participatedActivities} />
+                    <ActivityCard activities={participatedActivities.sort(function(a, b) {
+                          let x = a.startDate; let y = b.startDate;
+                          return ((x < y) ? 1 : ((x > y) ? -1 : 0))})} />
                   </Grid>
                 </Paper>
               </Grid>
