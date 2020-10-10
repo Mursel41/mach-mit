@@ -40,7 +40,6 @@ class EventDetails extends Component {
   }
 
   render() {
-    console.log(this.state.data);
     const {
       _id,
       image,
