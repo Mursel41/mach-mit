@@ -16,6 +16,7 @@ import { withRouter } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import swal from "sweetalert";
+import SubmitProfilePhoto from "../components/SubmitProfilePhoto";
 
 // Validation and style
 
@@ -50,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
+  // avatar: {
+  //   margin: theme.spacing(1),
+  //   backgroundColor: theme.palette.secondary.main,
+  // },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
@@ -132,8 +133,6 @@ const Profile = (props) => {
           }}
           validationSchema={SignupSchema}
           onSubmit={(values, { setSubmitting }) => {
-
-            console.log(values)
            
               fetch(`http://localhost:5000/api/v1/users/${props.user._id}`, {
                 method:'PUT',
@@ -169,12 +168,14 @@ const Profile = (props) => {
             values,
             isSubmitting,
           }) => (
+            <React.Fragment>
+            <SubmitProfilePhoto id={user._id} image={user.image} auth={props.auth}/>
+         
+
             <Form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
               <Grid item xs={12}>
-              <Avatar className={classes.avatar}>
               
-              </Avatar>
               <Typography component="h1" variant="h5">
                 Profile
               </Typography>
@@ -311,6 +312,7 @@ const Profile = (props) => {
                 Update
               </Button>
             </Form>
+            </React.Fragment>
           )}
         </Formik>
 }
@@ -321,8 +323,7 @@ const Profile = (props) => {
 
 {props.match.params.id!==props.user._id && user && <Grid container spacing={1}>
               <Grid item xs={12}>
-              <Avatar className={classes.avatar}>
-              
+              <Avatar className={classes.avatar} src={user.image}>
               </Avatar>
               <Typography component="h1" variant="h5">
                 Profile

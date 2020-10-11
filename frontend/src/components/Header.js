@@ -65,7 +65,7 @@ function Header(props) {
                 </Button>
               </NavLink>
               <Box  onClick={() => props.history.push(`/profile/${user._id}`)}>
-                  <Avatar className={classes.avatar} />
+              {user.image &&<Avatar className={classes.avatar} src={user.image} />}
               </Box>
             </Box>
           ) : (
