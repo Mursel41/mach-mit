@@ -118,7 +118,7 @@ class EventDetails extends Component {
                     this.props.history.push(`/profile/${creator._id}`)
                   }
                   alt={creator.fullName}
-                  src="/static/images/avatar/1.jpg"
+                  src={creator.image}
                 />
               </Grid>
               <Grid item>
@@ -216,7 +216,7 @@ class EventDetails extends Component {
                           this.props.history.push(`/profile/${participant._id}`)
                         }
                         alt={participant.fullName}
-                        src="/static/images/avatar/1.jpg"
+                        src={participant.image}
                       />
                     </Grid>
                     <Grid item>

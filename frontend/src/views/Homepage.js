@@ -3,6 +3,7 @@ import MainTextHeroImg from "../components/MainTextHeroImg";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
 import CreateActivityButton from "../components/CreateActivityButton";
+
 import {
   Typography,
   Divider,
