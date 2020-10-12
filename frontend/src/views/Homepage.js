@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import MainTextHeroImg from "../components/MainTextHeroImg";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
 import CreateActivityButton from "../components/CreateActivityButton";
+
 import {
   Typography,
   Divider,
@@ -15,6 +16,8 @@ import ActivityCard from "../components/ActivityCard";
 
 function Homepage(props) {
   const { isLoggedIn, auth, user, setUser } = props;
+  const [createdActivities, setCreatedActivities ]= useState([]);
+  const [participatedActivities, setParticipatedActivities ]= useState([]);
 
   useEffect(() => {
     (async () => {
@@ -28,6 +31,8 @@ function Homepage(props) {
           .then((res) => res.json())
           .then((data) => {
             setUser(data);
+            setCreatedActivities(data.createdActivities);
+            setParticipatedActivities(data.participatedActivities);
           })
           .catch((error) => console.log(error));
       }
@@ -47,7 +52,7 @@ function Homepage(props) {
         </Grid>
 
         <Grid item xs={12} md={9}>
-          <SearchBar city={user.city}/>
+          <SearchBar city={user.city} />
         </Grid>
 
         <Grid item xs={12} md={9}>
@@ -65,17 +70,20 @@ function Homepage(props) {
                   }}
                 >
                   <Grid item>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                      Created activities
-                    </Typography>
+                    <Box p={1}>
+                      <Typography variant="h4" component="h4" gutterBottom>
+                        Created activities
+                      </Typography>
+                    </Box>
                   </Grid>
 
-                  <Box m={2}>
+                  <Box m={1}>
                     <Divider />
                   </Box>
-
                   <Grid item>
-                    <ActivityCard activities={user.createdActivities} />
+                    <ActivityCard activities={createdActivities.sort(function(a, b) {
+                          let x = a.startDate; let y = b.startDate;
+                          return ((x < y) ? 1 : ((x > y) ? -1 : 0))})} />
                   </Grid>
                 </Paper>
               </Grid>
@@ -87,22 +95,27 @@ function Homepage(props) {
               <Grid item>
                 <Paper
                   style={{
-                    padding: "10px",
-                    backgroundColor: "rgba(238,250,255, 0.5)",
+                    padding: "30px",
+                    backgroundColor: "rgba(238,250,255, 0.6)",
+                    marginBottom: "30px",
+                    marginTop: "30px",
                   }}
                 >
                   <Grid item>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                      Participated activities
-                    </Typography>
+                    <Box p={1}>
+                      <Typography variant="h4" component="h4" gutterBottom>
+                        Participated activities
+                      </Typography>
+                    </Box>
                   </Grid>
 
-                  <Grid item>
+                  <Box m={1}>
                     <Divider />
-                  </Grid>
-
+                  </Box>
                   <Grid item>
-                    <ActivityCard activities={user.participatedActivities} />
+                    <ActivityCard activities={participatedActivities.sort(function(a, b) {
+                          let x = a.startDate; let y = b.startDate;
+                          return ((x < y) ? 1 : ((x > y) ? -1 : 0))})} />
                   </Grid>
                 </Paper>
               </Grid>

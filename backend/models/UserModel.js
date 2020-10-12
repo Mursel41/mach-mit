@@ -48,7 +48,7 @@ const UserSchema = new Schema(
     ],
     image: {
       type: String,
-      default: 'assets/img/user-profile-default.png',
+      default: '/assets/img/user-profile-default.png',
     },
     role: {
       type: String,

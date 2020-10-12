@@ -72,7 +72,6 @@ exports.deleteActivity = async (req, res, next) => {
 
 exports.getLocations = async (req, res, next) => {
   try {
-    console.log(req.query);
     const cities = await Activity.find().distinct('address.city');
     res.status(200).send(cities);
   } catch (error) {

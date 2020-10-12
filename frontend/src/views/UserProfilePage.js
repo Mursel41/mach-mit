@@ -16,6 +16,7 @@ import { withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
+import SubmitProfilePhoto from '../components/SubmitProfilePhoto';
 
 // Validation and style
 
@@ -41,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
+  // avatar: {
+  //   margin: theme.spacing(1),
+  //   backgroundColor: theme.palette.secondary.main,
+  // },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
@@ -116,8 +117,6 @@ const Profile = (props) => {
             }}
             validationSchema={SignupSchema}
             onSubmit={(values, { setSubmitting }) => {
-              console.log(values);
-
               fetch(`http://localhost:5000/api/v1/users/${props.user._id}`, {
                 method: 'PUT',
                 headers: {
@@ -152,150 +151,161 @@ const Profile = (props) => {
               values,
               isSubmitting,
             }) => (
-              <Form className={classes.form} onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Avatar className={classes.avatar}></Avatar>
-                    <Typography component="h1" variant="h5">
-                      Profile
-                    </Typography>
+              <React.Fragment>
+                <SubmitProfilePhoto
+                  id={user._id}
+                  image={user.image}
+                  auth={props.auth}
+                />
+
+                <Form className={classes.form} onSubmit={handleSubmit}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Typography component="h1" variant="h5">
+                        Profile
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        error={errors.firstName && touched.firstName}
+                        autoComplete="fname"
+                        name="firstName"
+                        fullWidth
+                        onChange={handleChange}
+                        value={values.firstName}
+                        id="firstName"
+                        label="First Name"
+                        autoFocus
+                        helperText={
+                          errors.firstName && touched.firstName
+                            ? errors.firstName
+                            : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        error={errors.lastName && touched.lastName}
+                        fullWidth
+                        onChange={handleChange}
+                        value={values.lastName}
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="lname"
+                        helperText={
+                          errors.lastName && touched.lastName
+                            ? errors.lastName
+                            : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        error={
+                          emailError !== '' || (errors.email && touched.email)
+                        }
+                        fullWidth
+                        onFocus={() => {
+                          setEmailError('');
+                        }}
+                        onChange={handleChange}
+                        value={values.email}
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        helperText={
+                          emailError
+                            ? emailError
+                            : errors.email && touched.email
+                            ? errors.email
+                            : null
+                        }
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      container
+                      direction="row"
+                      justify="space-evenly"
+                      alignItems="center"
+                    >
+                      <FormLabel component="legend">Gender</FormLabel>
+                      <Field
+                        name="gender"
+                        value={values.gender}
+                        id="gender"
+                        options={['Male', 'Female', 'Other']}
+                        component={FormikRadioGroup}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        error={errors.age && touched.age}
+                        fullWidth
+                        onChange={handleChange}
+                        value={values.age}
+                        id="age"
+                        label="Age"
+                        name="age"
+                        autoComplete="age"
+                        helperText={
+                          errors.age && touched.age ? errors.age : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        error={errors.city && touched.city}
+                        fullWidth
+                        onChange={handleChange}
+                        value={values.city}
+                        id="city"
+                        label="City"
+                        name="city"
+                        autoComplete="city"
+                        helperText={
+                          errors.city && touched.city ? errors.city : null
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Field
+                        name="interests"
+                        multiple
+                        component={Autocomplete}
+                        options={categories}
+                        getOptionLabel={(option) => option.name}
+                        fullWidth
+                        renderInput={(params) => (
+                          <MuiTextField
+                            {...params}
+                            error={
+                              touched['interests'] && !!errors['interests']
+                            }
+                            helperText={
+                              touched['interests'] && errors['interests']
+                            }
+                            label="My interests"
+                          />
+                        )}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      error={errors.firstName && touched.firstName}
-                      autoComplete="fname"
-                      name="firstName"
-                      fullWidth
-                      onChange={handleChange}
-                      value={values.firstName}
-                      id="firstName"
-                      label="First Name"
-                      autoFocus
-                      helperText={
-                        errors.firstName && touched.firstName
-                          ? errors.firstName
-                          : null
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      error={errors.lastName && touched.lastName}
-                      fullWidth
-                      onChange={handleChange}
-                      value={values.lastName}
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="lname"
-                      helperText={
-                        errors.lastName && touched.lastName
-                          ? errors.lastName
-                          : null
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      error={
-                        emailError !== '' || (errors.email && touched.email)
-                      }
-                      fullWidth
-                      onFocus={() => {
-                        setEmailError('');
-                      }}
-                      onChange={handleChange}
-                      value={values.email}
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      helperText={
-                        emailError
-                          ? emailError
-                          : errors.email && touched.email
-                          ? errors.email
-                          : null
-                      }
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    container
-                    direction="row"
-                    justify="space-evenly"
-                    alignItems="center"
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    disabled={isSubmitting}
+                    className={classes.submit}
                   >
-                    <FormLabel component="legend">Gender</FormLabel>
-                    <Field
-                      name="gender"
-                      value={values.gender}
-                      id="gender"
-                      options={['Male', 'Female', 'Other']}
-                      component={FormikRadioGroup}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      error={errors.age && touched.age}
-                      fullWidth
-                      onChange={handleChange}
-                      value={values.age}
-                      id="age"
-                      label="Age"
-                      name="age"
-                      autoComplete="age"
-                      helperText={errors.age && touched.age ? errors.age : null}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      error={errors.city && touched.city}
-                      fullWidth
-                      onChange={handleChange}
-                      value={values.city}
-                      id="city"
-                      label="City"
-                      name="city"
-                      autoComplete="city"
-                      helperText={
-                        errors.city && touched.city ? errors.city : null
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field
-                      name="interests"
-                      multiple
-                      component={Autocomplete}
-                      options={categories}
-                      getOptionLabel={(option) => option.name}
-                      fullWidth
-                      renderInput={(params) => (
-                        <MuiTextField
-                          {...params}
-                          error={touched['interests'] && !!errors['interests']}
-                          helperText={
-                            touched['interests'] && errors['interests']
-                          }
-                          label="My interests"
-                        />
-                      )}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="secondary"
-                  disabled={isSubmitting}
-                  className={classes.submit}
-                >
-                  Update
-                </Button>
-              </Form>
+                    Update
+                  </Button>
+                </Form>
+              </React.Fragment>
             )}
           </Formik>
         )}
@@ -307,7 +317,7 @@ const Profile = (props) => {
         {props.match.params.id !== props.user._id && user && (
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Avatar className={classes.avatar}></Avatar>
+              <Avatar className={classes.avatar} src={user.image}></Avatar>
               <Typography component="h1" variant="h5">
                 Profile
               </Typography>
