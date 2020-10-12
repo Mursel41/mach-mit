@@ -1,5 +1,5 @@
-import React, {useState, useEffect } from "react";
-import MainTextHeroImg from "../components/MainTextHeroImg";
+import React, { useState, useEffect } from "react";
+import MainText from "../components/MainText";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
 import CreateActivityButton from "../components/CreateActivityButton";
@@ -16,8 +16,8 @@ import ActivityCard from "../components/ActivityCard";
 
 function Homepage(props) {
   const { isLoggedIn, auth, user, setUser } = props;
-  const [createdActivities, setCreatedActivities ]= useState([]);
-  const [participatedActivities, setParticipatedActivities ]= useState([]);
+  const [createdActivities, setCreatedActivities] = useState([]);
+  const [participatedActivities, setParticipatedActivities] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -41,88 +41,105 @@ function Homepage(props) {
 
   return (
     <Container fixed>
-      <Grid container spacing={2} justify="center">
-        <Grid item xs={12} md={9}>
-          <Grid item>
-            <MainTextHeroImg />
-          </Grid>
-          <Grid item>
-            {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12} md={9}>
-          <SearchBar city={user.city} />
-        </Grid>
-
-        <Grid item xs={12} md={9}>
-          {isLoggedIn && user && (
-            <React.Fragment>
-              <Box m={2}>
-                <Divider />
+      <Box minHeight="82.4vh">
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={12} md={9}>
+            <Grid item>
+              <Box mt={20} mb={5}>
+                <MainText />
               </Box>
+            </Grid>
+            <Grid item>
+              {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
+            </Grid>
+          </Grid>
 
-              <Grid item>
-                <Paper
-                  style={{
-                    padding: "10px",
-                    backgroundColor: "rgba(238,250,255, 0.5)",
-                  }}
-                >
-                  <Grid item>
-                    <Box p={1}>
-                      <Typography variant="h4" component="h4" gutterBottom>
-                        Created activities
+          <Grid item xs={12} md={9}>
+            <SearchBar city={user.city} />
+          </Grid>
+
+          <Grid item xs={12} md={9}>
+            {isLoggedIn && user && (
+              <React.Fragment>
+                <Box m={2}>
+                  <Divider />
+                </Box>
+
+                <Grid item>
+                  <Paper
+                    style={{
+                      padding: "20px",
+                      backgroundColor: "rgba(238,250,255, 0.5)",
+                      marginBottom: "30px",
+                      marginTop: "30px",
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="h5" component="h5" gutterBottom>
+                        <Box letterSpacing={0.5} fontWeight="fontWeightBold">
+                          Created activities
+                        </Box>
                       </Typography>
                     </Box>
-                  </Grid>
 
-                  <Box m={1}>
-                    <Divider />
-                  </Box>
-                  <Grid item>
-                    <ActivityCard activities={createdActivities.sort(function(a, b) {
-                          let x = a.startDate; let y = b.startDate;
-                          return ((x < y) ? 1 : ((x > y) ? -1 : 0))})} />
-                  </Grid>
-                </Paper>
-              </Grid>
+                    <Box m={1}>
+                      <Divider />
+                    </Box>
+                    <Grid item>
+                      <ActivityCard
+                        activities={createdActivities.sort(function (a, b) {
+                          let x = a.startDate;
+                          let y = b.startDate;
+                          return x < y ? 1 : x > y ? -1 : 0;
+                        })}
+                      />
+                    </Grid>
+                  </Paper>
+                </Grid>
 
-              <Box m={2}>
-                <Divider />
-              </Box>
+                <Box mb={2}>
+                  <Divider />
+                </Box>
 
-              <Grid item>
-                <Paper
-                  style={{
-                    padding: "30px",
-                    backgroundColor: "rgba(238,250,255, 0.6)",
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                  }}
-                >
-                  <Grid item>
-                    <Box p={1}>
-                      <Typography variant="h4" component="h4" gutterBottom>
-                        Participated activities
+                <Box>
+                  <Paper
+                    style={{
+                      padding: "20px",
+                      backgroundColor: "rgba(238,250,255, 0.5)",
+                      marginBottom: "30px",
+                      marginTop: "30px",
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="h5" component="h5" gutterBottom>
+                        <Box letterSpacing={0.5} fontWeight="fontWeightBold">
+                          Participated activities
+                        </Box>
                       </Typography>
                     </Box>
-                  </Grid>
+                    <Box mb={1}>
+                      <Divider />
+                    </Box>
 
-                  <Box m={1}>
-                    <Divider />
-                  </Box>
-                  <Grid item>
-                    <ActivityCard activities={participatedActivities.sort(function(a, b) {
-                          let x = a.startDate; let y = b.startDate;
-                          return ((x < y) ? 1 : ((x > y) ? -1 : 0))})} />
-                  </Grid>
-                </Paper>
-              </Grid>
-            </React.Fragment>
-          )}
+                    <Grid item>
+                      <ActivityCard
+                        activities={participatedActivities.sort(function (
+                          a,
+                          b
+                        ) {
+                          let x = a.startDate;
+                          let y = b.startDate;
+                          return x < y ? 1 : x > y ? -1 : 0;
+                        })}
+                      />
+                    </Grid>
+                  </Paper>
+                </Box>
+              </React.Fragment>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </Container>
   );
 }

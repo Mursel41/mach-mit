@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, Box, Grid } from "@material-ui/core";
+import { Button, Box, Grid, makeStyles } from "@material-ui/core";
 import logo from "../images/Logo.png";
 import { NavLink, withRouter } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -16,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Header(props) {
   const { isLoggedIn, setIsLoggedIn, setAuth, user } = props;
-
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -42,11 +40,11 @@ function Header(props) {
         alignItems="center"
       >
         <NavLink to="/">
-          <Box ml={5}>
+          <Box ml={4}>
             <img src={logo} alt="Logo" width="90" />
           </Box>
         </NavLink>
-        <Box mr={5}>
+        <Box mr={4}>
           {isLoggedIn ? (
             <Box display="flex" flexDirection="row" alignItems="center">
               <NavLink
@@ -64,8 +62,10 @@ function Header(props) {
                   Log out
                 </Button>
               </NavLink>
-              <Box  onClick={() => props.history.push(`/profile/${user._id}`)}>
-              {user.image &&<Avatar className={classes.avatar} src={user.image} />}
+              <Box onClick={() => props.history.push(`/profile/${user._id}`)}>
+                {user.image && (
+                  <Avatar className={classes.avatar} src={user.image} />
+                )}
               </Box>
             </Box>
           ) : (
