@@ -20,6 +20,8 @@ import * as yup from "yup";
 import axios from "axios";
 import swal from "sweetalert";
 import { Box } from "@material-ui/core";
+import { decities } from './decities3';
+import { Autocomplete } from 'formik-material-ui-lab';
 
 // Validation and style
 
@@ -159,6 +161,7 @@ const CreateActivity = (props) => {
                   },
                 })
                 .then((res) => {
+                  console.log(values);
                   if (res.status === 201) {
                     swal(
                       "Success!",
@@ -249,23 +252,32 @@ const CreateActivity = (props) => {
                         </Grid>
                       </Box>
                       <Box mt={2}>
-                        <MuiTextField
-                          error={errors.address && touched.address}
-                          variant="outlined"
-                          fullWidth
-                          onChange={handleChange}
-                          value={values.address.city}
-                          id="city"
-                          label="City"
+                      <Field
                           name="address.city"
-                          autoComplete="city"
+                          component={Autocomplete}
+                          options={decities.map(option => option.city)}
+                          getOptionLabel={(option) => option}
+                          value={values.address.city}
+                          getOptionSelected={(option, value) => {
+                            return option._id === value._id;
+                         }}                          
+                          disableClearable
+                          fullWidth
+                          renderInput={(params) => (
+                          <MuiTextField
+                          {...params}
+                          error={errors.address && touched.address}
                           helperText={
                             getIn(errors, "address.city") &&
                             getIn(touched, "address.city")
                               ? getIn(errors, "address.city")
                               : null
                           }
-                        />
+                          label="City"
+                          variant="outlined"
+                      />
+                    )}
+                  />
                       </Box>
                       <Box mt={2}>
                         <MuiTextField
