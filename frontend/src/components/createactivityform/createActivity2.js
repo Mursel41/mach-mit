@@ -23,6 +23,8 @@ import { withRouter } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import swal from "sweetalert";
+import { decities } from "./decities3";
+import { Autocomplete } from "formik-material-ui-lab";
 
 // Validation and style
 
@@ -110,14 +112,13 @@ const CreateActivity = (props) => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <Box minHeight="75vh">
+      <Box minHeight="75.5vh">
         <CssBaseline />
         <Paper
           style={{
-            padding: "10px 20px 10px 20px",
+            padding: "30px",
             backgroundColor: "rgba(238,250,255, 0.6)",
-            marginTop: "4rem",
-            marginBottom: "4rem",
+            marginTop: "60px",
           }}
         >
           <div className={classes.paper}>
@@ -249,22 +250,31 @@ const CreateActivity = (props) => {
                           </Grid>
                         </Box>
                         <Box mt={2}>
-                          <MuiTextField
-                            error={errors.address && touched.address}
-                            variant="outlined"
-                            fullWidth
-                            onChange={handleChange}
-                            value={values.address.city}
-                            id="city"
-                            label="City"
+                          <Field
                             name="address.city"
-                            autoComplete="city"
-                            helperText={
-                              getIn(errors, "address.city") &&
-                              getIn(touched, "address.city")
-                                ? getIn(errors, "address.city")
-                                : null
-                            }
+                            component={Autocomplete}
+                            options={decities.map((option) => option.city)}
+                            getOptionLabel={(option) => option}
+                            value={values.address.city}
+                            getOptionSelected={(option, value) => {
+                              return option._id === value._id;
+                            }}
+                            disableClearable
+                            fullWidth
+                            renderInput={(params) => (
+                              <MuiTextField
+                                {...params}
+                                error={errors.address && touched.address}
+                                helperText={
+                                  getIn(errors, "address.city") &&
+                                  getIn(touched, "address.city")
+                                    ? getIn(errors, "address.city")
+                                    : null
+                                }
+                                label="City"
+                                variant="outlined"
+                              />
+                            )}
                           />
                         </Box>
                         <Box mt={2}>

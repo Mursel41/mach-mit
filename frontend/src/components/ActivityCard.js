@@ -17,7 +17,7 @@ class ActivityCard extends React.Component {
     return (
       <Grid container spacing={1} justify="center">
         {this.props.activities && this.props.activities.length < 1 ? (
-          <p> You don't have any activities yet!</p>
+          <p> No activity yet!</p>
         ) : (
           this.props.activities &&
           this.props.activities.map((card) => {
@@ -60,11 +60,16 @@ class ActivityCard extends React.Component {
                           <Box>
                             {moment(card.startDate).format("D MMM YYYY")}
                           </Box>
-                          <Box>
-                            {" "}
-                            {card.participants.length}/{card.numberOfAttendee}{" "}
-                            Participants
-                          </Box>
+                          {card.participants.length ===
+                          card.numberOfAttendee ? (
+                            "FULL"
+                          ) : (
+                            <Box>
+                              {" "}
+                              {card.participants.length}/{card.numberOfAttendee}{" "}
+                              Participants
+                            </Box>
+                          )}
                         </Typography>
                         <Box
                           display="flex"

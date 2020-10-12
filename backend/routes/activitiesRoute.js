@@ -15,6 +15,7 @@ const {
 const validator = require('../middleware/validator');
 const activityRules = require('../utilities/validation/activity');
 const authorizeToken = require('../middleware/tokenAuth');
+const authorizeUser = require('../middleware/userAuth');
 
 router
   .route('/')

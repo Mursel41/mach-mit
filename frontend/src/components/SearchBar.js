@@ -30,11 +30,6 @@ export default class SearchBar extends React.Component {
   }
 
   componentDidMount() {
-    // fetch('http://localhost:5000/api/v1/activities')
-    //   .then((res) => res.json())
-    //   .then((activities) => this.setState({ activities }))
-    //   .catch((err) => console.log(err));
-
     fetch("http://localhost:5000/api/v1/categories")
       .then((res) => res.json())
       .then((categories) => this.setState({ categories }))
@@ -84,7 +79,17 @@ export default class SearchBar extends React.Component {
       fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
         .then((res) => res.json())
         .then((activities) => {
-          this.setState({ activities });
+          activities.sort(function (a, b) {
+            let x = a.startDate;
+            let y = b.startDate;
+            return x < y ? -1 : x > y ? 1 : 0;
+          });
+          this.setState({
+            activities: activities.filter(
+              (activity) =>
+                new Date(activity.startDate).getTime() > new Date().getTime()
+            ),
+          });
         })
         .catch((err) => console.log(err));
 
@@ -184,16 +189,20 @@ export default class SearchBar extends React.Component {
           >
             <Box>
               <Box>
-                <Typography variant="h4" component="h4" gutterBottom>
+                <Typography variant="h5" component="h5" gutterBottom>
                   {this.state.activities.length > 0 ? (
                     <React.Fragment>
-                      <Box letterSpacing={0.5} fontWeight="fontWeightMedium">
+                      <Box letterSpacing={0.5} fontWeight="fontWeightBold">
                         Activities for {this.state.message}
                       </Box>
                     </React.Fragment>
                   ) : (
-                    this.state.firstSearch &&
-                    `Sorry, there are no activities for ${this.state.message}`
+                    this.state.firstSearch && (
+                      <Box letterSpacing={0.5} fontWeight="fontWeightBold">
+                        Sorry, there are no activities for
+                        {this.state.message}.
+                      </Box>
+                    )
                   )}
                 </Typography>
               </Box>

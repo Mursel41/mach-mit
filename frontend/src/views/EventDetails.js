@@ -40,7 +40,6 @@ class EventDetails extends Component {
   }
 
   render() {
-    console.log(this.state.data);
     const {
       _id,
       image,
@@ -56,16 +55,16 @@ class EventDetails extends Component {
       typeOfAttendee,
     } = this.state.data;
 
-    const handleClick = () => {
-      console.log(this.props.user._id);
+    const handleJoin = () => {
+      //console.log(this.props.user._id);
       if (!this.props.isLoggedIn) return this.props.history.push("/login");
 
-      if (
-        participants.findIndex(
-          (participant) => participant._id === this.props.user._id
-        ) !== -1
-      )
-        return swal("", "You have already joined this activity.", "info");
+      // if (
+      //   participants.findIndex(
+      //     (participant) => participant._id === this.props.user._id
+      //   ) !== -1
+      // )
+      //   return swal('', 'You have already joined this activity.', 'info');
 
       if (participants.length === numberOfAttendee)
         return swal("This activity has accessed its participants limit :(");
@@ -92,6 +91,109 @@ class EventDetails extends Component {
         }
       });
     };
+
+    const handleDelete = () => {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not have access to this activity!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          swal("Your activity has been deleted!", {
+            icon: "success",
+          }).then(() => {
+            fetch(`http://localhost:5000/api/v1/activities/${_id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": this.props.auth,
+              },
+            })
+              .then(() => this.props.history.push("/"))
+              .catch((err) => console.log(err));
+          });
+        }
+      });
+    };
+
+    const handleLeave = () => {
+      swal({
+        title: "Are you sure?",
+        text: `You can join again until ${moment(startDate).format(
+          "D MMM YYYY, hh:mm"
+        )}`,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willLeave) => {
+        if (willLeave) {
+          swal("You have leaved the activity!", {
+            icon: "success",
+          }).then(() => {
+            fetch(`http://localhost:5000/api/v1/activities/${_id}/leave`, {
+              method: "POST",
+              body: JSON.stringify({ _id: this.props.user._id }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then(() => this.props.history.push("/"))
+              .catch((err) => console.log(err));
+          });
+        }
+      });
+    };
+
+    let button;
+    if (
+      participants.findIndex(
+        (participant) => participant._id === this.props.user._id
+      ) !== -1
+    ) {
+      button = (
+        <Grid item xs={12}>
+          <Button
+            onClick={handleLeave}
+            variant="contained"
+            color="secondary"
+            size="large"
+            fullWidth={true}
+          >
+            Leave
+          </Button>
+        </Grid>
+      );
+    } else if (this.props.user._id !== creator._id) {
+      button = (
+        <Grid item xs={12}>
+          <Button
+            onClick={handleJoin}
+            variant="contained"
+            color="secondary"
+            size="large"
+            fullWidth={true}
+          >
+            Join
+          </Button>
+        </Grid>
+      );
+    } else if (this.props.user._id === creator._id) {
+      button = (
+        <Grid item xs={12}>
+          <Button
+            onClick={handleDelete}
+            variant="contained"
+            color="secondary"
+            size="large"
+            fullWidth={true}
+          >
+            Delete
+          </Button>
+        </Grid>
+      );
+    }
 
     return (
       <Container maxWidth="md">
@@ -125,7 +227,7 @@ class EventDetails extends Component {
                       this.props.history.push(`/profile/${creator._id}`)
                     }
                     alt={creator.fullName}
-                    src="/static/images/avatar/1.jpg"
+                    src={creator.image}
                   />
                 </Grid>
                 <Grid item>
@@ -202,16 +304,19 @@ class EventDetails extends Component {
                 <Typography variant="h6">
                   <Box letterSpacing={0.5} fontWeight="fontWeightBold">
                     {" "}
-                    Participants({participants.length})
+                    Participants({participants.length}/{numberOfAttendee})
                   </Box>
                 </Typography>
               </Grid>
+
               {participants.length === 0 ? (
-                <Typography>
-                  {" "}
-                  So far there is nobody joining to this activity. Be first to
-                  enjoy the activity.
-                </Typography>
+                <Grid item xs={12} md={9}>
+                  <Typography>
+                    {" "}
+                    So far there is nobody joining to this activity. Be first to
+                    enjoy the activity.
+                  </Typography>
+                </Grid>
               ) : (
                 <Grid item container xs={12} md={9} justify="flex-start">
                   {participants.map((participant) => (
@@ -231,7 +336,7 @@ class EventDetails extends Component {
                             )
                           }
                           alt={participant.fullName}
-                          src="/static/images/avatar/1.jpg"
+                          src={participant.image}
                         />
                       </Grid>
                       <Grid item>
@@ -244,20 +349,7 @@ class EventDetails extends Component {
                 </Grid>
               )}
 
-              {this.props.user._id !== creator._id && (
-                <Grid item xs={12}>
-                  <Box mb={6} mt={3}>
-                    <Button
-                      onClick={handleClick}
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                    >
-                      Join
-                    </Button>
-                  </Box>
-                </Grid>
-              )}
+              {button}
             </Grid>
           </Paper>
         </Box>
