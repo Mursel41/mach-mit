@@ -10,7 +10,7 @@ import CreateActivity from "./components/createactivityform/createActivity2";
 import EventDetails from "./views/EventDetails";
 import UserProfilePage from "./views/UserProfilePage";
 import Image from "./images/background.jpg";
-import { Box } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 import Footer from "./components/Footer";
 
 const styles = {

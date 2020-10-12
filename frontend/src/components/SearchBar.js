@@ -104,13 +104,13 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container component="main" maxWidth="lg">
         <Grid container justify="center" alignItems="center">
           <Paper
             style={{
-              backgroundColor: "rgba(238,250,255, 0.5)",
+              backgroundColor: "#F5F5F5",
               width: "100%",
-              padding: "5px",
+              padding: "10px",
             }}
           >
             <form id="Search" onSubmit={this.handleSubmit}>
@@ -126,12 +126,8 @@ export default class SearchBar extends React.Component {
                     onChange={this.handleChangeCategory}
                     renderInput={(params) => (
                       <TextField
-                        style={{
-                          backgroundColor: "#FFFFFF",
-                        }}
                         {...params}
                         label="Search Activity"
-                        margin="normal"
                         variant="outlined"
                       />
                     )}
@@ -149,12 +145,8 @@ export default class SearchBar extends React.Component {
                     onChange={this.handleChangeLocation}
                     renderInput={(params) => (
                       <TextField
-                        style={{
-                          backgroundColor: "#FFFFFF",
-                        }}
                         {...params}
                         label="Select Location"
-                        margin="normal"
                         variant="outlined"
                         InputProps={{ ...params.InputProps, type: "search" }}
                       />
@@ -167,9 +159,9 @@ export default class SearchBar extends React.Component {
                     fullWidth={true}
                     style={{
                       backgroundColor: "#90E2D8",
-                      color: "rgb(16, 46, 74)",
+                      color: "#102E4A",
                       height: "54px",
-                      marginTop: "6px",
+                      fontWeight: "500",
                       fontSize: ".9rem",
                     }}
                     type="submit"
@@ -184,7 +176,7 @@ export default class SearchBar extends React.Component {
         {this.state.firstSearch && (
           <Paper
             style={{
-              padding: "30px",
+              padding: "20px",
               backgroundColor: "rgba(238,250,255, 0.5)",
               marginBottom: "5px",
               marginTop: "60px",
@@ -195,7 +187,9 @@ export default class SearchBar extends React.Component {
                 <Typography variant="h4" component="h4" gutterBottom>
                   {this.state.activities.length > 0 ? (
                     <React.Fragment>
-                      Activities for {this.state.message}
+                      <Box letterSpacing={0.5} fontWeight="fontWeightMedium">
+                        Activities for {this.state.message}
+                      </Box>
                     </React.Fragment>
                   ) : (
                     this.state.firstSearch &&

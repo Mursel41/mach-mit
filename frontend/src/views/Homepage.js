@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import MainTextHeroImg from "../components/MainTextHeroImg";
+import MainText from "../components/MainText";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
 import CreateActivityButton from "../components/CreateActivityButton";
@@ -36,83 +36,91 @@ function Homepage(props) {
 
   return (
     <Container fixed>
-      <Grid container spacing={2} justify="center">
-        <Grid item xs={12} md={9}>
-          <Grid item>
-            <MainTextHeroImg />
+      <Box minHeight="82.4vh">
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={12} md={9}>
+            <Grid item>
+              <Box mt={20} mb={5}>
+                <MainText />
+              </Box>
+            </Grid>
+            <Grid item>
+              {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
+            </Grid>
           </Grid>
-          <Grid item>
-            {!isLoggedIn ? <JoinButton /> : <CreateActivityButton />}
+
+          <Grid item xs={12} md={9}>
+            <SearchBar city={user.city} />
+          </Grid>
+
+          <Grid item xs={12} md={9}>
+            {isLoggedIn && user && (
+              <React.Fragment>
+                <Box m={2}>
+                  <Divider />
+                </Box>
+
+                <Grid item>
+                  <Paper
+                    style={{
+                      padding: "20px",
+                      backgroundColor: "rgba(238,250,255, 0.5)",
+                      marginBottom: "30px",
+                      marginTop: "30px",
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="h4" component="h4" gutterBottom>
+                        <Box letterSpacing={0.5} fontWeight="fontWeightMedium">
+                          Created activities
+                        </Box>
+                      </Typography>
+                    </Box>
+
+                    <Box m={1}>
+                      <Divider />
+                    </Box>
+
+                    <Grid item>
+                      <ActivityCard activities={user.createdActivities} />
+                    </Grid>
+                  </Paper>
+                </Grid>
+
+                <Box mb={2}>
+                  <Divider />
+                </Box>
+
+                <Box>
+                  <Paper
+                    style={{
+                      padding: "20px",
+                      backgroundColor: "rgba(238,250,255, 0.5)",
+                      marginBottom: "30px",
+                      marginTop: "30px",
+                    }}
+                  >
+                    <Box>
+                      <Typography variant="h4" component="h4" gutterBottom>
+                        <Box letterSpacing={0.5} fontWeight="fontWeightMedium">
+                          Participated activities
+                        </Box>
+                      </Typography>
+                    </Box>
+                    <Box mb={1}>
+                      <Divider />
+                    </Box>
+
+                    <Grid item>
+                      <ActivityCard activities={user.participatedActivities} />
+                    </Grid>
+                  </Paper>
+                </Box>
+              </React.Fragment>
+            )}
           </Grid>
         </Grid>
-
-        <Grid item xs={12} md={9}>
-          <SearchBar city={user.city} />
-        </Grid>
-
-        <Grid item xs={12} md={9}>
-          {isLoggedIn && user && (
-            <React.Fragment>
-              <Box m={2}>
-                <Divider />
-              </Box>
-
-              <Grid item>
-                <Paper
-                  style={{
-                    padding: "30px",
-                    backgroundColor: "rgba(238,250,255, 0.5)",
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                  }}
-                >
-                  <Box>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                      Created activities
-                    </Typography>
-                  </Box>
-
-                  <Box m={1}>
-                    <Divider />
-                  </Box>
-
-                  <Grid item>
-                    <ActivityCard activities={user.createdActivities} />
-                  </Grid>
-                </Paper>
-              </Grid>
-
-              <Box mb={2}>
-                <Divider />
-              </Box>
-
-              <Box>
-                <Paper
-                  style={{
-                    padding: "30px",
-                    backgroundColor: "rgba(238,250,255, 0.5)",
-                    marginBottom: "30px",
-                    marginTop: "30px",
-                  }}
-                >
-                  <Box>
-                    <Typography variant="h4" component="h4" gutterBottom>
-                      Participated activities
-                    </Typography>
-                  </Box>
-                  <Box mb={1}>
-                    <Divider />
-                  </Box>
-
-                  <Grid item>
-                    <ActivityCard activities={user.participatedActivities} />
-                  </Grid>
-                </Paper>
-              </Box>
-            </React.Fragment>
-          )}
-        </Grid>
-      </Grid>
+      </Box>
     </Container>
   );
 }

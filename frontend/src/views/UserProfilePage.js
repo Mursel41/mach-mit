@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Button, Paper } from "@material-ui/core";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Avatar from "@material-ui/core/Avatar";
+import {
+  Button,
+  Paper,
+  CssBaseline,
+  TextField,
+  Typography,
+  Grid,
+  makeStyles,
+  Avatar,
+  Container,
+  Box,
+  FormLabel,
+} from "@material-ui/core";
 import { Autocomplete } from "formik-material-ui-lab";
-import MuiTextField from "@material-ui/core/TextField";
 import { Formik, Form, Field } from "formik";
 import FormikRadioGroup from "../components/signupform/radioGroupFormik";
-import FormLabel from "@material-ui/core/FormLabel";
+import MuiTextField from "@material-ui/core/TextField";
 import { withRouter } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
@@ -99,299 +103,320 @@ const Profile = (props) => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Paper
-        style={{
-          padding: "30px",
-          backgroundColor: "rgba(238,250,255, 0.5)",
-          marginBottom: "30px",
-          marginTop: "30px",
-        }}
-      >
-        <CssBaseline />
-        <div className={classes.paper}>
-          {/* see own profile page starts here */}
+      <Box minHeight="76.7vh">
+        <Paper
+          style={{
+            padding: "10px 20px 10px 20px",
+            backgroundColor: "rgba(238,250,255, 0.5)",
+            marginTop: "3rem",
+            marginBottom: "3rem",
+          }}
+        >
+          <CssBaseline />
+          <div className={classes.paper}>
+            {/* see own profile page starts here */}
 
-          {props.match.params.id === props.user._id && user && (
-            <Formik
-              initialValues={{
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                gender: user.gender,
-                age: user.age,
-                city: user.city,
-                interests: user.interests,
-              }}
-              validationSchema={SignupSchema}
-              onSubmit={(values, { setSubmitting }) => {
-                console.log(values);
+            {props.match.params.id === props.user._id && user && (
+              <Formik
+                initialValues={{
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  email: user.email,
+                  gender: user.gender,
+                  age: user.age,
+                  city: user.city,
+                  interests: user.interests,
+                }}
+                validationSchema={SignupSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                  console.log(values);
 
-                fetch(`http://localhost:5000/api/v1/users/${props.user._id}`, {
-                  method: "PUT",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "X-Auth-Token": props.auth,
-                  },
-                  body: JSON.stringify(values),
-                })
-                  .then((res) => {
-                    if (res.status === 200) {
-                      swal("Success!", "Updated successfully", "success").then(
-                        () => {
-                          props.history.push("/");
-                        }
-                      );
-                    } else if (res.status === 500) {
-                      swal("Error!", res.statusMessage, "error");
+                  fetch(
+                    `http://localhost:5000/api/v1/users/${props.user._id}`,
+                    {
+                      method: "PUT",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "X-Auth-Token": props.auth,
+                      },
+                      body: JSON.stringify(values),
                     }
-                  })
-                  .catch((error) => {
-                    console.log(error.response);
-                    setEmailError(error.response.data.error.message);
-                  });
-                setSubmitting(false);
-              }}
-            >
-              {({
-                errors,
-                handleChange,
-                touched,
-                handleSubmit,
-                values,
-                isSubmitting,
-              }) => (
-                <Form className={classes.form} onSubmit={handleSubmit}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Avatar className={classes.avatar}></Avatar>
-                      <Typography component="h1" variant="h5">
-                        Profile
-                      </Typography>
+                  )
+                    .then((res) => {
+                      if (res.status === 200) {
+                        swal(
+                          "Success!",
+                          "Updated successfully",
+                          "success"
+                        ).then(() => {
+                          props.history.push("/");
+                        });
+                      } else if (res.status === 500) {
+                        swal("Error!", res.statusMessage, "error");
+                      }
+                    })
+                    .catch((error) => {
+                      console.log(error.response);
+                      setEmailError(error.response.data.error.message);
+                    });
+                  setSubmitting(false);
+                }}
+              >
+                {({
+                  errors,
+                  handleChange,
+                  touched,
+                  handleSubmit,
+                  values,
+                  isSubmitting,
+                }) => (
+                  <Form className={classes.form} onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                      <Grid
+                        container
+                        xs={12}
+                        direction="column"
+                        alignItems="center"
+                        justify="center"
+                        style={{ marginBottom: "2rem", marginTop: "-2rem" }}
+                      >
+                        <Grid item>
+                          <Avatar className={classes.avatar}></Avatar>
+                        </Grid>
+
+                        <Grid item>
+                          <Typography component="h1" variant="h5">
+                            Profile
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          error={errors.firstName && touched.firstName}
+                          autoComplete="fname"
+                          name="firstName"
+                          fullWidth
+                          onChange={handleChange}
+                          value={values.firstName}
+                          id="firstName"
+                          label="First Name"
+                          autoFocus
+                          helperText={
+                            errors.firstName && touched.firstName
+                              ? errors.firstName
+                              : null
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          error={errors.lastName && touched.lastName}
+                          fullWidth
+                          onChange={handleChange}
+                          value={values.lastName}
+                          id="lastName"
+                          label="Last Name"
+                          name="lastName"
+                          autoComplete="lname"
+                          helperText={
+                            errors.lastName && touched.lastName
+                              ? errors.lastName
+                              : null
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          error={
+                            emailError !== "" || (errors.email && touched.email)
+                          }
+                          fullWidth
+                          onFocus={() => {
+                            setEmailError("");
+                          }}
+                          onChange={handleChange}
+                          value={values.email}
+                          id="email"
+                          label="Email Address"
+                          name="email"
+                          autoComplete="email"
+                          helperText={
+                            emailError
+                              ? emailError
+                              : errors.email && touched.email
+                              ? errors.email
+                              : null
+                          }
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        container
+                        direction="row"
+                        justify="space-evenly"
+                        alignItems="center"
+                      >
+                        <FormLabel component="legend">Gender</FormLabel>
+                        <Field
+                          name="gender"
+                          value={values.gender}
+                          id="gender"
+                          options={["Male", "Female", "Other"]}
+                          component={FormikRadioGroup}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          error={errors.age && touched.age}
+                          fullWidth
+                          onChange={handleChange}
+                          value={values.age}
+                          id="age"
+                          label="Age"
+                          name="age"
+                          autoComplete="age"
+                          helperText={
+                            errors.age && touched.age ? errors.age : null
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          error={errors.city && touched.city}
+                          fullWidth
+                          onChange={handleChange}
+                          value={values.city}
+                          id="city"
+                          label="City"
+                          name="city"
+                          autoComplete="city"
+                          helperText={
+                            errors.city && touched.city ? errors.city : null
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Field
+                          name="interests"
+                          multiple
+                          component={Autocomplete}
+                          options={categories}
+                          getOptionLabel={(option) => option.name}
+                          fullWidth
+                          renderInput={(params) => (
+                            <MuiTextField
+                              {...params}
+                              error={
+                                touched["interests"] && !!errors["interests"]
+                              }
+                              helperText={
+                                touched["interests"] && errors["interests"]
+                              }
+                              label="My interests"
+                            />
+                          )}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        error={errors.firstName && touched.firstName}
-                        autoComplete="fname"
-                        name="firstName"
-                        fullWidth
-                        onChange={handleChange}
-                        value={values.firstName}
-                        id="firstName"
-                        label="First Name"
-                        autoFocus
-                        helperText={
-                          errors.firstName && touched.firstName
-                            ? errors.firstName
-                            : null
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        error={errors.lastName && touched.lastName}
-                        fullWidth
-                        onChange={handleChange}
-                        value={values.lastName}
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        autoComplete="lname"
-                        helperText={
-                          errors.lastName && touched.lastName
-                            ? errors.lastName
-                            : null
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        error={
-                          emailError !== "" || (errors.email && touched.email)
-                        }
-                        fullWidth
-                        onFocus={() => {
-                          setEmailError("");
-                        }}
-                        onChange={handleChange}
-                        value={values.email}
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        helperText={
-                          emailError
-                            ? emailError
-                            : errors.email && touched.email
-                            ? errors.email
-                            : null
-                        }
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      direction="row"
-                      justify="space-evenly"
-                      alignItems="center"
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="secondary"
+                      disabled={isSubmitting}
+                      className={classes.submit}
                     >
-                      <FormLabel component="legend">Gender</FormLabel>
-                      <Field
-                        name="gender"
-                        value={values.gender}
-                        id="gender"
-                        options={["Male", "Female", "Other"]}
-                        component={FormikRadioGroup}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        error={errors.age && touched.age}
-                        fullWidth
-                        onChange={handleChange}
-                        value={values.age}
-                        id="age"
-                        label="Age"
-                        name="age"
-                        autoComplete="age"
-                        helperText={
-                          errors.age && touched.age ? errors.age : null
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        error={errors.city && touched.city}
-                        fullWidth
-                        onChange={handleChange}
-                        value={values.city}
-                        id="city"
-                        label="City"
-                        name="city"
-                        autoComplete="city"
-                        helperText={
-                          errors.city && touched.city ? errors.city : null
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        name="interests"
-                        multiple
-                        component={Autocomplete}
-                        options={categories}
-                        getOptionLabel={(option) => option.name}
-                        fullWidth
-                        renderInput={(params) => (
-                          <MuiTextField
-                            {...params}
-                            error={
-                              touched["interests"] && !!errors["interests"]
-                            }
-                            helperText={
-                              touched["interests"] && errors["interests"]
-                            }
-                            label="My interests"
-                          />
-                        )}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
+                      Update
+                    </Button>
+                  </Form>
+                )}
+              </Formik>
+            )}
+
+            {/* see own profile page ends here */}
+
+            {/* see others profile page starts here */}
+
+            {props.match.params.id !== props.user._id && user && (
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Avatar className={classes.avatar}></Avatar>
+                  <Typography component="h1" variant="h5">
+                    Profile
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="standard-read-only-input"
+                    label="First Name"
+                    defaultValue={user.firstName}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="standard-read-only-input"
+                    label="Last Name"
+                    defaultValue={user.lastName}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="standard-read-only-input"
+                    label="Gender"
+                    defaultValue={user.gender}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="standard-read-only-input"
+                    label="Age"
+                    defaultValue={user.age}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="standard-read-only-input"
+                    label="City"
                     fullWidth
-                    variant="contained"
-                    color="secondary"
-                    disabled={isSubmitting}
-                    className={classes.submit}
-                  >
-                    Update
-                  </Button>
-                </Form>
-              )}
-            </Formik>
-          )}
+                    defaultValue={user.city}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="standard-read-only-input"
+                    label="Interests"
+                    fullWidth
+                    defaultValue={user.interests.map(
+                      (interest) => interest.name
+                    )}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            )}
 
-          {/* see own profile page ends here */}
-
-          {/* see others profile page starts here */}
-
-          {props.match.params.id !== props.user._id && user && (
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Avatar className={classes.avatar}></Avatar>
-                <Typography component="h1" variant="h5">
-                  Profile
-                </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="standard-read-only-input"
-                  label="First Name"
-                  defaultValue={user.firstName}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="standard-read-only-input"
-                  label="Last Name"
-                  defaultValue={user.lastName}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="standard-read-only-input"
-                  label="Gender"
-                  defaultValue={user.gender}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="standard-read-only-input"
-                  label="Age"
-                  defaultValue={user.age}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="standard-read-only-input"
-                  label="City"
-                  fullWidth
-                  defaultValue={user.city}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="standard-read-only-input"
-                  label="Interests"
-                  fullWidth
-                  defaultValue={user.interests.map((interest) => interest.name)}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid>
-            </Grid>
-          )}
-
-          {/* see others profile page ends here */}
-        </div>
-      </Paper>
+            {/* see others profile page ends here */}
+          </div>
+        </Paper>
+      </Box>
     </Container>
   );
 };
