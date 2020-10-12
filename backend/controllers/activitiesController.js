@@ -97,6 +97,15 @@ exports.joinActivity = async (req, res, next) => {
 
 exports.leaveActivity = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+      throw new createError.NotFound();
+    const updatedActivity = await Activity.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { participants: req.body._id } },
+      { new: true, runValidators: true }
+    );
+    if (!updatedActivity) throw new createError.NotFound();
+    res.status(200).send(updatedActivity);
   } catch (error) {
     next(error);
   }
