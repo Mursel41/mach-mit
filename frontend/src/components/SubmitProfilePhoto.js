@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import axios, { post } from "axios";
-import { Button, Input, Box, Paper, Container, Grid } from "@material-ui/core";
+import { Button, Input, Box, Container } from "@material-ui/core";
 
 export default class SubmitProfilePhoto extends Component {
   constructor(props) {
@@ -93,6 +93,7 @@ export default class SubmitProfilePhoto extends Component {
                       onClick={() => this.setState({ newPhoto: true })}
                       variant="contained"
                       color="secondary"
+                      size="small"
                     >
                       New Photo
                     </Button>
