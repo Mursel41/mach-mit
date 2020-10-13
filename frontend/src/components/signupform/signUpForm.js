@@ -103,6 +103,7 @@ const Signup = (props) => {
             padding: "10px 20px 10px 20px",
             backgroundColor: "rgba(238,250,255, 0.6)",
             marginTop: "1rem",
+            marginBottom: "1rem",
           }}
         >
           <CssBaseline />
