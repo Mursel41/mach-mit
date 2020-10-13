@@ -8,7 +8,7 @@ exports.getActivities = async (req, res, next) => {
     console.log(req.query);
     const activities = await Activity.find(req.query).populate(
       'typeOfActivity',
-      '-_id name'
+      '-_id name categoryImage'
     );
     res.status(200).send(activities);
   } catch (error) {
@@ -32,7 +32,7 @@ exports.getActivity = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id))
       throw new createError.NotFound();
     const activity = await Activity.findById(req.params.id)
-      .populate('typeOfActivity', '-_id name')
+      .populate('typeOfActivity', '-_id name categoryImage')
       .populate('creator')
       .populate('participants');
     if (!activity) throw new createError.NotFound();
@@ -50,7 +50,7 @@ exports.updateActivity = async (req, res, next) => {
       req.params.id,
       req.body,
       { new: true, runValidators: true }
-    ).populate('typeOfActivity', '-_id name');
+    ).populate('typeOfActivity', '-_id name categoryImage');
     if (!updatedActivity) throw new createError.NotFound();
     res.status(200).send(updatedActivity);
   } catch (error) {

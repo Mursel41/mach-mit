@@ -168,8 +168,8 @@ const Profile = (props) => {
                 }) => (
                   <React.Fragment>
                     <SubmitProfilePhoto
-                      id={user._id}
-                      image={user.image}
+                      id={props.user._id}
+                      image={props.user.image}
                       auth={props.auth}
                     />
 

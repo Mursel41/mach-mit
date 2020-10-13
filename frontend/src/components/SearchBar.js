@@ -32,7 +32,14 @@ export default class SearchBar extends React.Component {
   componentDidMount() {
     fetch("http://localhost:5000/api/v1/categories")
       .then((res) => res.json())
-      .then((categories) => this.setState({ categories }))
+      .then((categories) => {
+        let sortedCategories = (categories.sort(function (a,b) {
+          let x = a.name;
+          let y = b.name;
+          return x < y ? -1 : x > y ? 1 : 0;
+        }))
+        this.setState({ categories: sortedCategories })
+      })
       .catch((err) => console.log(err));
 
     fetch("http://localhost:5000/api/v1/activities/locations")
