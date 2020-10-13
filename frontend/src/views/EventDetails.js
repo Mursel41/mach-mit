@@ -153,7 +153,7 @@ class EventDetails extends Component {
       ) !== -1
     ) {
       button = (
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={3} style={{ marginTop: "1rem" }}>
           <Button
             onClick={handleLeave}
             variant="contained"
@@ -167,7 +167,7 @@ class EventDetails extends Component {
       );
     } else if (this.props.user._id !== creator._id) {
       button = (
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={3} mt={4} style={{ marginTop: "1rem" }}>
           <Button
             onClick={handleJoin}
             variant="contained"
@@ -181,7 +181,7 @@ class EventDetails extends Component {
       );
     } else if (this.props.user._id === creator._id) {
       button = (
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={3} mt={4} style={{ marginTop: "1rem" }}>
           <Button
             onClick={handleDelete}
             variant="contained"
@@ -348,9 +348,8 @@ class EventDetails extends Component {
                   ))}
                 </Grid>
               )}
-
-              {button}
             </Grid>
+            <Grid item>{button}</Grid>
           </Paper>
         </Box>
       </Container>

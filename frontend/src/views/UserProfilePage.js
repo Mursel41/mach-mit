@@ -101,13 +101,13 @@ const Profile = (props) => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box minHeight="62vh">
+      <Box>
         <Paper
           style={{
             padding: "10px 20px 5px 20px",
             backgroundColor: "rgba(238,250,255, 0.5)",
-            marginTop: "1rem",
-            marginBottom: "1rem",
+            marginTop: "7rem",
+            marginBottom: "7rem",
           }}
         >
           <CssBaseline />
@@ -117,13 +117,13 @@ const Profile = (props) => {
             {props.match.params.id === props.user._id && user && (
               <Formik
                 initialValues={{
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  email: user.email,
-                  gender: user.gender,
-                  age: user.age,
-                  city: user.city,
-                  interests: user.interests,
+                  firstName: props.user.firstName,
+                  lastName: props.user.lastName,
+                  email: props.user.email,
+                  gender: props.user.gender,
+                  age: props.user.age,
+                  city: props.user.city,
+                  interests: props.user.interests,
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -177,16 +177,17 @@ const Profile = (props) => {
                       <Grid container spacing={2}>
                         <Grid item xs={12}>
                           <Typography
-                            variant="h4"
-                            component="h4"
+                            variant="h5"
+                            component="h5"
                             color="black"
                             gutterBottom
                           >
                             <Box
                               letterSpacing={0.5}
                               fontWeight="fontWeightBold"
+                              mt={2}
                             >
-                              Profile
+                              Edit profile
                             </Box>
                           </Typography>
                         </Grid>
@@ -341,78 +342,100 @@ const Profile = (props) => {
             {/* see others profile page starts here */}
 
             {props.match.params.id !== props.user._id && user && (
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <Avatar className={classes.avatar} src={user.image}></Avatar>
-                  <Typography component="h1" variant="h5">
-                    Profile
-                  </Typography>
+              <Box mt={4} mb={10}>
+                <Grid container spacing={2}>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    xs={12}
+                    spacing={2}
+                  >
+                    <Grid item>
+                      <Avatar
+                        className={classes.avatar}
+                        src={user.image}
+                        style={{ width: 100, height: 100 }}
+                      ></Avatar>
+                    </Grid>
+                    <Grid item>
+                      <Typography component="h5" variant="h5">
+                        <Box
+                          mb={6}
+                          letterSpacing={0.5}
+                          fontWeight="fontWeightBold"
+                        >
+                          User Profile
+                        </Box>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="standard-read-only-input"
+                      label="First Name"
+                      defaultValue={user.firstName}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="standard-read-only-input"
+                      label="Last Name"
+                      defaultValue={user.lastName}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="standard-read-only-input"
+                      label="Gender"
+                      defaultValue={user.gender}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="standard-read-only-input"
+                      label="Age"
+                      defaultValue={user.age}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="standard-read-only-input"
+                      label="City"
+                      fullWidth
+                      defaultValue={user.city}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="standard-read-only-input"
+                      label="Interests"
+                      fullWidth
+                      defaultValue={user.interests.map((interest, index) =>
+                        index === 0 ? `${interest.name}` : ` ${interest.name}`
+                      )}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="standard-read-only-input"
-                    label="First Name"
-                    defaultValue={user.firstName}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="standard-read-only-input"
-                    label="Last Name"
-                    defaultValue={user.lastName}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="standard-read-only-input"
-                    label="Gender"
-                    defaultValue={user.gender}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    id="standard-read-only-input"
-                    label="Age"
-                    defaultValue={user.age}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="standard-read-only-input"
-                    label="City"
-                    fullWidth
-                    defaultValue={user.city}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="standard-read-only-input"
-                    label="Interests"
-                    fullWidth
-                    defaultValue={user.interests.map(
-                      (interest) => interest.name
-                    )}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-              </Grid>
+              </Box>
             )}
 
             {/* see others profile page ends here */}
