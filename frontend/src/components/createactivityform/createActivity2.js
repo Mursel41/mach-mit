@@ -105,7 +105,11 @@ const CreateActivity = (props) => {
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get(`${apiUrl}`);
-      setCategories(result.data);
+      setCategories(result.data.sort(function (a,b) {
+        let x = a.name;
+        let y = b.name;
+        return x < y ? -1 : x > y ? 1 : 0;
+      }));
     }
     fetchData();
   }, []);
