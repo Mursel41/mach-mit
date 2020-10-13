@@ -25,7 +25,7 @@ class ActivityCard extends React.Component {
               <Box
                 m={0.5}
                 key={card._id}
-                width={250}
+                width={200}
                 mx={0.5}
                 mb={0.5}
                 onClick={() => this.props.history.push(`/events/${card._id}`)}
