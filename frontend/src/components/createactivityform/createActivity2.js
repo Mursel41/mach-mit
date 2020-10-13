@@ -138,7 +138,7 @@ const CreateActivity = (props) => {
               initialValues={{
                 title: "",
                 description: "",
-                paid: "",
+                paid: "No",
                 price: 0,
                 address: {
                   city: "",
@@ -199,7 +199,7 @@ const CreateActivity = (props) => {
                           onChange={handleChange}
                           value={values.title}
                           id="title"
-                          label="Title"
+                          label="Title*"
                           autoFocus
                           helperText={
                             errors.title && touched.title ? errors.title : null
@@ -271,7 +271,7 @@ const CreateActivity = (props) => {
                                     ? getIn(errors, "address.city")
                                     : null
                                 }
-                                label="City"
+                                label="City*"
                                 variant="outlined"
                               />
                             )}
@@ -285,7 +285,7 @@ const CreateActivity = (props) => {
                             onChange={handleChange}
                             value={values.address.street}
                             id="street"
-                            label="Street"
+                            label="Street*"
                             name="address.street"
                             autoComplete="street"
                             helperText={
@@ -304,7 +304,7 @@ const CreateActivity = (props) => {
                             onChange={handleChange}
                             value={values.address.zip}
                             id="zip"
-                            label="Zip"
+                            label="Zip*"
                             name="address.zip"
                             autoComplete="zip"
                             helperText={
@@ -341,7 +341,7 @@ const CreateActivity = (props) => {
                             type="text"
                             name="typeOfActivity"
                             onChange={handleChange}
-                            label="Type of activity"
+                            label="Type of activity*"
                             value={values.typeOfActivity}
                             select
                             fullWidth
@@ -366,7 +366,7 @@ const CreateActivity = (props) => {
                             type="text"
                             name="typeOfAttendee"
                             onChange={handleChange}
-                            label="Type of attendee"
+                            label="Type of attendee*"
                             value={values.typeOfAttendee}
                             select
                             fullWidth
@@ -402,7 +402,7 @@ const CreateActivity = (props) => {
                               },
                             }}
                             name="numberOfAttendee"
-                            label="Number of attendee"
+                            label="Number of attendee*"
                             type="number"
                             id="numberOfAttendee"
                             helperText={
@@ -424,7 +424,7 @@ const CreateActivity = (props) => {
                           name="startDate"
                           ampm={false}
                           disablePast={true}
-                          label="Date and time"
+                          label="Date and time*"
                         />
                       </Grid>
                     </Grid>
