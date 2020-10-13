@@ -35,7 +35,7 @@ class ActivityCard extends React.Component {
                     <CardActionArea>
                       <CardMedia color="secondary.main">
                         <img
-                          src={card.image}
+                          src={card.typeOfActivity.categoryImage}
                           alt="activity_image"
                           width="100%"
                           height={150}

@@ -51,7 +51,7 @@ class EventDetails extends Component {
       price,
       startDate,
       title,
-      typeOfActivity: { name },
+      typeOfActivity: { name, categoryImage},
       typeOfAttendee,
     } = this.state.data;
 
@@ -223,9 +223,9 @@ class EventDetails extends Component {
               <Grid container item xs={12} alignItems="center" spacing={1}>
                 <Grid item>
                   <Avatar
-                    onClick={() =>
-                      this.props.history.push(`/profile/${creator._id}`)
-                    }
+                    onClick={() =>{ 
+                      if (!this.props.isLoggedIn) return this.props.history.push("/login");
+                      this.props.history.push(`/profile/${creator._id}`)}}
                     alt={creator.fullName}
                     src={creator.image}
                   />
@@ -239,7 +239,7 @@ class EventDetails extends Component {
               </Grid>
               <Grid item xs={8} md={6}>
                 <Box>
-                  <img alt={name} src={image} width="100%" />
+                  <img alt={name} src={categoryImage} width="100%" />
                 </Box>
               </Grid>
               <Grid item xs={12} md={3}>
@@ -330,11 +330,9 @@ class EventDetails extends Component {
                     >
                       <Grid item>
                         <Avatar
-                          onClick={() =>
-                            this.props.history.push(
-                              `/profile/${participant._id}`
-                            )
-                          }
+                          onClick={() =>{ 
+                                if (!this.props.isLoggedIn) return this.props.history.push("/login");
+                                this.props.history.push(`/profile/${participant._id}`)}}
                           alt={participant.fullName}
                           src={participant.image}
                         />

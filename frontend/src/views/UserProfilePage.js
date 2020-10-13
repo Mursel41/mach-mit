@@ -117,13 +117,14 @@ const Profile = (props) => {
             {props.match.params.id === props.user._id && user && (
               <Formik
                 initialValues={{
-                  firstName: user.firstName,
-                  lastName: user.lastName,
-                  email: user.email,
-                  gender: user.gender,
-                  age: user.age,
-                  city: user.city,
-                  interests: user.interests,
+                  firstName: props.user.firstName,
+                  lastName: props.user.lastName,
+                  email: props.user.email,
+                  gender: props.user.gender,
+                  age: props.user.age,
+                  city: props.user.city,
+                  interests: props.user.interests,
+                 
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -168,8 +169,8 @@ const Profile = (props) => {
                 }) => (
                   <React.Fragment>
                     <SubmitProfilePhoto
-                      id={user._id}
-                      image={user.image}
+                      id={props.user._id}
+                      image={props.user.image}
                       auth={props.auth}
                     />
 
