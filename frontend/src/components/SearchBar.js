@@ -11,6 +11,8 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ActivityCard from "../components/ActivityCard";
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -25,6 +27,7 @@ export default class SearchBar extends React.Component {
       inputLocation: "",
       message: "",
       firstSearch: false,
+      isLoading: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -57,6 +60,7 @@ export default class SearchBar extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
     let searchKey = "";
+    this.setState({isLoading: true})
 
     if (
       this.state.inputCategory.length === 0 &&
@@ -86,12 +90,16 @@ export default class SearchBar extends React.Component {
       fetch(`http://localhost:5000/api/v1/activities${searchKey}`)
         .then((res) => res.json())
         .then((activities) => {
+          this.setState({
+            isLoading: false,
+          });
           activities.sort(function (a, b) {
             let x = a.startDate;
             let y = b.startDate;
             return x < y ? -1 : x > y ? 1 : 0;
           });
           this.setState({
+            isLoading: false,
             activities: activities.filter(
               (activity) =>
                 new Date(activity.startDate).getTime() > new Date().getTime()
@@ -114,7 +122,23 @@ export default class SearchBar extends React.Component {
     this.setState({ inputLocation: val });
   };
 
+
+  useStyles = () => makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      '& > * + *': {
+        marginLeft: theme.spacing(2),
+      },
+    },
+  }));
+
   render() {
+
+
+
+
+    const classes = this.useStyles();
+
     return (
       <Container component="main" maxWidth="lg">
         <Grid container justify="center" alignItems="center">
@@ -196,6 +220,12 @@ export default class SearchBar extends React.Component {
           >
             <Box>
               <Box>
+              {this.state.isLoading ?       
+                        <div className={classes.root}>
+                          <h2>Loading...</h2>
+                          <CircularProgress color="secondary" />
+                        </div>
+                        :
                 <Typography variant="h5" component="h5" gutterBottom>
                   {this.state.activities.length > 0 ? (
                     <React.Fragment>
@@ -212,6 +242,7 @@ export default class SearchBar extends React.Component {
                     )
                   )}
                 </Typography>
+                  } 
               </Box>
               <Box mb={1}>
                 <Divider />
