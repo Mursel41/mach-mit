@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ActivityCard from "../components/ActivityCard";
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -125,9 +125,9 @@ export default class SearchBar extends React.Component {
 
   useStyles = () => makeStyles((theme) => ({
     root: {
-      display: 'flex',
+      width: '100%',
       '& > * + *': {
-        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(2),
       },
     },
   }));
@@ -223,7 +223,7 @@ export default class SearchBar extends React.Component {
               {this.state.isLoading ?       
                         <div className={classes.root}>
                           <h2>Loading...</h2>
-                          <CircularProgress color="secondary" />
+                          <LinearProgress color="secondary" />
                         </div>
                         :
                 <Typography variant="h5" component="h5" gutterBottom>

@@ -313,8 +313,7 @@ class EventDetails extends Component {
                 <Grid item xs={12} md={9}>
                   <Typography>
                     {" "}
-                    So far there is nobody joining to this activity. Be first to
-                    enjoy the activity.
+                    So far there is nobody joining to this activity.
                   </Typography>
                 </Grid>
               ) : (

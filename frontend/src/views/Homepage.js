@@ -3,6 +3,8 @@ import MainText from "../components/MainText";
 import SearchBar from "../components/SearchBar";
 import JoinButton from "../components/JoinButton";
 import CreateActivityButton from "../components/CreateActivityButton";
+import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {
   Typography,
@@ -14,13 +16,25 @@ import {
 } from "@material-ui/core";
 import ActivityCard from "../components/ActivityCard";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
+
 function Homepage(props) {
   const { isLoggedIn, auth, user, setUser } = props;
   const [createdActivities, setCreatedActivities] = useState([]);
   const [participatedActivities, setParticipatedActivities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       if (isLoggedIn && auth) {
         fetch(`http://localhost:5000/api/v1/users/${user._id}`, {
           headers: {
@@ -30,6 +44,7 @@ function Homepage(props) {
         })
           .then((res) => res.json())
           .then((data) => {
+            setIsLoading(false);
             setUser(data);
             setCreatedActivities(data.createdActivities);
             setParticipatedActivities(data.participatedActivities);
@@ -38,6 +53,9 @@ function Homepage(props) {
       }
     })();
   }, [auth]);
+
+  
+  const classes = useStyles();
 
   return (
     <Container fixed>
@@ -81,11 +99,16 @@ function Homepage(props) {
                         </Box>
                       </Typography>
                     </Box>
-
                     <Box m={1}>
                       <Divider />
                     </Box>
                     <Grid item>
+                    {isLoading ?       
+                        <div className={classes.root}>
+                          <h2>Loading...</h2>
+                          <LinearProgress color="secondary" />
+                        </div>
+                        :
                       <ActivityCard
                         activities={createdActivities.sort(function (a, b) {
                           let x = a.startDate;
@@ -93,6 +116,7 @@ function Homepage(props) {
                           return x < y ? 1 : x > y ? -1 : 0;
                         })}
                       />
+                      }
                     </Grid>
                   </Paper>
                 </Grid>
@@ -111,11 +135,18 @@ function Homepage(props) {
                     }}
                   >
                     <Box>
+                    {isLoading ?       
+                        <div className={classes.root}>
+                          <h2>Loading...</h2>
+                          <LinearProgress color="secondary" />
+                        </div>
+                        :
                       <Typography variant="h5" component="h5" gutterBottom>
                         <Box letterSpacing={0.5} fontWeight="fontWeightBold">
                           Participated activities
                         </Box>
                       </Typography>
+                    }
                     </Box>
                     <Box mb={1}>
                       <Divider />
