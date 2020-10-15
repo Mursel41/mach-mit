@@ -132,13 +132,14 @@ export default class SubmitProfilePhoto extends Component {
 
                             </div>
 
-                            <Button
+                           {this.state.selectedFile.type.includes("image") && this.state.selectedFile.size < 1000000 && 
+                           <Button
                               onClick={this.onFileUpload}
                               variant="contained"
                               color="secondary"
                             >
                               Upload
-                            </Button>
+                            </Button>}
                           </React.Fragment>
                         )}
                       </Box>
