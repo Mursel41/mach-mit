@@ -123,9 +123,13 @@ export default class SubmitProfilePhoto extends Component {
                         {this.state.selectedFile && (
                           <React.Fragment>
                             <div>
-                              <h2>File Details:</h2>
-                              <p>File Name: {this.state.selectedFile.name}</p>
-                              <p>File Type: {this.state.selectedFile.type}</p>
+                              {/* <h2>File Details:</h2> */}
+                              <p>{this.state.selectedFile.name}</p>
+                              {/* <p>File Type: {this.state.selectedFile.type}</p> */}
+                              {!this.state.selectedFile.type.includes("image") && <Button color="secondary">Please select an image file.</Button>}
+                              {/* <p>File Size: {this.state.selectedFile.size/1000} KB</p> */}
+                              {this.state.selectedFile.size > 1000000 && <Button color="secondary">Your filesize is over limit.</Button>}
+
                             </div>
 
                             <Button
