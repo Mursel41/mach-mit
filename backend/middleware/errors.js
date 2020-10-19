@@ -6,6 +6,9 @@ exports.error400 = (req, res, next) => {
 };
 
 exports.handleErrors = (err, req, res, next) => {
+  if (err.code === 11000) {
+    err.message = 'Email is already registered';
+  }
   res.status(err.status || 500).send({
     error: {
       message: err.message,
