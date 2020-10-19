@@ -1,126 +1,69 @@
-import React from "react";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import React from 'react';
+import { Card, Grid } from '@material-ui/core';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import moment from 'moment';
+import { withRouter } from 'react-router-dom';
 
 class ActivityCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dummy: [
-        {
-          ID: 1,
-          activityType: "Soccer",
-          activityName: "Football for boys",
-          activityDate: "21.Sep.2020",
-          totalParticipant: 12,
-          actualParticipant: 7,
-          location: "Leipzig",
-          img:
-            "https://image.freepik.com/free-vector/soccer-concept-illustration_114360-2051.jpg",
-          price: "Free",
-        },
-
-        {
-          ID: 4,
-          activityType: "Photo",
-          activityName: "Photo at Denkmal",
-          activityDate: "27.Sep.2020",
-          totalParticipant: 15,
-          actualParticipant: 5,
-          location: "Markleberg",
-          img:
-            "https://image.freepik.com/free-vector/minimalist-illustration-photographer-working_23-2148280985.jpg",
-          price: "€30",
-        },
-
-        {
-          ID: 3,
-          activityType: "Bike",
-          activityName: "Ready for Bike Tour?",
-          activityDate: "28.Sep.2020",
-          totalParticipant: 30,
-          actualParticipant: 22,
-          location: "Grunau",
-          img:
-            "https://image.freepik.com/free-vector/flat-delivery-boy-bike-background_23-2148158147.jpg",
-          price: "Free",
-        },
-        {
-          ID: 5,
-          activityType: "Photo",
-          activityName: "Photo at Denkmal",
-          activityDate: "27.Sep.2020",
-          totalParticipant: 15,
-          actualParticipant: 5,
-          location: "Markleberg",
-          img:
-            "https://image.freepik.com/free-vector/minimalist-illustration-photographer-working_23-2148280985.jpg",
-          price: "€30",
-        },
-        {
-          ID: 2,
-          activityType: "Chess",
-          activityName: "Come & play chess",
-          activityDate: "24.Sep.2020",
-          totalParticipant: 2,
-          actualParticipant: 1,
-          location: "Connewitz",
-          img:
-            "https://image.freepik.com/free-vector/cartoon-character-playing-chess-game_29937-4045.jpg",
-          price: "€20",
-        },
-      ],
-    };
   }
 
   render() {
     return (
-      <div>
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          flexWrap="wrap"
-          mt={2}
-        >
-          {this.state.dummy.map((card) => {
+      <Grid container spacing={1} justify="center">
+        {this.props.activities && this.props.activities.length < 1 ? (
+          <p>You don't have any activities yet</p>
+        ) : (
+          this.props.activities &&
+          this.props.activities.map((card) => {
             return (
-              <Box m={0.5} key={card.ID} width={250} p={0.1} mx={0.5} mb={0.5}>
+              <Box
+                m={0.5}
+                key={card._id}
+                width={200}
+                mx={0.5}
+                mb={0.5}
+                onClick={() => this.props.history.push(`/events/${card._id}`)}
+              >
                 <Card>
-                  <Box height={400}>
+                  <Box>
                     <CardActionArea>
                       <CardMedia color="secondary.main">
                         <img
-                          src={card.img}
+                          src={card.image}
                           alt="activity_image"
                           width="100%"
-                          height={230}
+                          height={140}
                         />
                       </CardMedia>
                       <CardContent>
                         <Typography
                           gutterBottom
                           color="secondary"
-                          variant="subtitle2"
+                          variant="subtitle3"
                         >
-                          {card.activityType}
+                          {card.typeOfActivity.name}
                         </Typography>
-                        <Typography gutterBottom variant="h6" component="h2">
-                          {card.activityName}
+                        <Typography gutterBottom variant="h7" component="h2">
+                          {card.title}
                         </Typography>
                         <Typography
                           variant="body2"
                           color="textSecondary"
                           component="p"
                         >
-                          <Box>{card.activityDate}</Box>
                           <Box>
-                            {card.actualParticipant}/{card.totalParticipant}{" "}
-                            Paticipaters
+                            {moment(card.startDate).format('D MMM YYYY')}
+                          </Box>
+                          <Box>
+                            {' '}
+                            {card.participants.length}/{card.numberOfAttendee}{' '}
+                            Participants
                           </Box>
                         </Typography>
                         <Box
@@ -131,14 +74,14 @@ class ActivityCard extends React.Component {
                           mt={2}
                         >
                           <Box>
-                            {" "}
+                            {' '}
                             <Typography variant="body2" color="Primary">
-                              {card.price}
+                              {card.price === 0 ? 'Free' : '€ ' + card.price}
                             </Typography>
                           </Box>
                           <Box>
                             <Typography variant="body2">
-                              {card.location}
+                              {card.address.city}
                             </Typography>
                           </Box>
                         </Box>
@@ -148,11 +91,11 @@ class ActivityCard extends React.Component {
                 </Card>
               </Box>
             );
-          })}
-        </Box>
-      </div>
+          })
+        )}
+      </Grid>
     );
   }
 }
 
-export default ActivityCard;
+export default withRouter(ActivityCard);

@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "watch": "DEBUG=backend:* nodemon --inspect ./bin/www"
+    "watch": "DEBUG=backend:* nodemon --inspect ./bin/www",
+    "seed": "node ./seed/seedDB.js",
+    "purge": "node ./seed/purgeDB.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -12,8 +14,10 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-validator": "^6.6.1",
+    "faker": "^5.1.0",
     "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.0",
     "mongoose": "^5.10.4",
     "morgan": "~1.9.1"
   },
