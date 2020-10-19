@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 // internal Dependencies
 const indexRouter = require('./routes/index');
 const activitiesRouter = require('./routes/activitiesRoute');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/usersRoute');
+const categoriesRouter = require('./routes/categoriesRoute');
 const CORS = require('./middleware/CORS');
 const { error400, handleErrors } = require('./middleware/errors');
 
@@ -33,12 +34,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(CORS);
 
 // Routers
 app.use('/', indexRouter);
 app.use('/api/v1/activities', activitiesRouter);
 app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/categories', categoriesRouter);
 
 // If route does not match
 app.use(error400);

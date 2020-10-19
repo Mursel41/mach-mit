@@ -21,14 +21,37 @@ const UserSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
     },
-    address: {
-      type: Address,
+    city: {
+      type: String,
       required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ['Male', 'Female', 'Other'],
+      required: true,
+    },
+    interests: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        _id: false,
+      },
+    ],
+    image: {
+      type: String,
+      default: 'assets/img/user-profile-default.png',
     },
     role: {
       type: String,
@@ -46,6 +69,18 @@ const UserSchema = new Schema(
     },
   }
 );
+
+UserSchema.virtual('createdActivities', {
+  ref: 'Activity',
+  localField: '_id',
+  foreignField: 'creator',
+});
+
+UserSchema.virtual('participatedActivities', {
+  ref: 'Activity',
+  localField: '_id',
+  foreignField: 'participants',
+});
 
 UserSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
@@ -75,7 +110,13 @@ UserSchema.method('toJSON', function () {
     lastName: this.lastName,
     email: this.email,
     fullName: this.fullName,
-    address: this.address,
+    city: this.city,
+    interests: this.interests,
+    age: this.age,
+    gender: this.gender,
+    image: this.image,
+    createdActivities: this.createdActivities,
+    participatedActivities: this.participatedActivities,
   };
 });
 
